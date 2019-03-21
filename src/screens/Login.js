@@ -189,6 +189,7 @@ export default class Login extends Component<Props> {
               borderColor: colors.borderColor.normal,
               borderBottomWidth: 1,
               paddingBottom: 8,
+              fontFamily: "DINPro-Medium",
               fontSize: 24,
               color: colors.textColor.normal,
             }}

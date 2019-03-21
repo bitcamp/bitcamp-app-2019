@@ -15,28 +15,22 @@ const styles = StyleSheet.create({
     fontSize: 36,
   },
   h2: {
-    fontFamily: 'system default',
     fontWeight: 'bold',
     fontSize: 21,
   },
   h3: {
-    fontFamily: 'system default',
     fontSize: 16,
   },
   h4: {
-    fontFamily: 'system default',
     fontSize: 13,
   },
   h5: {
-    fontFamily: 'system default',
     fontSize: 11,
   },
   h6: {
-    fontFamily: 'system default',
     fontSize: 13,
   },
   p: {
-    fontFamily: 'system default',
     fontSize: 15,
   },
 });
