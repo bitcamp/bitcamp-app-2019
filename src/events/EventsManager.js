@@ -240,7 +240,7 @@ export default class EventsManager {
 
   //key of event
   // time in minutes to warn before event
-  async favoriteEvent(eventID, refreshSaved) {
+  async favoriteEvent(eventID, refreshSaved, depth = 0) {
 
 
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
@@ -270,7 +270,12 @@ export default class EventsManager {
             this.updateEventComponents();
 
           } else {
-            Toast.show('Could not favorite this event. Please try again.');
+            if (depth < 1) {
+              this.unfavoriteEvent(eventID, refreshSaved, depth + 1);
+              this.favoriteEvent(eventID, refreshSaved, depth + 1);
+            } else {
+              Toast.show('Could not unfavorite this event. Please try again.');
+            }
           }
         });
       });
@@ -278,7 +283,7 @@ export default class EventsManager {
     this.updateHearts();
   }
 
-  unfavoriteEvent(eventID, refreshSaved) {
+  unfavoriteEvent(eventID, refreshSaved, depth = 0) {
 
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
@@ -308,7 +313,12 @@ export default class EventsManager {
             this.updateHearts();
             this.updateEventComponents();
           } else {
-            Toast.show('Could not unfavorite this event. Please try again.');
+            if (depth < 1) {
+              this.favoriteEvent(eventID, refreshSaved, depth + 1);
+              this.unfavoriteEvent(eventID, refreshSaved, depth + 1);
+            } else {
+              Toast.show('Could not unfavorite this event. Please try again.');
+            }
           }
         });
       });
