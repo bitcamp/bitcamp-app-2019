@@ -86,7 +86,7 @@ export default class Login extends Component<Props> {
           }
       } catch (error) {
           Alert.alert(
-            "No internet connection.",
+            "There was an error requesting a code.",
             "Try again.",
             [
               {text: 'OK', onPress: () => console.log('OK Pressed')},
@@ -157,7 +157,7 @@ export default class Login extends Component<Props> {
     } catch (error) {
       console.log(error);
         Alert.alert(
-          "No internet connection.",
+          "There was an error confirming the pin.",
           "Try again.",
           [
             {text: 'OK', onPress: () => console.log('OK Pressed')},
