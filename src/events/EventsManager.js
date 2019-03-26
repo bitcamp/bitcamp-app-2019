@@ -79,30 +79,6 @@ export default class EventsManager {
       this.updateEventComponents();
       this.updateHearts();
     });
-
-    this.recentUpdates = [];
-    AsyncStorage.getItem(UPDATES_STORE, (err, result) => {
-      if(result != null) {
-        this.processRecentUpdates(JSON.parse(result));
-        //recentUpdates = JSON.parse(result);
-        //this.updateUpdatesComponents();
-      }
-
-      firebase.database().ref('/Updates')
-        .on('value', async (snapshot) => {
-          let data = snapshot.val();
-          data = _.filter(data, (event => event != null));
-
-          //store new schedule on phone
-          AsyncStorage.setItem(UPDATES_STORE, JSON.stringify(data), function(error){
-            if (error){
-              console.log(error);
-            }
-          });
-
-          this.processRecentUpdates(data);
-      });
-    })
   }
 
   processNewEvents(rawData, rescheduleNotifications) {
