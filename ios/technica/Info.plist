@@ -46,7 +46,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Camera usage is required to scan hacker QR codes.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>NSMotionUsageDescription</key>
 	<string>Motion data is used to record participant physical activity.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
@@ -112,7 +112,7 @@
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>Launch Screen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

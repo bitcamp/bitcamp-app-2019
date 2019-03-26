@@ -42,7 +42,7 @@ export default class Login extends Component<Props> {
   };
 
   validEmail(email){
-    var emailRegex = RegExp('^.+@.+\.com');
+    var emailRegex = RegExp('^.+@.+\..+$');
     if(emailRegex.test(email)){
       return email;
     }

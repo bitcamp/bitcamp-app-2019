@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		0018515A75EB434DBB048CAA /* AvenirLTStd-MediumOblique.otf in Resources */ = {isa = PBXBuildFile; fileRef = F6120CAA86504893BE776CDE /* AvenirLTStd-MediumOblique.otf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -993,6 +994,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1572,6 +1574,7 @@
 				PRODUCT_NAME = technica;
 				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
 				PROVISIONING_PROFILE_SPECIFIER = "Bitcamp 2019 Development";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1611,6 +1614,7 @@
 				PRODUCT_NAME = technica;
 				PROVISIONING_PROFILE = "6b6492c4-6f7b-4164-80db-62277df6e47a";
 				PROVISIONING_PROFILE_SPECIFIER = "Bitcamp 2019 Development";
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

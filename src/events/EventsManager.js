@@ -267,6 +267,8 @@ export default class EventsManager {
             this.createNotification(event);
         
             this.updateHearts();
+            this.updateEventComponents();
+
           } else {
             Toast.show('Could not favorite this event. Please try again.');
           }
@@ -304,6 +306,7 @@ export default class EventsManager {
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
             this.updateHearts();
+            this.updateEventComponents();
           } else {
             Toast.show('Could not unfavorite this event. Please try again.');
           }
