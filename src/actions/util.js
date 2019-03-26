@@ -1,7 +1,5 @@
 import moment from 'moment';
 import _ from 'lodash';
-
-
 import Event from '../events/Event';
 import EventGroup from '../events/EventGroup';
 import EventDay from '../events/EventDay';

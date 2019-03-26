@@ -143,7 +143,7 @@ export default class SearchModal extends Component {
       >
       <ModalContent style={{padding:0}}>
           {/* For no back button on IOS */}
-          {Platform.OS === 'ios' ?
+          {Platform.OS === 'ios' &&
             <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }} onLayout={(event) => this.measureView(event, 'ModalHeader')}>
               <ModalHeader
                 heading=''
@@ -152,8 +152,7 @@ export default class SearchModal extends Component {
                 isSearch={true}
               />
             </View>
-            :
-            <Fragment></Fragment>}
+          }
           <View style={{flex: 1}} onLayout={(event) => this.measureView(event, 'SearchBar')}>
             <SearchBar
               placeholder="Search"

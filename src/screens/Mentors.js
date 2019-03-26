@@ -25,6 +25,7 @@ import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import { red100 } from "react-native-paper/src/styles/colors";
+import { verticalScale } from "../actions/scale";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -381,7 +382,7 @@ const modalStyles = StyleSheet.create({
   },
   textArea: {
     textAlignVertical: 'top',
-    minHeight: 200,
+    minHeight: verticalScale(150),
   },
   inputGroupTitle: {
     color: colors.textColor.normal, 

@@ -16,6 +16,7 @@ import Profile from './Profile';
 import Schedule from './Schedule';
 import Expo from './Expo';
 import moment from 'moment';
+import { scale } from '../actions/scale';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
@@ -30,7 +31,7 @@ export default class AppContainer extends Component<Props> {
       borderBottomWidth: 0.5,
       backgroundColor: colors.backgroundColor.light,
       borderColor: colors.borderColor.normal,
-      height: 80,
+      height: scale(75),
     },
     headerLayoutPreset: 'center',
     headerTintColor: colors.primaryColor,
