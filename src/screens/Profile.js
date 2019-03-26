@@ -33,6 +33,7 @@ import MCI from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import RNRestart from 'react-native-restart'; // Import package from node modules
+import { scale } from '../actions/scale';
 
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
@@ -40,6 +41,31 @@ const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
 const USER_DATA_STORE = "USER_DATA_STORE";
+
+const styles = StyleSheet.create({
+  actionButton: {
+    marginBottom: scale(5),
+    borderRadius: scale(15),
+    padding: scale(15),
+  },
+  QRMarker: {
+    width: '60%',
+    aspectRatio: 1,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: colors.secondaryColor
+  },
+  QRCode: {
+    marginTop: scale(15),
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: scale(7)
+  },
+  username: {
+    textAlign: "center",
+    marginTop: scale(-15),
+  }
+});
 
 export default class Profile extends Component<Props> {
   constructor(props) {
@@ -280,15 +306,7 @@ export default class Profile extends Component<Props> {
                 showMarker
                 reactivate={false}
                 customMarker={
-                  <View
-                    style={{
-                      width: 240,
-                      height: 240,
-                      borderRadius: 8,
-                      borderWidth: 2,
-                      borderColor: colors.secondaryColor
-                    }}
-                  />
+                  <View style={styles.QRMarker}/>
                 }
               />
               <ScanResponseModal
@@ -325,18 +343,11 @@ export default class Profile extends Component<Props> {
             {isOrganizer &&
               scannerView}
             <View style={{ alignItems: "center" }}>
-              <View
-                style={{
-                  marginTop: 30,
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                  padding: 7
-                }}
-              >
+              <View style={styles.QRCode}>
                 {this.state.user.profile && (
                   <QRCode
                     value={id}
-                    size={190}
+                    size={scale(175)}
                     bgColor="black"
                     fgColor="white"
                   />
@@ -353,12 +364,7 @@ export default class Profile extends Component<Props> {
               {this.state.user.profile &&
                 <View style={{ alignItems: "center" }}>
                   <TouchableOpacity onPress={this.onNamePress}>
-                    <Heading style={{
-                      color: this.state.nameColor,
-                      textAlign: "center",
-                      marginTop: -15
-                     }}
-                    >
+                    <Heading style={[styles.username, {color: this.state.nameColor}]}>
                       {this.state.devoolooperMode
                         ? this.getDevoolooperName(displayName)
                         : displayName}
@@ -374,12 +380,7 @@ export default class Profile extends Component<Props> {
               {isOrganizer && (
                 <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                   <TouchableOpacity
-                    style={{
-                      marginBottom: 5,
-                      borderRadius: 20,
-                      padding: 20,
-                      backgroundColor: "#d2d1d7"
-                    }}
+                    style={[styles.actionButton, {backgroundColor: "#d2d1d7"}]}
                     onPress={() => this.toggleScanner()}
                   >
                     <MCI
@@ -393,12 +394,7 @@ export default class Profile extends Component<Props> {
               )}
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <TouchableOpacity
-                  style={{
-                    marginBottom: 5,
-                    borderRadius: 20,
-                    padding: 20,
-                    backgroundColor: "red"
-                  }}
+                  style={[styles.actionButton, {backgroundColor: 'red'}]}
                   onPress={() => this.logout()}
                 >
                   <AntDesign

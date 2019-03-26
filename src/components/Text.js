@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { scale } from '../actions/scale';
 
 const styles = StyleSheet.create({
   text: {
@@ -12,26 +13,26 @@ const styles = StyleSheet.create({
   h1: {
     color: colors.primaryColor,
     fontFamily: "Aleo-Bold",
-    fontSize: 36,
+    fontSize: scale(32),
   },
   h2: {
     fontWeight: 'bold',
-    fontSize: 21,
+    fontSize: scale(18),
   },
   h3: {
-    fontSize: 16,
+    fontSize: scale(15),
   },
   h4: {
-    fontSize: 13,
+    fontSize: scale(14),
   },
   h5: {
-    fontSize: 11,
+    fontSize: scale(13),
   },
   h6: {
-    fontSize: 13,
+    fontSize: scale(12),
   },
   p: {
-    fontSize: 15,
+    fontSize: scale(14),
   },
 });
 

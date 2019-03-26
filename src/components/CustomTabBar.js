@@ -7,6 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
 import { colors } from './Colors';
 import { P } from './Text';
+import { scale, verticalScale } from '../actions/scale';
 
 const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
@@ -31,18 +32,18 @@ class CustomTabBar extends Component {
             >
             {
               {
-                'home': <FontAwesome name='home' size={35} color={color}/>,
-                'schedule': <EvilIcon name='calendar' size={45} color={color}/>,
-                'expo': <Entypo name='code' size={34} color={color}/>,
-                'mentors': <Ionicon name='ios-people' size={45} color={color} style={{marginBottom: -5,marginTop: -6}}/>,
-                'profile': <Ionicon name='ios-person' size={35} color={color}/>
+                'home': <FontAwesome name='home' size={scale(30)} color={color}/>,
+                'schedule': <EvilIcon name='calendar' size={scale(40)} color={color}/>,
+                'expo': <Entypo name='code' size={scale(30)} color={color}/>,
+                'mentors': <Ionicon name='ios-people' size={scale(40)} color={color} style={{marginTop: scale(-5), marginBottom: scale(-5)}}/>,
+                'profile': <Ionicon name='ios-person' size={scale(30)} color={color}/>
               }[tab]
             }
               <P
                 style={
                   this.props.activeTab === i
-                    ? [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText), styles.tabActiveText]
-                    : [(tab === 'mentors' ? styles.tabTextMentors: styles.tabText)]
+                    ? [styles.tabText, styles.tabActiveText]
+                    : styles.tabText
                 }
               >
                 {LABELS[i]}
@@ -60,16 +61,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 8,
-    paddingBottom: 8
+    paddingVertical: verticalScale(5),
   },
   tabText: {
-    marginTop: 3,
-    color: colors.textColor.light
-  },
-  tabTextMentors: {
-    marginTop: 3,
-    color: colors.textColor.light
+    marginTop: verticalScale(1),
+    color: colors.textColor.light,
+    fontWeight: '400',
   },
   tabActiveText: {
     color: colors.primaryColor

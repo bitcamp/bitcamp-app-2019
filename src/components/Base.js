@@ -17,6 +17,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import EventStar from './EventStar';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
+import { scale } from '../actions/scale';
 
 const styles = StyleSheet.create({
   bg: {
@@ -29,25 +30,25 @@ const styles = StyleSheet.create({
   },
   padContainer: {
     flex: 1,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: scale(15),
+    paddingRight: scale(15)
   },
   modal: {
     flex: 1,
     backgroundColor: colors.backgroundColor.normal,
-    padding: 20
+    padding: scale(15)
   },
   spacing: {
-    height: 15,
+    height: scale(10),
   },
   heading: {
-    paddingTop: 30,
-    marginBottom: 20,
+    paddingTop: scale(25),
+    marginBottom: scale(15),
     flexDirection: 'row',
   },
   subHeading: {
     color: colors.textColor.light,
-    marginBottom: 40
+    marginBottom: scale(35),
   },
   paper: {
     //elevation: Platform.OS === 'ios' ? 4 : 6,
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   },
   modalHeader: {
     ...ifIphoneX({
-      marginTop: 40,
+      marginTop: scale(35),
     }, {
       //marginTop: 20,
     })
@@ -85,8 +86,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   modalHeadingText: {
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: scale(15),
+    marginBottom: scale(15),
   },
   button: {
     backgroundColor: colors.primaryColor,
