@@ -161,6 +161,8 @@ export default class SearchModal extends Component {
               onClear={query => this.filterEvents('')}
               value={this.state.search}
               cancelButtonProps={{color: colors.primaryColor}}
+              autoFocus={true}
+              autoCapitalize={'none'}
             />
           </View>
           <View style={{flex: 1, borderTopWidth: 0.5}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>

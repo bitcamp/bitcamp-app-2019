@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
         borderBottomColor: colors.borderColor.normal,
         ...ifIphoneX({
             paddingTop: 40,
-        }, {}),
+        }),
         paddingVertical: scale(15),
     },
     text: {
