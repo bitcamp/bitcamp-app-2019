@@ -23,6 +23,9 @@ const savedCountRefreshInterval = 10 * 60 * 1000;
 
 const channelId = 'technica-push-notifications';
 
+let lastNetworkRequest = null;
+let networkCallExecuting = false;
+
 export default class EventsManager {
   constructor() {
     console.log('Initializing event manager');
@@ -218,10 +221,15 @@ export default class EventsManager {
   // time in minutes to warn before event
   async favoriteEvent(eventID, refreshSaved, depth = 0) {
 
-
+    if (lastNetworkRequest != null && moment().seconds() == lastNetworkRequest.seconds() || networkCallExecuting) {
+      Toast.show('You have favorited or unfavorited an event too soon. Please try later.');
+      return;
+    }
+    lastNetworkRequest = moment();
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
+        networkCallExecuting = true;
         let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: new Headers({
@@ -241,10 +249,11 @@ export default class EventsManager {
             AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
             event = this.eventIDToEventMap[eventID];
             this.createNotification(event);
-        
+            
             this.updateHearts();
             this.updateEventComponents();
-
+            networkCallExecuting = false;
+            
           } else {
             if (depth < 1) {
               this.unfavoriteEvent(eventID, refreshSaved, depth + 1);
@@ -261,6 +270,11 @@ export default class EventsManager {
 
   unfavoriteEvent(eventID, refreshSaved, depth = 0) {
 
+    if (lastNetworkRequest != null && moment().seconds() == lastNetworkRequest.seconds() || networkCallExecuting) {
+      Toast.show('You have favorited or unfavorited an event too soon. Please try later.');
+      return;
+    }
+    lastNetworkRequest = moment();
     AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
 
@@ -288,6 +302,8 @@ export default class EventsManager {
             this.deleteNotification(event);
             this.updateHearts();
             this.updateEventComponents();
+            networkCallExecuting = false;
+
           } else {
             if (depth < 1) {
               this.favoriteEvent(eventID, refreshSaved, depth + 1);
