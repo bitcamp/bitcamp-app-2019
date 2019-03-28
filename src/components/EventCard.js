@@ -9,6 +9,7 @@ import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
 import Images from '../../assets/imgs/index';
 import LinearGradient from 'react-native-linear-gradient';
+import { scale } from '../actions/scale';
 
 const styles = StyleSheet.create({
   darkImageMask: {
@@ -94,7 +95,7 @@ export default class EventCard extends Component {
         {this.renderModal()}
         <TouchableOpacity
           onPress={() => this.toggleModal()}
-          activeOpacity={inSlideshow ? 0.7 : 0.2}
+          activeOpacity={0.7}
         >
           <View>
             {!inSlideshow ?
@@ -111,26 +112,36 @@ export default class EventCard extends Component {
                   source={Images[event.img]}
                   imageStyle={{ borderRadius: 13 }}
                 >
-                {!big &&<React.Fragment><View style={{flex: 1, flexDirection: 'row'}}>
-                  <View style={{backgroundColor: color, height: (imageHeight / 4), width: ((imageWidth / 4) + 10), borderTopLeftRadius: 13}}>
-                  </View>
+                {!big &&
+                <React.Fragment>
                   <View style={{
-                    width: 0,
-                    height: 0,
-                    backgroundColor: 'transparent',
-                    borderStyle: 'solid',
-                    borderRightWidth: (imageHeight / 4),
-                    borderTopWidth: (imageHeight / 4),
-                    borderRightColor: 'transparent',
-                    borderTopColor: color,
-                    marginLeft: -0.2
-                  }}>
-                </View>
-                <Text style={{ marginLeft: -((imageWidth / 3) + 13), paddingTop: (imageHeight / 30), color: 'white', fontSize: (imageHeight / 7), width: (imageWidth / 3)}}>
-                  <Icon name="star" size={(imageHeight / 5)} color={colors.starColor.selected} />{' '}
-                  {eventManager.getSavedCount(event.eventID)}
-                </Text>
-                </View>
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end'
+                  }}
+                  >
+                    <View style={{
+                      marginTop: 6,
+                      marginRight: 6,
+                      borderRadius: 6, 
+                      padding: 5,
+                      paddingVertical: 12,
+                      backgroundColor: color,
+                      flexDirection: 'row',
+                      alignItems: 'center'
+                    }}
+                    >
+                      <Icon name="star" size={scale(15)} color={'white'} />
+                      <Text style={{ 
+                          color: 'white', 
+                          fontSize: scale(13),
+                          marginLeft: 5,
+                        }}
+                      >
+                        {eventManager.getSavedCount(event.eventID)}
+                      </Text>
+                    </View>
+                  </View>
                 <View style={{backgroundColor: color, borderBottomLeftRadius: 13, borderBottomRightRadius: 13, marginTop: (imageHeight - 60)}}>
                   <Text numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</Text>
                 </View></React.Fragment>}
