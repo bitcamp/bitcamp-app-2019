@@ -35,8 +35,8 @@ export default class MapModal extends Component {
         backdropColor={colors.backgroundColor.dark}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInRight"
-        animationOut="slideOutRight"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}

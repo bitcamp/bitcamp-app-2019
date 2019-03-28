@@ -132,8 +132,8 @@ export default class SearchModal extends Component {
         backdropColor={'#f7f7f7'}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInRight"
-        animationOut="slideOutRight"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
