@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   AppState,
+  Text,
 } from "react-native";
 import {
   ViewContainer,
@@ -24,9 +25,9 @@ import { H1, H2, H3, H4, H6, P } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
-import { ifIphoneX } from 'react-native-iphone-x-helper';
 import { red100 } from "react-native-paper/src/styles/colors";
 import { scale, verticalScale } from "../actions/scale";
+import AltModalHeader from '../components/AltModalHeader';
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -195,26 +196,13 @@ export default class Mentors extends Component<Props> {
         style={modalStyle}
       >
         <KeyboardShift style={modalStyles.stretchyContainer}>
-          <View style={[ modalStyles.menu ]}>
-            <TouchableOpacity 
-              onPress={() => this.cancelQuestion()}
-              style={modalStyles.menuItem}
-            >
-              <P style={modalStyles.menuLink}>Cancel</P>
-            </TouchableOpacity>
-            <H3 style={modalStyles.menuItem}>Request Help</H3>
-            <TouchableOpacity 
-              style={modalStyles.menuItem}
-              onPress={() => this.sendQuestion()}
-            >
-              <P style={[
-                modalStyles.menuLink,
-                {fontWeight: 'bold'}
-              ]}>
-                Submit
-              </P>
-            </TouchableOpacity>
-          </View>
+          <AltModalHeader
+            title="Request Help"
+            leftText="Cancel"
+            leftFunc={this.cancelQuestion.bind(this)}
+            rightText="Submit"
+            rightFunc={this.sendQuestion.bind(this)}
+          />
           <ScrollView style={modalStyles.stretchyContainer}>
             <View style={modalStyles.inputGroup}>
               <H3 style={modalStyles.inputGroupTitle}>
@@ -399,27 +387,6 @@ const modalStyles = StyleSheet.create({
     paddingTop: 8,
     fontSize: scale(12),
     color: '#6d6d72'
-  },
-  menu: {
-    backgroundColor: 'white',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-    borderBottomWidth: 0.25,
-    borderBottomColor: colors.borderColor.normal,
-    ...ifIphoneX({
-      paddingTop: 40,
-    }, {
-      paddingTop: 20,
-    })
-  },
-  menuItem: {
-    fontWeight: 'bold',
-    margin: 15,
-    marginBottom: 10,
-  },
-  menuLink: {
-    color: colors.primaryColor,
   },
   stretchyContainer: {
     flex: 1,

@@ -48,7 +48,7 @@ export default class HappeningNowSlideshow extends Component {
       <Swiper
         height={Math.round((width * 38) / 67)}
         dotColor={'rgba(255,255,255,.6)'}
-        activeDotColor={colors.primaryColor}
+        activeDotColor={colors.textColor.primary}
         paginationStyle={styles.dotContainer}
         autoplay={true}
         autoplayTimeout={5}

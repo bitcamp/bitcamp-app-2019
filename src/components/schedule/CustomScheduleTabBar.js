@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { colors } from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons'
+import { scale } from '../../actions/scale';
 
 export default class CustomScheduleTabBar extends Component {
 
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.primaryColor,
   },
   tabs: {
-    height: 60,
     flexDirection: 'row',
     paddingTop: 5,
     borderWidth: 1,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     borderBottomColor: 'rgba(0,0,0,0.05)'
   },
   text: {
-    fontSize: 20,
+    fontSize: scale(15),
   },
   textActive: {
     color: colors.primaryColor,

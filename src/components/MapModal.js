@@ -19,6 +19,7 @@ import moment from 'moment';
 import PhotoView from 'react-native-photo-view';
 import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import AltModalHeader from '../components/AltModalHeader';
 
 export default class MapModal extends Component {
   render() {
@@ -31,7 +32,7 @@ export default class MapModal extends Component {
     return (
       <Modal
         isVisible={props.isModalVisible}
-        backdropColor={colors.backgroundColor.normal}
+        backdropColor={colors.backgroundColor.dark}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="slideInRight"
@@ -44,16 +45,14 @@ export default class MapModal extends Component {
         style={modalStyle}
       >
         <ModalContent style={{ padding: 0 }}>
-          <View style={{ padding: 20, paddingBottom: 0, marginBottom: -16.5 }}>
-            <ModalHeader
-              heading=""
-              onBackButtonPress={() => props.toggleModal()}
-              origin={'Home'}
-            />
-          </View>
+          <AltModalHeader
+            title="Map"
+            rightText="Done"
+            rightFunc={props.toggleModal}
+          />
           <ScrollableTabView
             renderTabBar={() => <CustomScheduleTabBar/> }
-            style={{height: 590}}
+            style={{height: 530}}
           >
           <PhotoView
             tabLabel="Floor 1"

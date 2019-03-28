@@ -30,7 +30,7 @@ const bitcampColorPalette = {
 export const colors = {
   starColor: {
     selected: bitcampColorPalette.darkYellow,
-    unselected: '#b7b7bb'
+    unselected: '#b7b7bb',
   },
   textColor: {
     primary: bitcampColorPalette.white, // on primary background

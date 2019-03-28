@@ -197,7 +197,7 @@ class ModalHeader extends Component<Props> {
           <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
             <IonIcon
               name={'ios-arrow-back'}
-              size={40}
+              size={35}
               color={colors.primaryColor}
               style={{paddingRight: 7}}
             />
