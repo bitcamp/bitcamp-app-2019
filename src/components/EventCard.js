@@ -79,7 +79,6 @@ export default class EventCard extends Component {
       Ceremony: 'rgb(204,171,60)',
       Colorwar: 'rgb(255,175,64)'
     };
-    console.log(event.category);
 
     let color = overlayColor[event.category[0]];
     if (event.title === 'Opening Ceremony' || event.title === 'Closing Ceremony') {

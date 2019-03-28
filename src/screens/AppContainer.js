@@ -31,7 +31,7 @@ export default class AppContainer extends Component<Props> {
       borderBottomWidth: 0.5,
       backgroundColor: colors.backgroundColor.light,
       borderColor: colors.borderColor.normal,
-      height: scale(75),
+      height: scale(60)
     },
     headerLayoutPreset: 'center',
     headerTintColor: colors.primaryColor,
@@ -100,14 +100,14 @@ export default class AppContainer extends Component<Props> {
         <View style={{flex:1}}>
           <Image
             source={require('../../assets/imgs/bitcamp-logo-icon.png')}
-            style={{width: 50, height: 50}}
+            style={{width: 50, height: 50, paddingVertical: scale(10)}}
           />
         </View>
         <View style={{flex:1, paddingLeft: 20, paddingTop: 5}}>
           <Text style={{
             textAlign: 'left',
             fontFamily: 'Aleo-Bold',
-            fontSize: 40,
+            fontSize: scale(32),
             color: colors.primaryColor,
           }}>
             {navigation.getParam("title")}

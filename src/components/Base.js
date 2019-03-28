@@ -36,7 +36,9 @@ const styles = StyleSheet.create({
   modal: {
     flex: 1,
     backgroundColor: colors.backgroundColor.normal,
-    padding: scale(15)
+    padding: scale(15),
+    marginTop: Platform.OS === 'ios' ? scale(15) : scale(3),
+    paddingTop: 0,
   },
   spacing: {
     height: scale(10),
@@ -78,16 +80,15 @@ const styles = StyleSheet.create({
     ...ifIphoneX({
       marginTop: scale(35),
     }, {
-      //marginTop: 20,
-    })
+      marginTop: 0,
+    }),
   },
   modalHeaderNav: {
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
   modalHeadingText: {
-    marginTop: scale(15),
-    marginBottom: scale(15),
+    marginVertical: scale(8),
   },
   button: {
     backgroundColor: colors.primaryColor,
@@ -190,7 +191,7 @@ class ModalHeader extends Component<Props> {
       <View style={styles.modalHeader}>
         <View style={styles.modalHeaderNav}>
           <TouchableOpacity
-            style={{ padding: 10, marginLeft: -10 }}
+            style={{ padding: scale(2), marginLeft: -10 }}
             onPress={onBackButtonPress}
           >
           <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
