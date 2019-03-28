@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import {
   View,
+  ScrollView,
   TextInput,
   FlatList,
   TouchableOpacity,
@@ -25,7 +26,7 @@ import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 import { red100 } from "react-native-paper/src/styles/colors";
-import { verticalScale } from "../actions/scale";
+import { scale, verticalScale } from "../actions/scale";
 
 const serverURL = "https://technicamentorshipservertest.herokuapp.com";
 
@@ -181,7 +182,7 @@ export default class Mentors extends Component<Props> {
     return (
       <Modal
         isVisible={newQuestionScreen}
-        backdropColor={colors.backgroundColor.light}
+        backdropColor={colors.backgroundColor.dark}
         backdropOpacity={1}
         animationInTiming={250}
         animationIn="slideInRight"
@@ -208,15 +209,13 @@ export default class Mentors extends Component<Props> {
             >
               <P style={[
                 modalStyles.menuLink,
-                {
-                  fontWeight: 'bold'
-                }
+                {fontWeight: 'bold'}
               ]}>
                 Submit
               </P>
             </TouchableOpacity>
           </View>
-          <View style={modalStyles.stretchyContainer}>
+          <ScrollView style={modalStyles.stretchyContainer}>
             <View style={modalStyles.inputGroup}>
               <H3 style={modalStyles.inputGroupTitle}>
                 QUESTION
@@ -281,7 +280,7 @@ export default class Mentors extends Component<Props> {
                 A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
               </P>
             </View>
-          </View>
+          </ScrollView>
         </KeyboardShift>
       </Modal>
     );
@@ -346,7 +345,7 @@ export default class Mentors extends Component<Props> {
           <Button style={{ 
             padding: 16, 
             borderRadius: 8,
-            fontWeight: 800
+            fontWeight: 'bold'
           }} text="Ask a Question" />
         </TouchableOpacity>
         <PadContainer>
@@ -373,7 +372,7 @@ export default class Mentors extends Component<Props> {
 const modalStyles = StyleSheet.create({
   input: {
     backgroundColor: colors.backgroundColor.normal,
-    fontSize: 14,
+    fontSize: scale(14),
     color: colors.textColor.normal,
     padding: 15,
     minHeight: 40,
@@ -382,21 +381,24 @@ const modalStyles = StyleSheet.create({
   },
   textArea: {
     textAlignVertical: 'top',
-    minHeight: verticalScale(150),
+    minHeight: verticalScale(225),
   },
   inputGroupTitle: {
-    color: colors.textColor.normal, 
+    color: '#6d6d72', 
     marginBottom: 5,
     paddingLeft: 15,
     fontSize: 14,
+    fontWeight: '400'
   },
   inputGroup: {
-    marginTop: 20,
+    marginTop: verticalScale(20),
     marginBottom: 5,
   },
   inputDescription: {
     padding: 15,
-    paddingTop: 8
+    paddingTop: 8,
+    fontSize: scale(12),
+    color: '#6d6d72'
   },
   menu: {
     backgroundColor: 'white',
@@ -421,6 +423,6 @@ const modalStyles = StyleSheet.create({
   },
   stretchyContainer: {
     flex: 1,
-    backgroundColor: colors.backgroundColor.light,
+    backgroundColor: colors.backgroundColor.dark,
   }
 });

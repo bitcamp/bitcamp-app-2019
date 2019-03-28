@@ -10,6 +10,7 @@ const bitcampColorPalette = {
   lightGrey: "#f9f9f9",
   darkGrey: "#8d8c92",
   black: "#000000",
+  backgroundGrey: '#EFEFF4',
 
   red: "#FF3F46",
   orange: {
@@ -43,7 +44,8 @@ export const colors = {
   },
   backgroundColor: {
     light: bitcampColorPalette.lightGrey,
-    normal: bitcampColorPalette.white
+    normal: bitcampColorPalette.white,
+    dark: bitcampColorPalette.backgroundGrey
   },
   iconColor: bitcampColorPalette.red,
   secondaryColor: bitcampColorPalette.orange.yellow,
