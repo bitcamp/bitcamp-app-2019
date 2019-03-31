@@ -150,7 +150,6 @@ export default class SearchModal extends Component {
               alignItems: 'center', 
               paddingHorizontal: scale(15),
               paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
-              backgroundColor: 'pink', // TODO: remove background color
             }} 
             onLayout={(event) => this.measureView(event, 'SearchBar')}
           >

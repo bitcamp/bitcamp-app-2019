@@ -78,7 +78,6 @@ const styles = StyleSheet.create({
   modalHeader: {
     paddingBottom: scale(4),
     paddingTop: Platform.OS === "ios" ? scale(4) + getStatusBarHeight() : scale(4),
-    backgroundColor: 'pink',
   },
   modalHeaderNav: {
     justifyContent: 'space-between',
