@@ -159,7 +159,7 @@ export default class EventsManager {
   }
 
   fetchSavedCounts() {
-    fetch("http://35.174.30.108/api/firebaseEvents/favoriteCounts")
+    fetch("https://api.bit.camp/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
         newSavedCount = responseJson;
@@ -229,8 +229,7 @@ export default class EventsManager {
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
-        networkCallExecuting = true;
-        let response = fetch(`http://35.174.30.108/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
+        let response = fetch(`https://api.bit.camp/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json',
@@ -280,7 +279,7 @@ export default class EventsManager {
 
         id = JSON.parse(result).id;
 
-        fetch(`http://35.174.30.108/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
+        fetch(`https://api.bit.camp/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

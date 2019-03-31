@@ -24,21 +24,20 @@ import AltModalHeader from '../components/AltModalHeader';
 
 export default class MapModal extends Component {
 
-  componentDidCatch(error, info) {
-    Toast.show("Unable to load floor maps. Sorry :(");
-  }
-
   render() {
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
     const screenWidth = dimensions.width;
 
     const floorPhotos = [1, 2, 3].map(floorNumber => {
-      let photoData = '';
+      var photoData = '';
       const URL = `https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/rn-0.57.8/assets/imgs/floor-maps/Floor_${floorNumber}.png`;
 
       fetch(URL)
-        .then(response => {photoData = response.blob(); console.log("Response: ", photoData)})
+        .then(response => {
+          photoData = response.body; 
+          console.log("Response: ", photoData)
+        })
         .catch(error => Toast.show('Unable to display the floor maps. Sorry :('));
 
       console.log({photoData});
