@@ -12,6 +12,7 @@ import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
 import CustomScheduleTabBar from './schedule/CustomScheduleTabBar';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
+import { scale } from '../actions/scale';
 
 export default class SearchModal extends Component {
 
@@ -142,26 +143,40 @@ export default class SearchModal extends Component {
         style={[modalStyle]}
       >
       <ModalContent style={{padding:0}}>
-          {/* For no back button on IOS */}
-          {Platform.OS === 'ios' &&
-            <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }} onLayout={(event) => this.measureView(event, 'ModalHeader')}>
-              <ModalHeader
-                heading=''
-                onBackButtonPress={() => props.toggleModal()}
-                origin={'Schedule'}
-                isSearch={true}
-              />
-            </View>
-          }
-          <View style={{flex: 1}} onLayout={(event) => this.measureView(event, 'SearchBar')}>
+          <View style={{
+              flex: 1, 
+              flexDirection: 'row', 
+              alignItems: 'center', 
+              paddingHorizontal: scale(15),
+            }} 
+            onLayout={(event) => this.measureView(event, 'SearchBar')}
+          >
             <SearchBar
               placeholder="Search"
-              platform={Platform.OS}
+              platform="android"
               onChangeText={query => this.filterEvents(query)}
               onClear={query => this.filterEvents('')}
               value={this.state.search}
               cancelButtonProps={{color: colors.primaryColor}}
+              autoFocus={true}
+              autoCapitalize={'none'}
+              containerStyle={{flex: 1}}
+              inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
+              leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
+              rightIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
             />
+            <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
+                <H3 style={{
+                  color: colors.primaryColor, 
+                  padding: scale(15), 
+                  paddingRight: 0,
+                  flex: 0,
+                }}>
+                  Cancel
+                </H3>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={{flex: 1, borderTopWidth: 0.5}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>
             <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>

@@ -29,7 +29,7 @@ import { red100 } from "react-native-paper/src/styles/colors";
 import { scale, verticalScale } from "../actions/scale";
 import AltModalHeader from '../components/AltModalHeader';
 
-const serverURL = "https://technicamentorshipservertest.herokuapp.com";
+const serverURL = "http://35.174.30.108:4000";
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
@@ -48,7 +48,7 @@ export default class Mentors extends Component<Props> {
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
 
-  grabQuestionsFromDB(email) {
+  async grabQuestionsFromDB(email) {
     fetch(`${serverURL}/getquestions/${email}`, {
       method: "GET",
       headers: {
@@ -73,7 +73,7 @@ export default class Mentors extends Component<Props> {
     AppState.addEventListener("change", this._handleAppStateChange);
     const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
     const user_data_json = JSON.parse(user_data);
-    this.grabQuestionsFromDB(user_data_json.profile.email);
+    this.grabQuestionsFromDB(user_data_json.email);
   }
 
   componentWillUnmount() {
@@ -88,7 +88,7 @@ export default class Mentors extends Component<Props> {
       console.log("App has come to the foreground!");
       const user_data = await AsyncStorage.getItem("USER_DATA_STORE");
       const user_data_json = JSON.parse(user_data);
-      this.grabQuestionsFromDB(user_data_json.profile.email);
+      this.grabQuestionsFromDB(user_data_json.email);
     }
     this.setState({ appState: nextAppState });
   }
@@ -144,7 +144,7 @@ export default class Mentors extends Component<Props> {
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
-        email: user_data_json.profile.email
+        email: user_data_json.email
       };
       if (fcmToken != null) {
         questionObject.fcmToken = fcmToken;
@@ -203,7 +203,7 @@ export default class Mentors extends Component<Props> {
             rightText="Submit"
             rightFunc={this.sendQuestion.bind(this)}
           />
-          <ScrollView style={modalStyles.stretchyContainer}>
+          <View style={modalStyles.stretchyContainer}>
             <View style={modalStyles.inputGroup}>
               <H3 style={modalStyles.inputGroupTitle}>
                 QUESTION
@@ -268,7 +268,7 @@ export default class Mentors extends Component<Props> {
                 A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
               </P>
             </View>
-          </ScrollView>
+          </View>
         </KeyboardShift>
       </Modal>
     );
