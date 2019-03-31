@@ -70,15 +70,16 @@ export default class EventCard extends Component {
     }
 
     const overlayColor = {
-      Main: 'rgb(43,168,207)',
-      Food: 'rgb(239,89,46)',
-      Workshop: 'rgb(172,51,48)',
-      Mini: 'rgb(55,95,119)',
-      Sponsor: 'rgb(58,50,41)',
-      Mentor: 'rgb(106,94,84)',
-      Demo: 'rgb(166,142,124)',
-      Ceremony: 'rgb(204,171,60)',
-      Colorwar: 'rgb(255,175,64)'
+      Main: '#5996B3',
+      Food: '#AB622A',
+      Workshop: '#A53C32',
+      Mini: '#496B7D',
+      Sponsor: '#544941',
+      Mentor: '#595049',
+      Demo: '#645D54',
+      Ceremony: '#BBB35D',
+      Colorwar: '#405962',
+      Campfire: '#81581F'
     };
 
     let color = overlayColor[event.category[0]];
