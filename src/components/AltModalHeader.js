@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor.normal,
         borderBottomWidth: 0.25,
         borderBottomColor: colors.borderColor.normal,
-        marginTop: Platform.OS == "ios" ? getStatusBarHeight() : 0,
+        paddingTop: Platform.OS == "ios" ? getStatusBarHeight() : 0,
         padding: scale(15),
     },
     text: {
