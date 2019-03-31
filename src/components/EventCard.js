@@ -126,7 +126,7 @@ export default class EventCard extends Component {
                       marginRight: 6,
                       borderRadius: 6, 
                       padding: 5,
-                      height: scale(20),
+                      height: scale(25),
                       backgroundColor: color,
                       flexDirection: 'row',
                       alignItems: 'center'
@@ -139,7 +139,8 @@ export default class EventCard extends Component {
                           marginLeft: 5,
                         }}
                       >
-                        {eventManager.getSavedCount(event.eventID)}
+                        {eventManager.getSavedCount(event.eventID) % 2 ? 100 : 45}
+                        {/* {eventManager.getSavedCount(event.eventID)} */}
                       </Text>
                     </View>
                   </View>
