@@ -7,7 +7,8 @@ import {
   ScrollView,
   TouchableOpacity,
   View,
-  SafeAreaView
+  SafeAreaView,
+  ActivityIndicator
 } from 'react-native';
 import Images from '../../assets/imgs/index';
 import { H1, H2, H3, H4, H6, P } from '../components/Text';
@@ -22,12 +23,43 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import AltModalHeader from '../components/AltModalHeader';
 
 export default class MapModal extends Component {
+
+  componentDidCatch(error, info) {
+    Toast.show("Unable to load floor maps. Sorry :(");
+  }
+
   render() {
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
-    const imageWidth = dimensions.width - 42;
-    const imageHeight = Math.round((imageWidth * 38) / 67);
-    const styles = {width: window.width, height: window.height, overflow:'visible'};
+    const screenWidth = dimensions.width;
+
+    const floorPhotos = [1, 2, 3].map(floorNumber => {
+      let photoData = '';
+      const URL = `https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/rn-0.57.8/assets/imgs/floor-maps/Floor_${floorNumber}.png`;
+
+      fetch(URL)
+        .then(response => {photoData = response.blob(); console.log("Response: ", photoData)})
+        .catch(error => Toast.show('Unable to display the floor maps. Sorry :('));
+
+      console.log({photoData});
+
+      return (
+        <PhotoView
+          key={floorNumber}
+          tabLabel={`Floor ${floorNumber}`} 
+          source={{uri: photoData}}
+          minimumZoomScale={1}
+          maximumZoomScale={8}
+          androidScaleType="fitCenter"
+          onLoad={() => console.log("Image loaded!")}
+          style={{
+            width: screenWidth,
+            flex: 1,
+            backgroundColor: colors.backgroundColor.dark,
+          }}
+        />
+      );
+      });
 
     return (
       <Modal
@@ -42,9 +74,9 @@ export default class MapModal extends Component {
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={modalStyle}
+        style={[modalStyle, {flex: 1}]}
       >
-        <ModalContent style={{ padding: 0 }}>
+        <ModalContent style={{ padding: 0, flex: 1 }}> 
           <AltModalHeader
             title="Map"
             rightText="Done"
@@ -54,42 +86,7 @@ export default class MapModal extends Component {
             renderTabBar={() => <CustomScheduleTabBar/> }
             style={{height: 530}}
           >
-          <PhotoView
-            tabLabel="Floor 1"
-            source={require('./images/Floor_1.png')}
-            minimumZoomScale={1}
-            maximumZoomScale={8}
-            androidScaleType="fitCenter"
-            onLoad={() => console.log("Image loaded!")}
-            style={{
-              width: window.width,
-              height: 530,
-            }}
-          />
-          <PhotoView
-            tabLabel="Floor 2"
-            source={require('./images/Floor_1.png')}
-            minimumZoomScale={1}
-            maximumZoomScale={8}
-            androidScaleType="fitCenter"
-            onLoad={() => console.log("Image loaded!")}
-            style={{
-              width: window.width,
-              height: 530,
-            }}
-          />
-          <PhotoView
-            tabLabel="Floor 3"
-            source={require('./images/Floor_1.png')}
-            minimumZoomScale={1}
-            maximumZoomScale={8}
-            androidScaleType="fitCenter"
-            onLoad={() => console.log("Image loaded!")}
-            style={{
-              width: window.width,
-              height: 530,
-            }}
-          />
+            {floorPhotos}
           </ScrollableTabView>
         </ModalContent>
       </Modal>
