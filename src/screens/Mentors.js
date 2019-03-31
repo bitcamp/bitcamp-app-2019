@@ -229,18 +229,19 @@ export default class Mentors extends Component<Props> {
                   {
                     borderBottomColor: colors.borderColor.light,
                     borderBottomWidth: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
                   }
                 ]}
                 onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
                 activeOpacity={1}
               >
+                <P>I'd like in person assistance please</P>
                 <Switch
                   trackColor={colors.primaryColor}
                   value={needsInPersonAssistance}
                   onValueChange={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-                  style={{ marginRight: 10, }}
                 />
-                <P>I'd like in person assistance please</P>
               </TouchableOpacity>
               <TextInput
                 style={modalStyles.input}

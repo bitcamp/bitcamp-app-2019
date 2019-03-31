@@ -163,7 +163,7 @@ const HorizontalLine = props => (
 const Spacing = props => <View style={styles.spacing} />;
 
 const ModalContent = props => (
-  <ScrollView>
+  <ScrollView keyboardShouldPersistTaps={'handled'}>
     <View style={[styles.modal, props.style]}>{props.children}</View>
   </ScrollView>
 );
