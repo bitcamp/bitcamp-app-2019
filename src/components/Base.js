@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor.normal,
     padding: scale(15),
-    marginTop: Platform.OS === 'ios' ? scale(15) : scale(3),
     paddingTop: 0,
   },
   spacing: {
@@ -79,6 +78,7 @@ const styles = StyleSheet.create({
   modalHeader: {
     paddingBottom: scale(4),
     paddingTop: Platform.OS === "ios" ? scale(4) + getStatusBarHeight() : scale(4),
+    backgroundColor: 'pink',
   },
   modalHeaderNav: {
     justifyContent: 'space-between',

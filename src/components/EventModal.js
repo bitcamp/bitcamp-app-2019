@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     marginLeft: -20, // Used to offset the padding on everything else in the modal
-    marginTop: 5,
   },
   viewWithSpacing: {
     marginTop: 20,
