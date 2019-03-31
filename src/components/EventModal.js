@@ -23,8 +23,8 @@ export default class EventModal extends Component {
         isVisible={props.isModalVisible}
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
-        animationIn="slideInRight"
-        animationOut="slideOutRight"
+        animationIn="fadeInRight"
+        animationOut="fadeOutRight"
         animationInTiming={250}
         animationOutTiming={300}
         backdropTransitionInTiming={250}

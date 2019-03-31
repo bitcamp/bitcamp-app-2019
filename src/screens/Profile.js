@@ -281,8 +281,8 @@ export default class Profile extends Component<Props> {
           backdropColor={colors.backgroundColor.normal}
           backdropOpacity={1}
           animationInTiming={250}
-          animationIn="slideInUp"
-          animationOut="slideOutDown"
+          animationIn="fadeInUp"
+          animationOut="fadeOutDown"
           animationOutTiming={300}
           backdropTransitionInTiming={250}
           backdropTransitionOutTiming={300}

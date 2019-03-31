@@ -186,8 +186,8 @@ export default class Mentors extends Component<Props> {
         backdropColor={colors.backgroundColor.dark}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
