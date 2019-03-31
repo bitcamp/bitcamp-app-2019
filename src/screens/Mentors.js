@@ -48,7 +48,7 @@ export default class Mentors extends Component<Props> {
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
 
-  grabQuestionsFromDB(email) {
+  async grabQuestionsFromDB(email) {
     fetch(`${serverURL}/getquestions/${email}`, {
       method: "GET",
       headers: {
