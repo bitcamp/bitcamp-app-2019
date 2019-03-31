@@ -203,7 +203,7 @@ export default class Mentors extends Component<Props> {
             rightText="Submit"
             rightFunc={this.sendQuestion.bind(this)}
           />
-          <ScrollView style={modalStyles.stretchyContainer}>
+          <View style={modalStyles.stretchyContainer}>
             <View style={modalStyles.inputGroup}>
               <H3 style={modalStyles.inputGroupTitle}>
                 QUESTION
@@ -268,7 +268,7 @@ export default class Mentors extends Component<Props> {
                 A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
               </P>
             </View>
-          </ScrollView>
+          </View>
         </KeyboardShift>
       </Modal>
     );
