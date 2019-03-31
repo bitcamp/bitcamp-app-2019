@@ -77,12 +77,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.borderColor.light
   },
   modalHeader: {
-    paddingVertical: scale(4),
-    marginTop: Platform.OS == "ios" ? getStatusBarHeight() : 0,
+    paddingBottom: scale(4),
+    paddingTop: Platform.OS === "ios" ? scale(4) + getStatusBarHeight() : scale(4),
   },
   modalHeaderNav: {
     justifyContent: 'space-between',
     flexDirection: 'row',
+    alignItems: 'center'
   },
   modalHeadingText: {
     marginVertical: scale(8),
@@ -191,14 +192,14 @@ class ModalHeader extends Component<Props> {
             style={{ marginLeft: -10, padding: scale(4), }}
             onPress={onBackButtonPress}
           >
-          <View style={{flexDirection: 'row', alignSelf: 'flex-start'}}>
+          <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
             <IonIcon
               name={'ios-arrow-back'}
               size={35}
               color={colors.primaryColor}
               style={{paddingRight: 7}}
             />
-            <H3 style={{color: colors.primaryColor, fontSize: 20, alignSelf: 'center'}}>{this.props.origin}</H3>
+            <H3 style={{color: colors.primaryColor, fontSize: 20}}>{this.props.origin}</H3>
           </View>
           </TouchableOpacity>
           {heart &&
