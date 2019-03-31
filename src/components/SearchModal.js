@@ -143,17 +143,6 @@ export default class SearchModal extends Component {
         style={[modalStyle]}
       >
       <ModalContent style={{padding:0}}>
-          {/* For no back button on IOS */}
-          {Platform.OS === 'ios' &&
-            <View style={{ padding: 20, paddingBottom: 0, paddingTop: 0 }} onLayout={(event) => this.measureView(event, 'ModalHeader')}>
-              <ModalHeader
-                heading=''
-                onBackButtonPress={() => props.toggleModal()}
-                origin={'Schedule'}
-                isSearch={true}
-              />
-            </View>
-          }
           <View style={{
               flex: 1, 
               flexDirection: 'row', 
@@ -164,7 +153,7 @@ export default class SearchModal extends Component {
           >
             <SearchBar
               placeholder="Search"
-              platform={Platform.OS}
+              platform="android"
               onChangeText={query => this.filterEvents(query)}
               onClear={query => this.filterEvents('')}
               value={this.state.search}
