@@ -13,7 +13,8 @@ import {badgeStyles} from './PillBadge.js';
 import CustomScheduleTabBar from './schedule/CustomScheduleTabBar';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import { scale } from '../actions/scale';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper'
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class SearchModal extends Component {
 
@@ -180,7 +181,7 @@ export default class SearchModal extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{flex: 1, borderTopWidth: 0.5}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>
+          <View style={{flex: 1}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>
             <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
               <ScrollView
                 horizontal={true}
@@ -188,6 +189,14 @@ export default class SearchModal extends Component {
                 showsHorizontalScrollIndicator={false}>
                 {badges}
               </ScrollView>
+              <LinearGradient
+                  colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
+                  locations={[0, 0.1, 0.8, 1]}
+                  start={{x: 0, y: 0}}
+                  end={{x: 1, y: 0}} 
+                  style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+                  pointerEvents={'none'}
+                />
             </View>
           </View>
           {this.state.newSchedule.length > 0 ?
