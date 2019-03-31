@@ -139,8 +139,7 @@ export default class EventCard extends Component {
                           marginLeft: 5,
                         }}
                       >
-                        {eventManager.getSavedCount(event.eventID) % 2 ? 100 : 45}
-                        {/* {eventManager.getSavedCount(event.eventID)} */}
+                        {eventManager.getSavedCount(event.eventID)}
                       </Text>
                     </View>
                   </View>

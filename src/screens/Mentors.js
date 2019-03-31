@@ -29,7 +29,7 @@ import { red100 } from "react-native-paper/src/styles/colors";
 import { scale, verticalScale } from "../actions/scale";
 import AltModalHeader from '../components/AltModalHeader';
 
-const serverURL = "http://35.174.30.108:4000";
+const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
 export default class Mentors extends Component<Props> {
   constructor(props) {
@@ -186,8 +186,8 @@ export default class Mentors extends Component<Props> {
         backdropColor={colors.backgroundColor.dark}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}

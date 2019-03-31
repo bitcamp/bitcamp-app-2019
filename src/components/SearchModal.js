@@ -13,6 +13,7 @@ import {badgeStyles} from './PillBadge.js';
 import CustomScheduleTabBar from './schedule/CustomScheduleTabBar';
 import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import { scale } from '../actions/scale';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 export default class SearchModal extends Component {
 
@@ -133,8 +134,8 @@ export default class SearchModal extends Component {
         backdropColor={'#f7f7f7'}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInUp"
-        animationOut="slideOutDown"
+        animationIn="fadeInUp"
+        animationOut="fadeOutDown"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
@@ -148,6 +149,7 @@ export default class SearchModal extends Component {
               flexDirection: 'row', 
               alignItems: 'center', 
               paddingHorizontal: scale(15),
+              paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
             }} 
             onLayout={(event) => this.measureView(event, 'SearchBar')}
           >

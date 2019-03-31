@@ -136,8 +136,8 @@ export default class EventColumns extends Component {
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
-        animationIn="slideInRight"
-        animationOut="slideOutRight"
+        animationIn="fadeInRight"
+        animationOut="fadeOutRight"
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
