@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   tab: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingBottom: 5,
+    paddingVertical: scale(8),
     borderBottomWidth: 5,
   },
   weekdays: {
@@ -73,11 +73,7 @@ const styles = StyleSheet.create({
   },
   tabs: {
     flexDirection: 'row',
-    paddingTop: 5,
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
+    borderBottomWidth: 1,
     borderBottomColor: 'rgba(0,0,0,0.05)'
   },
   text: {
