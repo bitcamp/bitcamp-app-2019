@@ -8,6 +8,7 @@ import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from '
 import { colors } from './Colors';
 import PillBadge from "./PillBadge";
 import Images from '../../assets/imgs/index';
+import { scale } from '../actions/scale';
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     color: colors.textColor.light,
   },
   banner: {
-    marginLeft: -20, // Used to offset the padding on everything else in the modal
+    marginLeft: -scale(15), // Used to offset the padding on everything else in the modal
   },
   viewWithSpacing: {
     marginTop: 20,
