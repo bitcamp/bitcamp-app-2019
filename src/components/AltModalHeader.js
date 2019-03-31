@@ -72,6 +72,7 @@ function requireFunctionIfPresent(dependentProp) {
     }
 }
 
+const headerPadding = scale(15);
 const styles = StyleSheet.create({
     menu: {
         width: '100%',
@@ -81,8 +82,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor.normal,
         borderBottomWidth: 0.25,
         borderBottomColor: colors.borderColor.normal,
-        paddingTop: Platform.OS == "ios" ? getStatusBarHeight() : 0,
-        padding: scale(15),
+        padding: headerPadding,
+        paddingTop: Platform.OS === "ios" ? headerPadding + getStatusBarHeight() : headerPadding,
     },
     text: {
         fontWeight: 'bold',
