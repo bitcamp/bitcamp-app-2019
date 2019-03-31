@@ -3,11 +3,11 @@ import {
     View,
     StyleSheet,
     TouchableOpacity,
-    Text
+    Platform
 } from 'react-native';
 import { H3, P } from './Text';
 import { colors } from './Colors';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { scale } from '../actions/scale'; 
 import PropTypes from 'prop-types';
 
@@ -81,10 +81,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.backgroundColor.normal,
         borderBottomWidth: 0.25,
         borderBottomColor: colors.borderColor.normal,
-        ...ifIphoneX({
-            paddingTop: 40,
-        }),
-        paddingVertical: scale(15),
+        marginTop: Platform.OS == "ios" ? getStatusBarHeight() : 0,
+        padding: scale(15),
     },
     text: {
         fontWeight: 'bold',
