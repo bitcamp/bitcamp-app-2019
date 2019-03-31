@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'baseline',
-        backgroundColor: 'pink', // TODO: change back to colors.backgroundColor.normal,
+        backgroundColor: colors.backgroundColor.normal,
         borderBottomWidth: 0.25,
         borderBottomColor: colors.borderColor.normal,
         padding: headerPadding,

@@ -8,6 +8,7 @@ import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from '
 import { colors } from './Colors';
 import PillBadge from "./PillBadge";
 import Images from '../../assets/imgs/index';
+import { scale } from '../actions/scale';
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 
@@ -57,14 +58,14 @@ export default class EventModal extends Component {
             <View style={styles.viewWithSpacing}>
               <View>
                 <H2>{props.event.title}</H2>
+                <H3 style={styles.location}>{props.event.location}</H3>
                 <View style={{ alignItems: 'flex-start', flexDirection:'row', paddingTop: 5, paddingBottom: 5 }}>
-                {(Array.isArray(props.event.category) ? props.event.category : [props.event.category]).map((category,index) =>
+                  {(Array.isArray(props.event.category) ? props.event.category : [props.event.category]).map((category,index) =>
                     <View style={{marginRight: 5}} key={props.event.title + index.toString()}>
                       <PillBadge category={category} from={'Modal'}/>
                     </View>
-                )}
+                  )}
                 </View>
-                <H3 style={styles.location}>{props.event.location}</H3>
               </View>
             </View>
             <View style={styles.viewWithSpacing}>
@@ -100,10 +101,10 @@ const styles = StyleSheet.create({
     color: colors.textColor.light,
   },
   banner: {
-    marginLeft: -20, // Used to offset the padding on everything else in the modal
+    marginLeft: -scale(15), // Used to offset the padding on everything else in the modal
   },
   viewWithSpacing: {
-    marginTop: 20,
+    marginTop: scale(15),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start'
