@@ -120,7 +120,7 @@ export default class Profile extends Component<Props> {
   async onScanSuccess(e) {
     try {
       const userId = e.data;
-      const url =`http://35.174.30.108/api/users/${userId}/checkIn`;
+      const url =`https://api.bit.camp/api/users/${userId}/checkIn`;
       const token = await AsyncStorage.getItem(USER_TOKEN);
       const response = await fetch(url, {
         method: "POST",

@@ -52,7 +52,7 @@ export default class Login extends Component<Props> {
   async sendEmail(email) {
     validEmail = this.validEmail(email);
     if(validEmail != null){
-      let url = "http://35.174.30.108/auth/login/requestCode";
+      let url = "https://api.bit.camp/auth/login/requestCode";
       try {
           let response = await fetch(url, {
             method: 'POST',
@@ -117,7 +117,7 @@ export default class Login extends Component<Props> {
 
   async sendReceivedCode(code){
 
-    let url = "http://35.174.30.108/auth/login/code";
+    let url = "https://api.bit.camp/auth/login/code";
     try {
         let email = this.state.savedEmail;
         let response = await fetch(url, {
