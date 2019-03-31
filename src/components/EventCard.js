@@ -126,7 +126,7 @@ export default class EventCard extends Component {
                       marginRight: 6,
                       borderRadius: 6, 
                       padding: 5,
-                      paddingVertical: 15,
+                      height: scale(20),
                       backgroundColor: color,
                       flexDirection: 'row',
                       alignItems: 'center'
