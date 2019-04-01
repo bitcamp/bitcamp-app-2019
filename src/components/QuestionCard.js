@@ -42,7 +42,7 @@ export default class QuestionCard extends Component {
   renderStatus() {
     const { status, question } = this.props;
     if (status.includes("claimed")) {
-      return <H6 style={{ color: colors.secondaryColor }}>{status}</H6>;
+      return <H6 style={{ color: '#32D74B' }}>{status}</H6>;
     } else {
       return (
         <Fragment>
@@ -73,7 +73,7 @@ export default class QuestionCard extends Component {
             name={questionIsExpanded ? "chevron-down" : "chevron-right"}
             style={styles.collapseIcon}
             size={16}
-            color={colors.textColor.normal}
+            color='#C9C9CE'
           />
         </View>
         {questionIsExpanded && this.renderStatus()}
