@@ -73,7 +73,7 @@ export default class QuestionCard extends Component {
             name={questionIsExpanded ? "chevron-down" : "chevron-right"}
             style={styles.collapseIcon}
             size={16}
-            color='#C9C9CE'
+            color='#8e8e92'
           />
         </View>
         {questionIsExpanded && this.renderStatus()}
