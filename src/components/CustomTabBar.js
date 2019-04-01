@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     marginTop: verticalScale(1),
-    color: colors.textColor.light,
+    color: '#8E8E93',
     fontWeight: '400',
     fontSize: scale(13),
   },

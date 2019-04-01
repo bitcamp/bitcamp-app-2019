@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { scale } from '../actions/scale';
 
 const badgeColors = {
   red: '255, 59, 48',
@@ -36,7 +37,8 @@ const styles = StyleSheet.create({
     borderRadius: 3
   },
   modal: {
-    marginTop: 3
+    marginTop: 3,
+    paddingHorizontal: scale(3),
   },
   description: {
     marginTop: 5
@@ -47,6 +49,9 @@ const styles = StyleSheet.create({
     paddingRight: 5,
     paddingTop: 1,
     paddingBottom: 1
+  },
+  modalText: {
+    fontSize: scale(12)
   }
 });
 
@@ -62,7 +67,12 @@ export default class PillBadge extends Component<Props> {
         styles.width,
         {backgroundColor: badgeStyles[this.props.category].bgColor, marginLeft: (this.props.margin !== null ? this.props.margin : 0)}
       ]}>
-        <Text style={[styles.width,styles.text,{color: badgeStyles[this.props.category].text}]}>
+        <Text style={[
+          styles.width,
+          styles.text,
+          {color: badgeStyles[this.props.category].text},
+          this.props.from === 'Modal' ? styles.modalText : {}
+        ]}>
             {(this.props.category === 'Main' || this.props.category === 'Mini' ? this.props.category + '-Event' : this.props.category).toUpperCase()}
         </Text>
       </View>

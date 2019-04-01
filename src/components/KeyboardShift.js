@@ -11,7 +11,7 @@ export default class KeyboardShift extends Component {
     this.state = {
       shift: new Animated.Value(0),
     };
-    this.animationDuration = 400;
+    this.animationDuration = 250;
   }
 
   componentDidMount() {
