@@ -219,7 +219,7 @@ export default class EventsManager {
 
   //key of event
   // time in minutes to warn before event
-  async favoriteEvent(eventID, refreshSaved, depth = 0) {
+  async favoriteEvent(eventID, refreshSaved) {
 
     if (lastNetworkRequest != null && moment().seconds() == lastNetworkRequest.seconds() || networkCallExecuting) {
       Toast.show('You have favorited or unfavorited an event too soon. Please try later.');
@@ -254,12 +254,7 @@ export default class EventsManager {
             networkCallExecuting = false;
             
           } else {
-            if (depth < 1) {
-              this.unfavoriteEvent(eventID, refreshSaved, depth + 1);
-              this.favoriteEvent(eventID, refreshSaved, depth + 1);
-            } else {
-              Toast.show('Could not unfavorite this event. Please try again.');
-            }
+            Toast.show('Could not unfavorite this event. Please try again.');
           }
         });
       });
@@ -267,7 +262,7 @@ export default class EventsManager {
     this.updateHearts();
   }
 
-  unfavoriteEvent(eventID, refreshSaved, depth = 0) {
+  unfavoriteEvent(eventID, refreshSaved) {
 
     if (lastNetworkRequest != null && moment().seconds() == lastNetworkRequest.seconds() || networkCallExecuting) {
       Toast.show('You have favorited or unfavorited an event too soon. Please try later.');
@@ -302,14 +297,8 @@ export default class EventsManager {
             this.updateHearts();
             this.updateEventComponents();
             networkCallExecuting = false;
-
           } else {
-            if (depth < 1) {
-              this.favoriteEvent(eventID, refreshSaved, depth + 1);
-              this.unfavoriteEvent(eventID, refreshSaved, depth + 1);
-            } else {
-              Toast.show('Could not unfavorite this event. Please try again.');
-            }
+            Toast.show('Could not unfavorite this event. Please try again.');
           }
         });
       });
