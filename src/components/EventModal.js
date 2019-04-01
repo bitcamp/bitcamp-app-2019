@@ -18,7 +18,7 @@ export default class EventModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-
+    console.log(props.isModalVisible);
     return (
       <Modal
         isVisible={props.isModalVisible}
@@ -33,13 +33,15 @@ export default class EventModal extends Component {
         avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
         style={modalStyle}
+        onModalHide={() => props.eventManager.updateEventComponents()}
       >
         <ModalContent>
           <ModalHeader
-            onBackButtonPress={() => {props.toggleModal();}}
+            onBackButtonPress={() => props.toggleModal()}
             eventID={props.event.eventID.toString()}
             eventManager={props.eventManager}
             origin={props.origin}
+            isModalVisible={this.props.isModalVisible}
             heart
             noArrow
             small

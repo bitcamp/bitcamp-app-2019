@@ -11,6 +11,7 @@ export default class EventStar extends Component {
     this.handleHeartPress = this.handleHeartPress.bind(this);
   }
 
+
   handleHeartPress() {
     const { eventID, eventManager, hasArrow } = this.props;
     if (eventManager.isFavorited(eventID)) {
