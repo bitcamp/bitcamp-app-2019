@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 import { SearchBar } from 'react-native-elements';
 import { H3 } from "./Text";
@@ -32,8 +32,26 @@ export default class SearchModal extends Component {
         TagViewParent: 0,
         TagScrollView: 0
       },
-      offsetHeight: 0
+      offsetHeight: 0,
+      keyboardHeight: 0
     }
+  }
+
+  componentDidMount() {
+    this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', this.handleKeyboardDidShow);
+    this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide);
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowSub.remove();
+    this.keyboardDidHideSub.remove();
+  }
+
+  handleKeyboardDidShow = (event) => {
+    this.setState({keyboardHeight: event.endCoordinates.height});
+  }
+  handleKeyboardDidHide = () => {
+    this.setState({keyboardHeight: 0});
   }
 
   measureView(event, view) {
@@ -41,7 +59,7 @@ export default class SearchModal extends Component {
     newHeight[view] = event.nativeEvent.layout.height;
     this.setState({
       height: newHeight,
-      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + Math.floor(h), 0)
+      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + h, 0)
     })
     console.log(this.state.height);
     console.log(this.state.offsetHeight);
@@ -125,6 +143,7 @@ export default class SearchModal extends Component {
             category={obj}
             from='Modal'
             margin={5}
+            isLast={obj === 'Mentor' ? true : false}
           />
         </TouchableOpacity>);
     }
@@ -202,7 +221,7 @@ export default class SearchModal extends Component {
           {this.state.newSchedule.length > 0 ?
             <ScrollableTabView
               renderTabBar={() => <CustomScheduleTabBar /> }
-              style={{height: (dimensions.height - (this.state.offsetHeight + 2))}}
+              style={{height: (dimensions.height - (this.state.offsetHeight + 2 + this.state.keyboardHeight))}}
               page={0}
             >
               {newSchedule.map((eventDay,index) =>
