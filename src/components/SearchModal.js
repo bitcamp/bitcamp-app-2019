@@ -41,7 +41,7 @@ export default class SearchModal extends Component {
     newHeight[view] = event.nativeEvent.layout.height;
     this.setState({
       height: newHeight,
-      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + h, 0)
+      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + Math.floor(h), 0)
     })
     console.log(this.state.height);
     console.log(this.state.offsetHeight);
@@ -146,12 +146,12 @@ export default class SearchModal extends Component {
       >
       <ModalContent style={{padding:0}}>
           <View style={{
-              flex: 1, 
-              flexDirection: 'row', 
-              alignItems: 'center', 
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
               paddingHorizontal: scale(15),
               paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
-            }} 
+            }}
             onLayout={(event) => this.measureView(event, 'SearchBar')}
           >
             <SearchBar
@@ -171,8 +171,8 @@ export default class SearchModal extends Component {
             <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
                 <H3 style={{
-                  color: colors.primaryColor, 
-                  padding: scale(15), 
+                  color: colors.primaryColor,
+                  padding: scale(15),
                   paddingRight: 0,
                   flex: 0,
                 }}>
@@ -193,7 +193,7 @@ export default class SearchModal extends Component {
                   colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
                   locations={[0, 0.1, 0.8, 1]}
                   start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}} 
+                  end={{x: 1, y: 0}}
                   style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
                   pointerEvents={'none'}
                 />
@@ -202,7 +202,7 @@ export default class SearchModal extends Component {
           {this.state.newSchedule.length > 0 ?
             <ScrollableTabView
               renderTabBar={() => <CustomScheduleTabBar /> }
-              style={{height: (dimensions.height - this.state.offsetHeight)}}
+              style={{height: (dimensions.height - (this.state.offsetHeight + 2))}}
               page={0}
             >
               {newSchedule.map((eventDay,index) =>

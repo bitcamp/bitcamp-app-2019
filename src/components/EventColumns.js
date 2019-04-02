@@ -57,8 +57,7 @@ export default class EventColumns extends Component {
           <EventCard
             event={event}
             eventManager={this.props.eventManager}
-            origin={this.props.origin}
-            isModalVisible={this.state.showModal}/>
+            origin={this.props.origin}/>
         </View>
       );
     } else {

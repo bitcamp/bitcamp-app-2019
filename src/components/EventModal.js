@@ -18,7 +18,6 @@ export default class EventModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const imageWidth = dimensions.width;
     const imageHeight = Math.round((imageWidth * 38) / 67);
-    console.log(props.isModalVisible);
     return (
       <Modal
         isVisible={props.isModalVisible}

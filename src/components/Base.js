@@ -212,7 +212,6 @@ class ModalHeader extends Component<Props> {
                 eventManager={eventManager}
                 discludeArrow={noArrow}
                 origin={this.props.origin}
-                isModalVisible={this.props.isModalVisible}
               />
             </View>
           }
