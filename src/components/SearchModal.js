@@ -36,6 +36,10 @@ export default class SearchModal extends Component {
     }
   }
 
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+
   measureView(event, view) {
     let newHeight = this.state.height;
     newHeight[view] = event.nativeEvent.layout.height;
@@ -49,6 +53,7 @@ export default class SearchModal extends Component {
 
   filterEvents(query) {
     query = query.toLowerCase();
+    query_regex = this.escapeRegExp(query);
     eventDays = this.state.schedule;
     newSchedule = []
 
@@ -63,8 +68,8 @@ export default class SearchModal extends Component {
           for (eventIndex in eventGroup.events) {
             event = eventGroup.events[eventIndex];
             /* TODO: Change this when all categories switched to list */
-            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query) >= 0) : event.category.toLowerCase().search(query) >= 0)
-            if (event.title.toLowerCase().search(query) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
+            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query_regex) >= 0) : event.category.toLowerCase().search(query_regex) >= 0)
+            if (event.title.toLowerCase().search(query_regex) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
           /*event.category.toLowerCase().search(query) >= 0*/) {
               newEventGroup.events.push(event);
             }

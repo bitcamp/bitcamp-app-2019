@@ -35,6 +35,8 @@ target 'technica' do
 
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
 end
 
 post_install do |installer|
@@ -46,7 +48,7 @@ post_install do |installer|
     # "Multiple commands produce ... libReact.a"
     # "Multiple commands produce ... libyoga.a"
 
-    targets_to_ignore = %w(React yoga)
+    targets_to_ignore = %w(React yoga Restart)
 
     if targets_to_ignore.include? target.name
       target.remove_from_project
