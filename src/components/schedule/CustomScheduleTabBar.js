@@ -45,7 +45,7 @@ export default class CustomScheduleTabBar extends Component {
           :
           <FontAwesome5
             name={'car-side'}
-            size={27.5}
+            size={22}
             color={this.props.activeTab === i ? colors.primaryColor : colors.textColor.light}
           />)
           :

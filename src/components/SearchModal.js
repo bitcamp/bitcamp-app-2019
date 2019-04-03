@@ -23,7 +23,6 @@ export default class SearchModal extends Component {
     this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
     this.state = {
-      schedule: this.props.eventDays,
       search: '',
       newSchedule: [],
       height: {
@@ -67,8 +66,8 @@ export default class SearchModal extends Component {
 
   filterEvents(query) {
     query = query.toLowerCase();
-    eventDays = this.state.schedule;
-    newSchedule = []
+    eventDays = this.props.eventDays;
+    newSchedule = [];
 
     // We apologize for this mess :(
     if(query !== "") {
@@ -98,8 +97,7 @@ export default class SearchModal extends Component {
     this.setState({
       newSchedule: newSchedule,
       search: query
-    });
-
+    });    
   }
 
   renderScheduleForDay(eventDayObj) {
@@ -125,6 +123,18 @@ export default class SearchModal extends Component {
         origin={'Search'}
       />
     );
+  }
+
+
+  renderSearchResults(schedule) {
+    return schedule.map((eventDay,index) =>
+      <ScrollView key={eventDay.label} tabLabel={eventDay.label} style={[styles.tabView]}>
+        <FlatList
+          data={[eventDay]}
+          renderItem={this.renderScheduleForDay}
+          keyExtractor={(event, index) => `${eventDay.label} list`}
+        />
+      </ScrollView>);
   }
 
   render() {
@@ -181,7 +191,7 @@ export default class SearchModal extends Component {
               value={this.state.search}
               cancelButtonProps={{color: colors.primaryColor}}
               autoFocus={true}
-              autoCapitalize={'none'}
+              autoCapitalize='none'
               containerStyle={{flex: 1}}
               inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
               leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
@@ -218,29 +228,16 @@ export default class SearchModal extends Component {
                 />
             </View>
           </View>
-          {this.state.newSchedule.length > 0 ?
-            <ScrollableTabView
-              renderTabBar={() => <CustomScheduleTabBar /> }
-              style={{height: (dimensions.height - (this.state.offsetHeight + 2 + this.state.keyboardHeight))}}
-              page={0}
-            >
-              {newSchedule.map((eventDay,index) =>
-                ( eventDay.eventGroups.length > 0 ?
-                <ScrollView key={index} tabLabel={eventDay.label} style={[styles.tabView]}>
-                  <FlatList
-                    data={[eventDay]}
-                    renderItem={this.renderScheduleForDay}
-                    keyExtractor={(event, index) => index.toString()}
-                  />
-                </ScrollView>
-                :
-                <Fragment></Fragment>)
-              )}
-            </ScrollableTabView>
-            :
-            <Fragment></Fragment>
-          }
-          </ModalContent>
+          <ScrollableTabView
+            renderTabBar={() => <CustomScheduleTabBar /> }
+            style={{height: (dimensions.height - (this.state.offsetHeight + 2 + this.state.keyboardHeight))}}
+            page={0}
+          >
+            {newSchedule.length > 0 && 
+              this.renderSearchResults(newSchedule)
+            }
+          </ScrollableTabView>
+        </ModalContent>
       </Modal>
     );
   }
