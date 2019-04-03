@@ -18,7 +18,7 @@ export default class MapModal extends Component {
   constructor() {
     super();
     this.state = {
-      floors: [],
+      floors: {},
     }
     this.setFloors();
   }
@@ -26,7 +26,6 @@ export default class MapModal extends Component {
   setFloors() {
     RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
     const floorPhotos = [1, 2, 3, 'Parking'].map(floorNumber => {
-      console.log('https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`);
       let dirs = RNFetchBlob.fs.dirs;
       RNFetchBlob
         .config({
@@ -38,18 +37,14 @@ export default class MapModal extends Component {
         .fetch('GET', 'https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`, {
         })
         .then((res) => {
-          // the temp file path with file extension `png`
-          console.log(this.state);
-          currFloors = this.state.floors;
-          currFloors.push('file://' + res.path())
-          // Beware that when using a file path as Image source on Android,
-          // you must prepend "file://"" before the file path
-          this.setState({floors: currFloors})
+          if (floorNumber === 'Parking') {
+            this.setState({floors: this.state.floors['Parking'] = ('file://' + res.path())});
+          } else {
+            this.setState({floors: this.state.floors[floorNumber] = ('file://' + res.path())});
+          }
         }).catch((error) => {
           console.log(error);
-          currFloors = this.state.floors;
-          currFloors.push(null);
-          this.setState({floors: currFloors});
+          this.setState({floors: this.state.floors[floorNumber] = null});
           });
       });
   }
@@ -83,7 +78,7 @@ export default class MapModal extends Component {
         <PhotoView
           key={floorNumber}
           tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-          source={{uri : this.state.floors[(floorNumber === 'Parking' ? floorNumber : floorNumber - 1)] }}
+          source={{uri : this.state.floors[floorNumber] }}
           minimumZoomScale={1}
           maximumZoomScale={8}
           androidScaleType="fitCenter"
