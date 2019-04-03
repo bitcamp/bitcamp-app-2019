@@ -159,7 +159,7 @@ export default class AppContainer extends Component<Props> {
     const { navigate } = this.props.navigation;
     return (
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: colors.backgroundColor.normal }}
+        style={{ flex: 1, backgroundColor: colors.backgroundColor.light }}
       >
         <StatusBar
           barStyle="dark-content"
