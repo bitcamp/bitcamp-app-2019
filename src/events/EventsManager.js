@@ -248,11 +248,12 @@ export default class EventsManager {
             AsyncStorage.mergeItem(EVENT_FAVORITED_STORE, JSON.stringify(updateObj));
             event = this.eventIDToEventMap[eventID];
             this.createNotification(event);
-            
+
             this.updateHearts();
-            this.updateEventComponents();
+            //console.log(this);
+            //this.updateEventComponents();
             networkCallExecuting = false;
-            
+
           } else {
             Toast.show('Could not unfavorite this event. Please try again.');
           }
@@ -295,7 +296,8 @@ export default class EventsManager {
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
             this.updateHearts();
-            this.updateEventComponents();
+            //console.log(this);
+            //this.updateEventComponents();
             networkCallExecuting = false;
           } else {
             Toast.show('Could not unfavorite this event. Please try again.');

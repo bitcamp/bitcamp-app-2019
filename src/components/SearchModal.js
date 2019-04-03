@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
 import Modal from 'react-native-modal';
 import { SearchBar } from 'react-native-elements';
 import { H3 } from "./Text";
@@ -23,7 +23,6 @@ export default class SearchModal extends Component {
     this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
     this.state = {
-      schedule: this.props.eventDays,
       search: '',
       newSchedule: [],
       height: {
@@ -32,12 +31,30 @@ export default class SearchModal extends Component {
         TagViewParent: 0,
         TagScrollView: 0
       },
-      offsetHeight: 0
+      offsetHeight: 0,
+      keyboardHeight: 0
     }
   }
 
   escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+  
+  componentDidMount() {
+    this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', this.handleKeyboardDidShow);
+    this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide);
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowSub.remove();
+    this.keyboardDidHideSub.remove();
+  }
+
+  handleKeyboardDidShow = (event) => {
+    this.setState({keyboardHeight: event.endCoordinates.height});
+  }
+  handleKeyboardDidHide = () => {
+    this.setState({keyboardHeight: 0});
   }
 
   measureView(event, view) {
@@ -85,8 +102,7 @@ export default class SearchModal extends Component {
     this.setState({
       newSchedule: newSchedule,
       search: query
-    });
-
+    });    
   }
 
   renderScheduleForDay(eventDayObj) {
@@ -114,6 +130,18 @@ export default class SearchModal extends Component {
     );
   }
 
+
+  renderSearchResults(schedule) {
+    return schedule.map((eventDay,index) =>
+      <ScrollView key={eventDay.label} tabLabel={eventDay.label} style={[styles.tabView]}>
+        <FlatList
+          data={[eventDay]}
+          renderItem={this.renderScheduleForDay}
+          keyExtractor={(event, index) => `${eventDay.label} list`}
+        />
+      </ScrollView>);
+  }
+
   render() {
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
@@ -130,6 +158,7 @@ export default class SearchModal extends Component {
             category={obj}
             from='Modal'
             margin={5}
+            isLast={obj === 'Mentor' ? true : false}
           />
         </TouchableOpacity>);
     }
@@ -151,12 +180,12 @@ export default class SearchModal extends Component {
       >
       <ModalContent style={{padding:0}}>
           <View style={{
-              flex: 1, 
-              flexDirection: 'row', 
-              alignItems: 'center', 
+              flex: 1,
+              flexDirection: 'row',
+              alignItems: 'center',
               paddingHorizontal: scale(15),
               paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
-            }} 
+            }}
             onLayout={(event) => this.measureView(event, 'SearchBar')}
           >
             <SearchBar
@@ -167,7 +196,7 @@ export default class SearchModal extends Component {
               value={this.state.search}
               cancelButtonProps={{color: colors.primaryColor}}
               autoFocus={true}
-              autoCapitalize={'none'}
+              autoCapitalize='none'
               containerStyle={{flex: 1}}
               inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
               leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
@@ -176,8 +205,8 @@ export default class SearchModal extends Component {
             <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
                 <H3 style={{
-                  color: colors.primaryColor, 
-                  padding: scale(15), 
+                  color: colors.primaryColor,
+                  padding: scale(15),
                   paddingRight: 0,
                   flex: 0,
                 }}>
@@ -198,35 +227,22 @@ export default class SearchModal extends Component {
                   colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
                   locations={[0, 0.1, 0.8, 1]}
                   start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}} 
+                  end={{x: 1, y: 0}}
                   style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
                   pointerEvents={'none'}
                 />
             </View>
           </View>
-          {this.state.newSchedule.length > 0 ?
-            <ScrollableTabView
-              renderTabBar={() => <CustomScheduleTabBar /> }
-              style={{height: (dimensions.height - this.state.offsetHeight)}}
-              page={0}
-            >
-              {newSchedule.map((eventDay,index) =>
-                ( eventDay.eventGroups.length > 0 ?
-                <ScrollView key={index} tabLabel={eventDay.label} style={[styles.tabView]}>
-                  <FlatList
-                    data={[eventDay]}
-                    renderItem={this.renderScheduleForDay}
-                    keyExtractor={(event, index) => index.toString()}
-                  />
-                </ScrollView>
-                :
-                <Fragment></Fragment>)
-              )}
-            </ScrollableTabView>
-            :
-            <Fragment></Fragment>
-          }
-          </ModalContent>
+          <ScrollableTabView
+            renderTabBar={() => <CustomScheduleTabBar /> }
+            style={{height: (dimensions.height - (this.state.offsetHeight + 2 + this.state.keyboardHeight))}}
+            page={0}
+          >
+            {newSchedule.length > 0 && 
+              this.renderSearchResults(newSchedule)
+            }
+          </ScrollableTabView>
+        </ModalContent>
       </Modal>
     );
   }

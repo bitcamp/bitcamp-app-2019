@@ -35,7 +35,7 @@ class CustomTabBar extends Component {
                 'home': <FontAwesome name='home' size={scale(25)} color={color}/>,
                 'schedule': <EvilIcon name='calendar' size={scale(32)} color={color}/>,
                 'expo': <Entypo name='code' size={scale(25)} color={color}/>,
-                'mentors': <Ionicon name='ios-people' size={scale(32)} color={color} style={{marginTop: scale(-5), marginBottom: scale(-5)}}/>,
+                'mentors': <Ionicon name='ios-people' size={scale(32)} color={color} style={{marginTop: scale(-5), marginBottom: scale(-2.5)}}/>,
                 'profile': <Ionicon name='ios-person' size={scale(25)} color={color}/>
               }[tab]
             }

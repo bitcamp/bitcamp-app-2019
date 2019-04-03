@@ -35,7 +35,8 @@ export default class EventColumns extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
+      isModalVisible: false
     };
     this.toggleModal = this.toggleModal.bind(this);
     // this.getColumns = this.getColumns.bind(this);
@@ -53,7 +54,10 @@ export default class EventColumns extends Component {
     if (event) {
       return (
         <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
-          <EventCard event={event} eventManager={this.props.eventManager} origin={this.props.origin}/>
+          <EventCard
+            event={event}
+            eventManager={this.props.eventManager}
+            origin={this.props.origin}/>
         </View>
       );
     } else {
@@ -129,10 +133,10 @@ export default class EventColumns extends Component {
     );
   }
 
-  renderModal() {
+  /*renderModal() {
     return (
       <Modal
-        isVisible={this.state.showModal}
+        isVisible={false}
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
         animationInTiming={250}
@@ -150,18 +154,18 @@ export default class EventColumns extends Component {
             onBackButtonPress={() => this.toggleModal()}
             heading={this.props.heading}
             eventManager={this.props.eventManager}
+            origin={'Home'}
           />
           {this.getRows(false)}
         </ModalContent>
       </Modal>
     );
-  }
+  }*/
 
   render() {
     const { width, height } = require("Dimensions").get("window");
     return (
       <View style={{ flex: 1}}>
-        {this.renderModal()}
         {this.getRowOfEvents()}
       </View>
     );

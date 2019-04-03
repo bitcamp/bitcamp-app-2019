@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Text, Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 import { H2, H3, H6 } from '../components/Text';
 import { PadContainer } from './Base';
@@ -124,17 +125,18 @@ export default class EventCard extends Component {
                     <View style={{
                       marginTop: 6,
                       marginRight: 6,
-                      borderRadius: 6, 
-                      padding: 5,
-                      height: scale(25),
+                      borderRadius: 6,
+                      paddingLeft: 10,
+                      paddingRight: 10,
+                      height: scale(23),
                       backgroundColor: color,
                       flexDirection: 'row',
                       alignItems: 'center'
                     }}
                     >
-                      <Icon name="star" size={scale(15)} color={'white'} />
-                      <Text style={{ 
-                          color: 'white', 
+                      <IonIcon name="ios-star" size={scale(15)} color={'white'} />
+                      <Text style={{
+                          color: 'white',
                           fontSize: scale(13),
                           marginLeft: 5,
                         }}
@@ -165,7 +167,7 @@ export default class EventCard extends Component {
                 ]}
                 source={Images[event.img]}
                 >
-                <LinearGradient 
+                <LinearGradient
                   style={styles.darkImageMask}
                   colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.65)']}
                   locations={[0.3, 1]}

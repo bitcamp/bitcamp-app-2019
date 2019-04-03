@@ -7,6 +7,7 @@ import {
 } from 'react-native'
 import { colors } from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { scale } from '../../actions/scale';
 
 export default class CustomScheduleTabBar extends Component {
@@ -37,9 +38,16 @@ export default class CustomScheduleTabBar extends Component {
             (tab == 'ios-star' ? styles.star : styles.weekdays)
           ]}>
           { tab != 'ios-star' ?
+          ( tab != 'Parking' ?
           <Text style={[(this.props.activeTab === i) && styles.textActive, styles.text]}>
             {tab}
           </Text>
+          :
+          <FontAwesome5
+            name={'car-side'}
+            size={22}
+            color={this.props.activeTab === i ? colors.primaryColor : colors.textColor.light}
+          />)
           :
           <Icon
             name={tab}

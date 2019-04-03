@@ -25,7 +25,8 @@ export default class MapModal extends Component {
 
   setFloors() {
     RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
-    const floorPhotos = [1, 2, 3].map(floorNumber => {
+    const floorPhotos = [1, 2, 3, 'Parking'].map(floorNumber => {
+      console.log('https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`);
       let dirs = RNFetchBlob.fs.dirs;
       RNFetchBlob
         .config({
@@ -34,7 +35,7 @@ export default class MapModal extends Component {
           appendExt : 'png',
           session: 'floorMaps',
         })
-        .fetch('GET', `https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/Floor_${floorNumber}.png`, {
+        .fetch('GET', 'https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`, {
         })
         .then((res) => {
           // the temp file path with file extension `png`
@@ -48,24 +49,23 @@ export default class MapModal extends Component {
           console.log(error);
           currFloors = this.state.floors;
           currFloors.push(null);
-          this.setState({floors: currFloors});  
+          this.setState({floors: currFloors});
           });
       });
   }
 
   componentDidMount() {
-    
   }
 
   render() {
     console.log(this.state.floors);
     const props = this.props;
-    const floors = [1, 2, 3].map(floorNumber => {
-      if (this.state.floors[floorNumber - 1] === null) {
+    const floors = [1, 2, 3, 'Parking'].map(floorNumber => {
+      if (this.state.floors[(floorNumber === 'Parking' ? floorNumber : floorNumber - 1)] === null) {
         return (
           <PhotoView
             key={floorNumber}
-            tabLabel={`Floor ${floorNumber}`} 
+            tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
             source={require('../../assets/imgs/floor-maps/not_found.png')}
             minimumZoomScale={1}
             maximumZoomScale={8}
@@ -76,14 +76,14 @@ export default class MapModal extends Component {
               flex: 1,
               backgroundColor: colors.backgroundColor.dark,
             }}
-          />  
+          />
         );
       }
       return (
         <PhotoView
           key={floorNumber}
-          tabLabel={`Floor ${floorNumber}`} 
-          source={{uri : this.state.floors[floorNumber - 1] }}
+          tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
+          source={{uri : this.state.floors[(floorNumber === 'Parking' ? floorNumber : floorNumber - 1)] }}
           minimumZoomScale={1}
           maximumZoomScale={8}
           androidScaleType="fitCenter"
@@ -111,7 +111,7 @@ export default class MapModal extends Component {
         onBackButtonPress={() => props.toggleModal()}
         style={[modalStyle, {flex: 1}]}
       >
-        <ModalContent style={{ padding: 0, flex: 1 }}> 
+        <ModalContent style={{ padding: 0, flex: 1 }}>
           <AltModalHeader
             title="Map"
             rightText="Done"

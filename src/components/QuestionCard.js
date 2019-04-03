@@ -22,6 +22,17 @@ const styles = StyleSheet.create({
   collapseIcon: {
     marginHorizontal: 10,
   },
+  statusText: {
+    color: colors.secondaryColor, 
+    marginTop: 5
+  },
+  claimedText: { 
+    color: '#32D74B' 
+  },
+  animatedEllipsis: { 
+    fontSize: 12, 
+    marginLeft: -4 
+  }
 });
 
 export default class QuestionCard extends Component {
@@ -42,13 +53,13 @@ export default class QuestionCard extends Component {
   renderStatus() {
     const { status, question } = this.props;
     if (status.includes("claimed")) {
-      return <H6 style={{ color: '#32D74B' }}>{status}</H6>;
+      return <H6 style={[styles.statusText, styles.claimedText]}>{status}</H6>;
     } else {
       return (
         <Fragment>
-          <H6 style={{ color: colors.secondaryColor, marginTop: 5 }}>
+          <H6 style={styles.statusText}>
             {status}
-            <AnimatedEllipsis style={{ fontSize: 12, marginLeft: -4 }} />
+            <AnimatedEllipsis style={styles.animatedEllipsis} />
           </H6>
         </Fragment>
       );
@@ -70,9 +81,9 @@ export default class QuestionCard extends Component {
             {question}
           </H3>
           <Icon
-            name={questionIsExpanded ? "chevron-down" : "chevron-right"}
+            name={questionIsExpanded ? "minus" : "plus"}
             style={styles.collapseIcon}
-            size={16}
+            size={18}
             color='#8e8e92'
           />
         </View>

@@ -70,7 +70,7 @@ export default class AppContainer extends Component<Props> {
           <View style={{flex:1}}>
           <TouchableHighlight
             onPress={navigation.getParam("toggleSearchModal")}
-            underlayColor={Colors.white}
+            underlayColor={"#f9f9f9"}
             >
               <Icon
                 name="magnifier"
