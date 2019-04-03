@@ -48,13 +48,13 @@ export default class MapModal extends Component {
           console.log(error);
           currFloors = this.state.floors;
           currFloors.push(null);
-          this.setState({floors: currFloors});  
+          this.setState({floors: currFloors});
           });
       });
   }
 
   componentDidMount() {
-    
+
   }
 
   render() {
@@ -65,7 +65,7 @@ export default class MapModal extends Component {
         return (
           <PhotoView
             key={floorNumber}
-            tabLabel={`Floor ${floorNumber}`} 
+            tabLabel={`Floor ${floorNumber}`}
             source={require('../../assets/imgs/floor-maps/not_found.png')}
             minimumZoomScale={1}
             maximumZoomScale={8}
@@ -76,13 +76,13 @@ export default class MapModal extends Component {
               flex: 1,
               backgroundColor: colors.backgroundColor.dark,
             }}
-          />  
+          />
         );
       }
       return (
         <PhotoView
           key={floorNumber}
-          tabLabel={`Floor ${floorNumber}`} 
+          tabLabel={`Floor ${floorNumber}`}
           source={{uri : this.state.floors[floorNumber - 1] }}
           minimumZoomScale={1}
           maximumZoomScale={8}
@@ -93,7 +93,7 @@ export default class MapModal extends Component {
             flex: 1,
             backgroundColor: colors.backgroundColor.dark,
           }}
-        />  
+        />
       );
     });
     return (
@@ -111,7 +111,7 @@ export default class MapModal extends Component {
         onBackButtonPress={() => props.toggleModal()}
         style={[modalStyle, {flex: 1}]}
       >
-        <ModalContent style={{ padding: 0, flex: 1 }}> 
+        <ModalContent style={{ padding: 0, flex: 1 }}>
           <AltModalHeader
             title="Map"
             rightText="Done"
