@@ -195,7 +195,6 @@ export default class SearchModal extends Component {
               onChangeText={query => this.filterEvents(query)}
               onClear={query => this.filterEvents('')}
               value={this.state.search}
-              cancelButtonProps={{color: colors.primaryColor}}
               autoFocus={true}
               autoCapitalize='none'
               containerStyle={{flex: 1}}
@@ -210,6 +209,7 @@ export default class SearchModal extends Component {
                   padding: scale(15),
                   paddingRight: 0,
                   flex: 0,
+                  fontWeight: '500'
                 }}>
                   Cancel
                 </H3>

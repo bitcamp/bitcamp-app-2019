@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     color: '#8E8E93',
     fontWeight: '400',
     fontSize: scale(13),
+    fontFamily: 'System'
   },
   tabActiveText: {
     color: colors.primaryColor
