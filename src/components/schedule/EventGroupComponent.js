@@ -1,16 +1,6 @@
 import React, { Component, Fragment } from 'react';
-
 import { Platform, StyleSheet, Text, View, FlatList } from 'react-native';
-
-import {
-  GradientBackground,
-  ViewContainer,
-  PadContainer,
-  Heading,
-  PaperSheet,
-  HorizontalLine
-} from '../Base';
-import { H1, H2, H3, H4, P } from '../Text';
+import { BaseText } from '../Text';
 import EventDescription from './EventDescription';
 
 export default class EventGroupComponent extends Component<Props> {
@@ -23,7 +13,7 @@ export default class EventGroupComponent extends Component<Props> {
     let AM_or_PM = ( this.props.header.endsWith('am') ? ' AM' : ' PM');
     return (
       <Fragment>
-      <Text style={styles.header}>{headerWithoutAM_PM + AM_or_PM}</Text>
+      <BaseText style={styles.header}>{headerWithoutAM_PM + AM_or_PM}</BaseText>
         <FlatList
           data={this.props.events}
           renderItem={ (eventObj) => {

@@ -3,7 +3,7 @@ import { Text, Image, ImageBackground, StyleSheet, TouchableOpacity, View } from
 import Icon from 'react-native-vector-icons/FontAwesome';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
-import { H2, H3, H6 } from '../components/Text';
+import { H2, H3, BaseText } from '../components/Text';
 import { PadContainer } from './Base';
 import { colors } from './Colors';
 import EventModal from './EventModal';
@@ -125,7 +125,7 @@ export default class EventCard extends Component {
                     <View style={{
                       marginTop: 6,
                       marginRight: 6,
-                      borderRadius: 6,
+                      borderRadius: 8,
                       paddingLeft: 10,
                       paddingRight: 10,
                       height: scale(23),
@@ -135,18 +135,18 @@ export default class EventCard extends Component {
                     }}
                     >
                       <IonIcon name="ios-star" size={scale(15)} color={'white'} />
-                      <Text style={{
+                      <BaseText style={{
                           color: 'white',
                           fontSize: scale(13),
                           marginLeft: 5,
                         }}
                       >
                         {eventManager.getSavedCount(event.eventID)}
-                      </Text>
+                      </BaseText>
                     </View>
                   </View>
                 <View style={{backgroundColor: color, borderBottomLeftRadius: 13, borderBottomRightRadius: 13, marginTop: (imageHeight - 60)}}>
-                  <Text numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</Text>
+                  <BaseText numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</BaseText>
                 </View></React.Fragment>}
                 </ImageBackground>
                 {/*!big &&

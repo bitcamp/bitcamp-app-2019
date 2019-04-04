@@ -7,45 +7,37 @@ import {
 } from 'react-native';
 import { scale } from '../actions/scale';
 
-const baseTextStyle = {
-  fontFamily: 'System',
-  fontWeight: 'normal'
-};
-
 const styles = StyleSheet.create({
   text: {
     color: colors.textColor.normal,
+    fontFamily: 'System',
+    fontWeight: 'normal'
   },
   h1: {
     color: colors.primaryColor,
-    fontFamily: "Aleo-Bold",
+    fontFamily: 'Aleo-Bold',
     fontSize: scale(32),
   },
   h2: {
-    ...baseTextStyle,
     fontWeight: 'bold',
     fontSize: scale(18),
   },
   h3: {
-    ...baseTextStyle,
     fontSize: scale(15),
   },
   h4: {
-    ...baseTextStyle,
     fontSize: scale(14),
   },
   h5: {
-    ...baseTextStyle,
     fontSize: scale(13),
   },
   h6: {
-    ...baseTextStyle,
     fontSize: scale(12),
   },
   p: {
-    ...baseTextStyle,
     fontSize: scale(14),
   },
+
 });
 
 
@@ -91,5 +83,11 @@ const P = (props) => (
   </Text>
 );
 
+const BaseText = (props) => (
+  <Text {...props} style={[styles.text, props.style]}>
+    {props.children}
+  </Text>
+);
 
-export { H1, H2, H3, H4, H5, H6, P }
+
+export { H1, H2, H3, H4, H5, H6, P, BaseText }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { H3 } from './Text';
+import { H3, BaseText } from './Text';
 import { StyleSheet, Text } from 'react-native';
 import { colors } from './Colors';
 
@@ -69,7 +69,7 @@ export default class CountdownTimer extends Component {
     return (
       <H3 style={styles.countdownText}>
         {daysText + hoursText + minutesText + secondsText}
-        <Text style={{ fontWeight: 'normal' }}>left to hack</Text>
+        <BaseText>left to hack</BaseText>
       </H3>
     );
   }
