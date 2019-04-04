@@ -8,7 +8,7 @@ import {
 import { scale } from '../actions/scale';
 
 const baseTextStyle = {
-  fontFamily: (Platform.OS === 'android') ? 'Roboto' : 'System',
+  fontFamily: 'System',
   fontWeight: 'normal'
 };
 

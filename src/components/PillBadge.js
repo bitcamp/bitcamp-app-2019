@@ -48,7 +48,8 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingRight: 5,
     paddingTop: 1,
-    paddingBottom: 1
+    paddingBottom: 1,
+    fontFamily: 'System'
   },
   modalText: {
     fontSize: scale(12)
