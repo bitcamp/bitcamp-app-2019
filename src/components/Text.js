@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { colors } from './Colors';
 import {
   Text,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 import { scale } from '../actions/scale';
+
+const baseTextStyle = {
+  fontFamily: (Platform.OS === 'android') ? 'Roboto' : 'System',
+  fontWeight: 'normal'
+};
 
 const styles = StyleSheet.create({
   text: {
@@ -16,28 +22,28 @@ const styles = StyleSheet.create({
     fontSize: scale(32),
   },
   h2: {
+    ...baseTextStyle,
     fontWeight: 'bold',
-    fontFamily: 'System',
     fontSize: scale(18),
   },
   h3: {
-    fontFamily: 'System',
+    ...baseTextStyle,
     fontSize: scale(15),
   },
   h4: {
-    fontFamily: 'System',
+    ...baseTextStyle,
     fontSize: scale(14),
   },
   h5: {
-    fontFamily: 'System',
+    ...baseTextStyle,
     fontSize: scale(13),
   },
   h6: {
-    fontFamily: 'System',
+    ...baseTextStyle,
     fontSize: scale(12),
   },
   p: {
-    fontFamily: 'System',
+    ...baseTextStyle,
     fontSize: scale(14),
   },
 });

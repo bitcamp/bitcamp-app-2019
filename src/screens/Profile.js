@@ -214,7 +214,6 @@ export default class Profile extends Component<Props> {
           { cancelable: false }
         );
 
-        let count = 0;
         let intervalID = setInterval(() => {
           // Your logic here
           this.setState({
@@ -223,7 +222,7 @@ export default class Profile extends Component<Props> {
                 ? colors.primaryColor
                 : colors.secondaryColor
           });
-          if(++count === 100 || !this.state.devoolooperMode) {
+          if(!this.state.devoolooperMode) {
             clearInterval(intervalID);
             this.setState({
               nameColor: colors.textColor.normal
