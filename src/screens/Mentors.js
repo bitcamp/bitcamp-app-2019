@@ -217,6 +217,8 @@ export default class Mentors extends Component<Props> {
                 underlineColorAndroid="transparent"
                 placeholder="How do I make X using Y?"
                 placeholderTextColor={colors.textColor.light}
+                returnKeyType="next"
+                autoFocus
               />
             </View>
             <View style={modalStyles.inputGroup} marginTop={10}>
@@ -250,6 +252,7 @@ export default class Mentors extends Component<Props> {
                 underlineColorAndroid="transparent"
                 placeholder="Table B5"
                 placeholderTextColor={colors.textColor.light}
+                returnKeyType="next"
               />
             </View>
             <View style={modalStyles.inputGroup} marginTop={10}>
@@ -264,6 +267,7 @@ export default class Mentors extends Component<Props> {
                 placeholder="bitcamper123"
                 placeholderTextColor={colors.textColor.light}
                 autoCapitalize="none"
+                returnKeyType="done"
               />
               <P style={modalStyles.inputDescription}>
                 A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
@@ -315,9 +319,9 @@ export default class Mentors extends Component<Props> {
   }
 
   render() {
-    {
-      this.createNotificationListener();
-    }
+  {
+    this.createNotificationListener();
+  }
 
     return (
       <ViewContainer>
@@ -370,7 +374,7 @@ const modalStyles = StyleSheet.create({
   },
   textArea: {
     textAlignVertical: 'top',
-    minHeight: verticalScale(225),
+    minHeight: verticalScale(200),
   },
   inputGroupTitle: {
     color: '#6d6d72', 
