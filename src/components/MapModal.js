@@ -23,12 +23,12 @@ export default class MapModal extends Component {
     this.setFloors();
   }
 
-  setFloors() {
-    RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
+  async setFloors() {
+    await RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
     [1, 2, 3, 'Parking'].map(floorNumber => {
       RNFetchBlob
         .config({
-          fileCache : true,
+          fileCache : false,
           // by adding this option, the temp files will have a file extension
           appendExt : 'png',
           session: 'floorMaps',
@@ -37,7 +37,7 @@ export default class MapModal extends Component {
         })
         .then((res) => {
           currFloors = this.state.floors;
-          currFloors[floorNumber] = ('file://' + res.path());
+          currFloors[floorNumber] = 'https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`;
           this.setState({floors: currFloors});
         }).catch((error) => {
           console.log(error);

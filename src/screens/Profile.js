@@ -335,7 +335,7 @@ export default class Profile extends Component<Props> {
 
         console.log(id);
 
-        const isOrganizer = this.state.user.admin;
+        const isOrganizer = this.state.user.admin || this.state.user.organizer;
 
         return (
           <ViewContainer>
