@@ -17,6 +17,7 @@ import Schedule from './Schedule';
 import Expo from './Expo';
 import moment from 'moment';
 import { scale } from '../actions/scale';
+import { H1 } from '../components/Text';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
@@ -104,14 +105,7 @@ export default class AppContainer extends Component<Props> {
           />
         </View>
         <View style={{flex:1, paddingLeft: 20, paddingTop: 5}}>
-          <Text style={{
-            textAlign: 'left',
-            fontFamily: 'Aleo-Bold',
-            fontSize: scale(32),
-            color: colors.primaryColor,
-          }}>
-            {navigation.getParam("title")}
-          </Text>
+          <H1>{navigation.getParam("title")}</H1>
         </View>
       </View>
     ),
