@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { colors } from './Colors';
 import {
   Text,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 import { scale } from '../actions/scale';
 
@@ -17,21 +17,27 @@ const styles = StyleSheet.create({
   },
   h2: {
     fontWeight: 'bold',
+    fontFamily: 'System',
     fontSize: scale(18),
   },
   h3: {
+    fontFamily: 'System',
     fontSize: scale(15),
   },
   h4: {
+    fontFamily: 'System',
     fontSize: scale(14),
   },
   h5: {
+    fontFamily: 'System',
     fontSize: scale(13),
   },
   h6: {
+    fontFamily: 'System',
     fontSize: scale(12),
   },
   p: {
+    fontFamily: 'System',
     fontSize: scale(14),
   },
 });
