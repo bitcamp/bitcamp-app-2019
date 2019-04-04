@@ -71,7 +71,7 @@ export default class SearchModal extends Component {
   filterEvents(query) {
     query = query.toLowerCase();
     query_regex = this.escapeRegExp(query);
-    eventDays = this.state.schedule;
+    eventDays = this.props.eventDays;
     newSchedule = []
 
     // We apologize for this mess :(
@@ -88,6 +88,7 @@ export default class SearchModal extends Component {
             let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query_regex) >= 0) : event.category.toLowerCase().search(query_regex) >= 0)
             if (event.title.toLowerCase().search(query_regex) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
           /*event.category.toLowerCase().search(query) >= 0*/) {
+              console.log("HERE");
               newEventGroup.events.push(event);
             }
           }

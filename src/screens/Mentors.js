@@ -121,7 +121,7 @@ export default class Mentors extends Component<Props> {
   }
 
   async sendQuestion() {
-    if (this.state.question === "" || this.state.location === "") {
+    if (this.state.question === "" || (this.state.location === "" && this.state.needsInPersonAssistance)) {
       Alert.alert(
         "Try Again",
         "Your question or location was empty.",
