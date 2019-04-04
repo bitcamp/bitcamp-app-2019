@@ -36,6 +36,10 @@ export default class SearchModal extends Component {
     }
   }
 
+  escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
+  
   componentDidMount() {
     this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', this.handleKeyboardDidShow);
     this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide);
@@ -66,8 +70,9 @@ export default class SearchModal extends Component {
 
   filterEvents(query) {
     query = query.toLowerCase();
+    query_regex = this.escapeRegExp(query);
     eventDays = this.props.eventDays;
-    newSchedule = [];
+    newSchedule = []
 
     // We apologize for this mess :(
     if(query !== "") {
@@ -80,9 +85,10 @@ export default class SearchModal extends Component {
           for (eventIndex in eventGroup.events) {
             event = eventGroup.events[eventIndex];
             /* TODO: Change this when all categories switched to list */
-            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query) >= 0) : event.category.toLowerCase().search(query) >= 0)
-            if (event.title.toLowerCase().search(query) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
+            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query_regex) >= 0) : event.category.toLowerCase().search(query_regex) >= 0)
+            if (event.title.toLowerCase().search(query_regex) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
           /*event.category.toLowerCase().search(query) >= 0*/) {
+              console.log("HERE");
               newEventGroup.events.push(event);
             }
           }

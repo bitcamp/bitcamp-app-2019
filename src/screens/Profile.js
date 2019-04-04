@@ -41,6 +41,7 @@ const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
 const USER_DATA_STORE = "USER_DATA_STORE";
+const SCHEDULE_STORAGE_KEY = APP_ID + 'schedule';
 
 const styles = StyleSheet.create({
   actionButton: {
@@ -98,8 +99,9 @@ export default class Profile extends Component<Props> {
           text: "OK",
           onPress: () => {
             AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-              const navigate = this.props.navigation;
-              RNRestart.Restart();
+              AsyncStorage.removeItem(SCHEDULE_STORAGE_KEY).then(() => {
+                RNRestart.Restart();
+              });
             });
           }
         },
@@ -209,7 +211,7 @@ export default class Profile extends Component<Props> {
       if (!this.state.devoolooperMode) {
         Alert.alert(
           "Congratulations!",
-          "You have toggled devoolooper mode.",
+          "You have found the easter egg!",
           [{ text: "OK", onPress: () => console.log("OK Pressed") }],
           { cancelable: false }
         );

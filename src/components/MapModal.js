@@ -18,16 +18,14 @@ export default class MapModal extends Component {
   constructor() {
     super();
     this.state = {
-      floors: [],
+      floors: {},
     }
     this.setFloors();
   }
 
   setFloors() {
     RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
-    const floorPhotos = [1, 2, 3, 'Parking'].map(floorNumber => {
-      console.log('https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`);
-      let dirs = RNFetchBlob.fs.dirs;
+    [1, 2, 3, 'Parking'].map(floorNumber => {
       RNFetchBlob
         .config({
           fileCache : true,
@@ -38,31 +36,26 @@ export default class MapModal extends Component {
         .fetch('GET', 'https://raw.githubusercontent.com/bitcamp/bitcamp-app-2019/master/assets/imgs/floor-maps/' + (floorNumber === 'Parking' ? '' : 'Floor_') + `${floorNumber}.png`, {
         })
         .then((res) => {
-          // the temp file path with file extension `png`
-          console.log(this.state);
           currFloors = this.state.floors;
-          currFloors.push('file://' + res.path())
-          // Beware that when using a file path as Image source on Android,
-          // you must prepend "file://"" before the file path
-          this.setState({floors: currFloors})
+          currFloors[floorNumber] = ('file://' + res.path());
+          this.setState({floors: currFloors});
         }).catch((error) => {
           console.log(error);
           currFloors = this.state.floors;
-          currFloors.push(null);
+          currFloors[floorNumber] = null;
           this.setState({floors: currFloors});
-          });
+        });
       });
   }
 
   componentDidMount() {
-
   }
 
   render() {
     console.log(this.state.floors);
     const props = this.props;
     const floors = [1, 2, 3, 'Parking'].map(floorNumber => {
-      if (this.state.floors[(floorNumber === 'Parking' ? floorNumber : floorNumber - 1)] === null) {
+      if (this.state.floors[floorNumber] === null) {
         return (
           <PhotoView
             key={floorNumber}
@@ -84,7 +77,7 @@ export default class MapModal extends Component {
         <PhotoView
           key={floorNumber}
           tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-          source={{uri : this.state.floors[(floorNumber === 'Parking' ? floorNumber : floorNumber - 1)] }}
+          source={{uri : this.state.floors[floorNumber] }}
           minimumZoomScale={1}
           maximumZoomScale={8}
           androidScaleType="fitCenter"
@@ -94,7 +87,7 @@ export default class MapModal extends Component {
             flex: 1,
             backgroundColor: colors.backgroundColor.dark,
           }}
-        />
+        />  
       );
     });
     return (
