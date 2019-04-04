@@ -99,9 +99,7 @@ export default class Profile extends Component<Props> {
           text: "OK",
           onPress: () => {
             AsyncStorage.removeItem(USER_DATA_STORE).then(() => {
-              AsyncStorage.removeItem(SCHEDULE_STORAGE_KEY).then(() => {
-                RNRestart.Restart();
-              });
+              RNRestart.Restart();
             });
           }
         },

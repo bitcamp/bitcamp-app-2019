@@ -77,6 +77,7 @@ export default class EventsManager {
       }
 
       this.fetchSavedCounts();
+      this.fetchNewUserData();
       this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
 
       this.updateEventComponents();
@@ -178,6 +179,51 @@ export default class EventsManager {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  compareUserData(oldData, newData) {
+    return oldData.admin === newData.admin &&
+      _.isEqual(oldData.confirmation, newData.confirmation) && 
+      oldData.email === newData.email && 
+      _.isEmpty(_.xor(oldData.favoritedEvents, newData.favoritedEvents)) && 
+      _.isEmpty(_.xor(oldData.favoritedFirebaseEvents, newData.favoritedFirebaseEvents)) && 
+      oldData.id === newData.id && 
+      _.isEqual(oldData.profile, newData.profile) && 
+      _.isEqual(oldData.status, newData.status)
+  }
+
+  async fetchNewUserData() {
+    try {
+      result = await AsyncStorage.getItem(USER_DATA_STORE);
+      token = await AsyncStorage.getItem(USER_TOKEN);
+      if (result != null && token != null) {
+        result = JSON.parse(result);
+        id = result.id;
+        let response = await fetch(`https://api.bit.camp/api/users/${id}/`, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'x-access-token': token,
+          },
+        });
+        let responseJson = await response.json();
+        console.log(responseJson);
+        if(response.status == 200){
+          console.log({result});
+          console.log({responseJson});
+          if (!this.compareUserData(result, responseJson)) {
+            Toast.show("Your user information is out of date! Please log out and log in again.", Toast.LONG);
+          }
+        }
+      }
+    }
+    catch(error) {
+      console.log(error);
+      Toast.show("Error grabbing new user data.");
+    }
+    this.updateHearts();
+    this.updateEventComponents();
   }
 
   getEventDays() {
