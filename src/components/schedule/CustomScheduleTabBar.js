@@ -26,6 +26,9 @@ export default class CustomScheduleTabBar extends Component {
   }
 
   render() {
+    if(this.props.tabs.length === 0) {
+      return <React.Fragment key="EMPTY SEARCH TAB"/>;
+    }
     return (
     <View style={[styles.tabs, this.props.style]}>
       {this.props.tabs.map((tab, i) => {
@@ -36,11 +39,11 @@ export default class CustomScheduleTabBar extends Component {
           style={[
             styles.tab,
             (this.props.activeTab === i ? styles.activetab : styles.inactivetab),
-            (tab == 'ios-star' ? styles.star : styles.weekdays)
+            (tab === 'ios-star' ? styles.star : styles.weekdays)
           ]}>
-          { tab != 'ios-star' ?
-          ( tab != 'Parking' ?
-          <BaseText style={[(this.props.activeTab === i) && styles.textActive, styles.text]}>
+          { tab !== 'ios-star' ?
+          ( tab !== 'Parking' ?
+          <BaseText style={[styles.text, (this.props.activeTab === i) && styles.textActive]}>
             {tab}
           </BaseText>
           :
@@ -87,6 +90,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: scale(15),
+    color: colors.textColor.light
   },
   textActive: {
     color: colors.primaryColor,

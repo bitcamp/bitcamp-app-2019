@@ -3,24 +3,22 @@ import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Tex
 import Modal from 'react-native-modal';
 import { SearchBar } from 'react-native-elements';
 import { H3 } from "./Text";
-import EventGroupComponent from '../components/schedule/EventGroupComponent';
 import EventDay from '../events/EventDay';
 import EventGroup from '../events/EventGroup';
 import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
 import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
-import CustomScheduleTabBar from './schedule/CustomScheduleTabBar';
-import ScrollableTabView, {ScrollableTabBar} from 'react-native-scrollable-tab-view';
 import { scale } from '../actions/scale';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
+import SearchBarTabView from './SearchBarTabView';
+import _ from 'lodash';
 
 export default class SearchModal extends Component {
 
   constructor(props) {
     super(props);
-    this.renderScheduleForDay = this.renderScheduleForDay.bind(this);
     this.filterEvents = this.filterEvents.bind(this);
     this.state = {
       search: '',
@@ -34,6 +32,7 @@ export default class SearchModal extends Component {
       offsetHeight: 0,
       keyboardHeight: 0
     }
+    this.renderCount = 0;
   }
 
   escapeRegExp(string) {
@@ -51,10 +50,10 @@ export default class SearchModal extends Component {
   }
 
   handleKeyboardDidShow = (event) => {
-    this.setState({keyboardHeight: event.endCoordinates.height});
+    // this.setState({keyboardHeight: event.endCoordinates.height});
   }
   handleKeyboardDidHide = () => {
-    this.setState({keyboardHeight: 0});
+    // this.setState({keyboardHeight: 0});
   }
 
   measureView(event, view) {
@@ -64,11 +63,9 @@ export default class SearchModal extends Component {
       height: newHeight,
       offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + h, 0)
     })
-    console.log(this.state.height);
-    console.log(this.state.offsetHeight);
   }
 
-  filterEvents(query) {
+  filterEvents(query, args) {
     query = query.toLowerCase();
     query_regex = this.escapeRegExp(query);
     eventDays = this.props.eventDays;
@@ -88,7 +85,6 @@ export default class SearchModal extends Component {
             let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query_regex) >= 0) : event.category.toLowerCase().search(query_regex) >= 0)
             if (event.title.toLowerCase().search(query_regex) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
           /*event.category.toLowerCase().search(query) >= 0*/) {
-              console.log("HERE");
               newEventGroup.events.push(event);
             }
           }
@@ -103,52 +99,11 @@ export default class SearchModal extends Component {
     this.setState({
       newSchedule: newSchedule,
       search: query
-    });    
+    });
+    console.log("FILTER ARGS", ...args)
   }
 
-  renderScheduleForDay(eventDayObj) {
-    eventDay = eventDayObj.item;
-    return (
-      <FlatList
-        key={eventDay.label}
-        data={eventDay.eventGroups}
-        renderItem={this.renderEventCard.bind(this)}
-        keyExtractor={(item, index) => index.toString()}
-        scrollEnabled={false}
-      />
-    );
-  }
-
-  renderEventCard(eventGroupObj) {
-    eventGroup = eventGroupObj.item;
-    return (
-      <EventGroupComponent
-        header={eventGroup.label}
-        events={eventGroup.events}
-        eventManager={this.props.eventManager}
-        origin={'Search'}
-      />
-    );
-  }
-
-
-  renderSearchResults(schedule) {
-    return schedule.map((eventDay,index) =>
-      <ScrollView key={eventDay.label} tabLabel={eventDay.label} style={[styles.tabView]}>
-        <FlatList
-          data={[eventDay]}
-          renderItem={this.renderScheduleForDay}
-          keyExtractor={(event, index) => `${eventDay.label} list`}
-        />
-      </ScrollView>);
-  }
-
-  render() {
-    const props = this.props;
-    const dimensions = require('Dimensions').get('window');
-    const imageWidth = dimensions.width - 42;
-    const imageHeight = Math.round((imageWidth * 38) / 67);
-    const styles = {width: window.width, height: window.height, overflow:'visible'};
+  renderBadges() {
     let badges = [];
     for (let obj in badgeStyles) {
       badges.push(
@@ -163,6 +118,24 @@ export default class SearchModal extends Component {
           />
         </TouchableOpacity>);
     }
+    return badges;
+  }
+
+  render() {
+    let diff = null;
+    if(this.state && this.prevState) {
+      diff = Object.keys(this.state).reduce((diff, key) => {
+        if (this.prevState[key] === this.state[key]) return diff
+        return {
+          ...diff,
+          [key]: this.state[key]
+        }
+      }, {})
+    }
+    console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (diff) ? diff : "");
+    this.prevState = this.state;
+    const props = this.props;
+    const dimensions = require('Dimensions').get('window');
     let newSchedule = this.state.newSchedule.filter(event => event.eventGroups.length > 0);
     return (
       <Modal
@@ -175,7 +148,6 @@ export default class SearchModal extends Component {
         animationOutTiming={300}
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
         style={[modalStyle]}
       >
@@ -201,6 +173,7 @@ export default class SearchModal extends Component {
               inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
               leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
               rightIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
+              returnKeyType="search"
             />
             <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
               <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
@@ -216,13 +189,13 @@ export default class SearchModal extends Component {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{flex: 1}} onLayout={(event) => this.measureView(event, 'TagViewParent')}>
+          <View style={{flex: 1}} onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
             <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
               <ScrollView
                 horizontal={true}
                 onLayout={(event) => this.measureView(event, 'TagScrollView')}
                 showsHorizontalScrollIndicator={false}>
-                {badges}
+                {this.renderBadges()}
               </ScrollView>
               <LinearGradient
                   colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
@@ -234,15 +207,13 @@ export default class SearchModal extends Component {
                 />
             </View>
           </View>
-          <ScrollableTabView
-            renderTabBar={() => <CustomScheduleTabBar /> }
-            style={{height: (dimensions.height - (this.state.offsetHeight + 2 + this.state.keyboardHeight))}}
-            page={0}
-          >
-            {newSchedule.length > 0 && 
-              this.renderSearchResults(newSchedule)
-            }
-          </ScrollableTabView>
+          <SearchBarTabView
+            screenHeight={dimensions.height}
+            offsetHeight={this.state.offsetHeight}
+            keyboardHeight={this.state.keyboardHeight}
+            schedule={newSchedule}
+            eventManager={this.props.eventManager}
+          />
         </ModalContent>
       </Modal>
     );
@@ -263,10 +234,5 @@ const styles = StyleSheet.create({
     //borderBottomColor: colors.primaryColor,
     //borderTopColor: 'black',
     //textAlign: 'center'
-  },
-  tabView: {
-    flex: 1,
-    //padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.01)'
   },
 });
