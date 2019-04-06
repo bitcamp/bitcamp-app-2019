@@ -65,8 +65,6 @@ export default class SearchBarTabView extends React.Component {
 const styles = StyleSheet.create({
   tabView: {
     flex: 1,
-    //padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.01)'
   },
 });
 
