@@ -67,40 +67,32 @@ export default class SearchModal extends Component {
 
   filterEvents(query, args) {
     query = query.toLowerCase();
-    query_regex = this.escapeRegExp(query);
-    eventDays = this.props.eventDays;
-    newSchedule = []
+    let query_regex = this.escapeRegExp(query);
+    let newSchedule = [];
 
-    // We apologize for this mess :(
     if(query !== "") {
-      for (ed in eventDays) {
-        day = eventDays[ed];
-        newEventDay = new EventDay(day.label, [])
-        for (eventGroupIndex in day.eventGroups) {
-          eventGroup = day.eventGroups[eventGroupIndex];
-          newEventGroup = new EventGroup(eventGroup.label, [])
-          for (eventIndex in eventGroup.events) {
-            event = eventGroup.events[eventIndex];
-            /* TODO: Change this when all categories switched to list */
-            let category_search = (Array.isArray(event.category) ? event.category.map(category => category.toLowerCase().search(query_regex) >= 0) : event.category.toLowerCase().search(query_regex) >= 0)
-            if (event.title.toLowerCase().search(query_regex) >= 0 || (Array.isArray(category_search) ? category_search.includes(true) : category_search)
-          /*event.category.toLowerCase().search(query) >= 0*/) {
-              newEventGroup.events.push(event);
-            }
-          }
-          if (newEventGroup.events.length > 0) {
-            newEventDay.eventGroups.push(newEventGroup);
-          }
-        }
-        newSchedule.push(newEventDay);
-      }
+      newSchedule = _.cloneDeep(this.props.eventDays);
+
+      // Filter out any event that doesn't match the query
+      newSchedule = newSchedule.map(eventDay => {
+        eventDay.eventGroups = eventDay.eventGroups.map(eventGroup => {
+          eventGroup.events = eventGroup.events.filter(event => {
+            const category_search = (Array.isArray(event.category))
+              ? event.category.some(category => category.toLowerCase().search(query_regex) >= 0) 
+              : event.category.toLowerCase().search(query_regex) >= 0;
+
+            return event.title.toLowerCase().search(query_regex) >= 0 || category_search;
+          })
+          return eventGroup;
+        }).filter(group => group.events.length > 0);
+        return eventDay;
+      });
     }
 
     this.setState({
       newSchedule: newSchedule,
       search: query
     });
-    console.log("FILTER ARGS", ...args)
   }
 
   renderBadges() {
@@ -122,21 +114,10 @@ export default class SearchModal extends Component {
   }
 
   render() {
-    let diff = null;
-    if(this.state && this.prevState) {
-      diff = Object.keys(this.state).reduce((diff, key) => {
-        if (this.prevState[key] === this.state[key]) return diff
-        return {
-          ...diff,
-          [key]: this.state[key]
-        }
-      }, {})
-    }
-    console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (diff) ? diff : "");
-    this.prevState = this.state;
+    console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (this.state) ? this.state : "");
     const props = this.props;
     const dimensions = require('Dimensions').get('window');
-    let newSchedule = this.state.newSchedule.filter(event => event.eventGroups.length > 0);
+    const newSchedule = this.state.newSchedule.filter(day => day.eventGroups.length > 0);
     return (
       <Modal
         isVisible={props.isModalVisible}

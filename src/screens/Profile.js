@@ -60,6 +60,8 @@ const styles = StyleSheet.create({
     marginTop: scale(15),
     backgroundColor: "white",
     borderRadius: 8,
+    borderColor: 'transparent',
+    borderWidth: 0,
     padding: scale(7)
   },
   username: {

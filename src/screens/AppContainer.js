@@ -54,14 +54,14 @@ export default class AppContainer extends Component<Props> {
             </TouchableHighlight>
           </View>
         </View>
-        {/* <MapModal
+        <MapModal
           isModalVisible={
             navigation.state.params
               ? navigation.getParam("isMapModalVisible")
               : false
           }
           toggleModal={() => navigation.state.params.toggleMapModal()}
-        /> */}
+        />
       </View>
     )
     :
