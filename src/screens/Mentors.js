@@ -28,6 +28,7 @@ import { StyleSheet, StatusBar, Switch } from "react-native";
 import { red100 } from "react-native-paper/src/styles/colors";
 import { scale, verticalScale } from "../actions/scale";
 import AltModalHeader from '../components/AltModalHeader';
+import SwitchInput from '../components/SwitchInput';
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
@@ -41,7 +42,8 @@ export default class Mentors extends Component<Props> {
       needsInPersonAssistance: false,
       slackUsername: "",
       newQuestionScreen: false,
-      listData: []
+      listData: [],
+      needsDesignMentor: false
     };
     this.sendQuestion = this.sendQuestion.bind(this);
     this.showToast = this.showToast.bind(this);
@@ -94,11 +96,15 @@ export default class Mentors extends Component<Props> {
   }
 
   clearInputs() {
-    this.setState({ question: "", location: "" });
+    this.setState({ 
+      question: "",
+      needsDesignMentor: false, 
+      needsInPersonAssistance: false 
+    });
   }
   cancelQuestion() {
+    this.clearInputs();
     this.setState({
-      question: "",
       newQuestionScreen: !this.state.newQuestionScreen
     });
   }
@@ -141,6 +147,7 @@ export default class Mentors extends Component<Props> {
         location: this.state.location,
         slackUsername: this.state.slackUsername,
         needsInPersonAssistance: this.state.needsInPersonAssistance,
+        needsDesignMentor: this.state.needsDesignMentor,
         status: "Awaiting available mentors",
         key: moment().format(),
         name: name,
@@ -170,15 +177,21 @@ export default class Mentors extends Component<Props> {
   }
   renderHeading() {
     return (
-      <React.Fragment>
+      <View>
         <H2 style={{ marginTop: 20, marginBottom: 5 }}>Get help from a mentor</H2>
         <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
-      </React.Fragment>
+      </View>
     );
   }
 
   renderNewQuestionModal() {
-    const { question, location, newQuestionScreen, slackUsername, needsInPersonAssistance } = this.state;
+    const { 
+      question, 
+      location, 
+      newQuestionScreen, 
+      slackUsername, 
+      needsInPersonAssistance, 
+      needsDesignMentor } = this.state;
 
     return (
       <Modal
@@ -195,86 +208,79 @@ export default class Mentors extends Component<Props> {
         onBackButtonPress={() => this.toggleModal()}
         style={modalStyle}
       >
-        <KeyboardShift style={modalStyles.stretchyContainer}>
-          <AltModalHeader
-            title="Request Help"
-            leftText="Cancel"
-            leftFunc={this.cancelQuestion.bind(this)}
-            rightText="Submit"
-            rightFunc={this.sendQuestion.bind(this)}
-          />
-          <View style={modalStyles.stretchyContainer}>
-            <View style={modalStyles.inputGroup}>
-              <H3 style={modalStyles.inputGroupTitle}>
-                QUESTION
-              </H3>
-              <TextInput
-                style={[ modalStyles.input, modalStyles.textArea ]}
-                multiline={true}
-                numberOfLines={10}
-                onChangeText={text => this.setState({ question: text })}
-                value={question}
-                underlineColorAndroid="transparent"
-                placeholder="How do I make X using Y?"
-                placeholderTextColor={colors.textColor.light}
-                returnKeyType="next"
-                autoFocus
-              />
-            </View>
-            <View style={modalStyles.inputGroup} marginTop={10}>
-              <H3 style={modalStyles.inputGroupTitle}>
-                TABLE INFO
-              </H3>
-              <TouchableOpacity 
-                style={[
-                  modalStyles.input,
-                  {
-                    borderBottomColor: colors.borderColor.light,
-                    borderBottomWidth: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between'
-                  }
-                ]}
-                onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-                activeOpacity={1}
-              >
-                <P>I'd like in person assistance please</P>
-                <Switch
-                  trackColor={colors.primaryColor}
-                  value={needsInPersonAssistance}
-                  onValueChange={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-                />
-              </TouchableOpacity>
-              <TextInput
-                style={modalStyles.input}
-                onChangeText={text => this.setState({ location: text })}
-                value={location}
-                underlineColorAndroid="transparent"
-                placeholder="Table B5"
-                placeholderTextColor={colors.textColor.light}
-                returnKeyType="next"
-              />
-            </View>
-            <View style={modalStyles.inputGroup} marginTop={10}>
-              <H3 style={modalStyles.inputGroupTitle}>
-                SLACK USERNAME
-              </H3>
-              <TextInput
-                style={modalStyles.input}
-                onChangeText={text => this.setState({ slackUsername: text })}
-                value={slackUsername}
-                underlineColorAndroid="transparent"
-                placeholder="bitcamper123"
-                placeholderTextColor={colors.textColor.light}
-                autoCapitalize="none"
-                returnKeyType="done"
-              />
-              <P style={modalStyles.inputDescription}>
-                A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
-              </P>
-            </View>
+        <AltModalHeader
+          title="Request Help"
+          leftText="Cancel"
+          leftFunc={this.cancelQuestion.bind(this)}
+          rightText="Submit"
+          rightFunc={this.sendQuestion.bind(this)}
+        />
+        <ScrollView style={modalStyles.stretchyContainer}>
+          <View style={modalStyles.inputGroup}>
+            <H3 style={modalStyles.inputGroupTitle}>
+              QUESTION
+            </H3>
+            <TextInput
+              style={[ modalStyles.input, modalStyles.textArea ]}
+              multiline={true}
+              numberOfLines={10}
+              onChangeText={text => this.setState({ question: text })}
+              value={question}
+              underlineColorAndroid="transparent"
+              placeholder="How do I make X using Y?"
+              placeholderTextColor={colors.textColor.light}
+              returnKeyType="next"
+              autoFocus
+            />
           </View>
-        </KeyboardShift>
+          <View style={modalStyles.inputGroup}>
+            <H3 style={modalStyles.inputGroupTitle}>
+              MENTOR/LOCATION INFO
+            </H3>
+            <SwitchInput
+              style={[modalStyles.input, modalStyles.switchInput]}
+              onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
+              text="I'd like in person assistance please"
+              value={needsInPersonAssistance}
+            />
+            <SwitchInput
+              style={[modalStyles.input, modalStyles.switchInput]}
+              onPress={() => this.setState({ needsDesignMentor: !needsDesignMentor})}
+              text="I'd like a design den mentor"
+              value={needsDesignMentor}
+            />
+            <TextInput
+              style={modalStyles.input}
+              onChangeText={text => this.setState({ location: text })}
+              value={location}
+              underlineColorAndroid="transparent"
+              placeholder="Table B5"
+              placeholderTextColor={colors.textColor.light}
+              returnKeyType="next"
+            />
+          </View>
+          <View style={modalStyles.inputGroup}>
+          
+          </View>
+          <View style={modalStyles.inputGroup}>
+            <H3 style={modalStyles.inputGroupTitle}>
+              SLACK USERNAME
+            </H3>
+            <TextInput
+              style={modalStyles.input}
+              onChangeText={text => this.setState({ slackUsername: text })}
+              value={slackUsername}
+              underlineColorAndroid="transparent"
+              placeholder="bitcamper123"
+              placeholderTextColor={colors.textColor.light}
+              autoCapitalize="none"
+              returnKeyType="done"
+            />
+            <P style={modalStyles.inputDescription}>
+              A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
+            </P>
+          </View>
+        </ScrollView>
       </Modal>
     );
   }
@@ -335,11 +341,14 @@ export default class Mentors extends Component<Props> {
           }}
           style={{ marginBottom: 40 }}
         >
-          <Button style={{ 
-            padding: 16, 
-            borderRadius: 8,
-            fontWeight: 'bold'
-          }} text="Ask a Question" />
+          <Button 
+            style={{ 
+              padding: 16, 
+              borderRadius: 8,
+              fontWeight: 'bold'
+            }} 
+            text="Ask a Question" 
+          />
         </TouchableOpacity>
         <PadContainer>
           {this.state.listData && this.state.listData.length > 0 && (
@@ -371,6 +380,12 @@ const modalStyles = StyleSheet.create({
     minHeight: 40,
     flexDirection: 'row',
     alignItems: 'center'
+  },
+  switchInput: {
+    borderBottomColor: colors.borderColor.light,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   textArea: {
     textAlignVertical: 'top',
