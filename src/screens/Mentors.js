@@ -14,6 +14,7 @@ import {
   modalStyle,
   Button,
   PadContainer,
+  ModalContent,
 } from "../components/Base";
 import Modal from "react-native-modal";
 import { colors } from "../components/Colors";
@@ -178,7 +179,7 @@ export default class Mentors extends Component<Props> {
   renderHeading() {
     return (
       <View>
-        <H2 style={{ marginTop: 20, marginBottom: 5 }}>Get help from a mentor</H2>
+        <H2 style={[modalStyles.bigTitle, { marginTop: 20, marginBottom: 5 }]}>Get help from a mentor</H2>
         <P style={{ marginBottom: 20 }}>Bitcamp mentors are experts in helping you with your hack or answering any additional questions you might have.</P>
       </View>
     );
@@ -215,7 +216,7 @@ export default class Mentors extends Component<Props> {
           rightText="Submit"
           rightFunc={this.sendQuestion.bind(this)}
         />
-        <ScrollView style={modalStyles.stretchyContainer}>
+        <ModalContent style={modalStyles.stretchyContainer}>
           <View style={modalStyles.inputGroup}>
             <H3 style={modalStyles.inputGroupTitle}>
               QUESTION
@@ -235,28 +236,23 @@ export default class Mentors extends Component<Props> {
           </View>
           <View style={modalStyles.inputGroup}>
             <H3 style={modalStyles.inputGroupTitle}>
-              MENTOR/LOCATION INFO
+              I WOULD LIKE
             </H3>
             <SwitchInput
               style={[modalStyles.input, modalStyles.switchInput]}
               onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-              text="I'd like in person assistance please"
+              text="In person assistance"
               value={needsInPersonAssistance}
+              isDisabled={needsDesignMentor}
             />
             <SwitchInput
               style={[modalStyles.input, modalStyles.switchInput]}
-              onPress={() => this.setState({ needsDesignMentor: !needsDesignMentor})}
-              text="I'd like a design den mentor"
+              onPress={() => this.setState({ 
+                needsDesignMentor: !needsDesignMentor,
+                needsInPersonAssistance: (!needsDesignMentor) ? true : needsInPersonAssistance
+              })}
+              text="A Design Den mentor"
               value={needsDesignMentor}
-            />
-            <TextInput
-              style={modalStyles.input}
-              onChangeText={text => this.setState({ location: text })}
-              value={location}
-              underlineColorAndroid="transparent"
-              placeholder="Table B5"
-              placeholderTextColor={colors.textColor.light}
-              returnKeyType="next"
             />
           </View>
           <View style={modalStyles.inputGroup}>
@@ -264,14 +260,23 @@ export default class Mentors extends Component<Props> {
           </View>
           <View style={modalStyles.inputGroup}>
             <H3 style={modalStyles.inputGroupTitle}>
-              SLACK USERNAME
+             ABOUT YOU
             </H3>
+            <TextInput
+              style={modalStyles.input}
+              onChangeText={text => this.setState({ location: text })}
+              value={location}
+              underlineColorAndroid="transparent"
+              placeholder="Table Number (B5)"
+              placeholderTextColor={colors.textColor.light}
+              returnKeyType="next"
+            />
             <TextInput
               style={modalStyles.input}
               onChangeText={text => this.setState({ slackUsername: text })}
               value={slackUsername}
               underlineColorAndroid="transparent"
-              placeholder="bitcamper123"
+              placeholder="Slack Username (bitcamper)"
               placeholderTextColor={colors.textColor.light}
               autoCapitalize="none"
               returnKeyType="done"
@@ -280,7 +285,7 @@ export default class Mentors extends Component<Props> {
               A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
             </P>
           </View>
-        </ScrollView>
+        </ModalContent>
       </Modal>
     );
   }
@@ -352,7 +357,7 @@ export default class Mentors extends Component<Props> {
         </TouchableOpacity>
         <PadContainer>
           {this.state.listData && this.state.listData.length > 0 && (
-            <H2 style={{ marginBottom: 20 }}>Your Questions</H2>
+            <H2 style={modalStyles.bigTitle}>Your Questions</H2>
           )}
           <FlatList
             data={this.state.listData}
@@ -372,6 +377,10 @@ export default class Mentors extends Component<Props> {
 }
 
 const modalStyles = StyleSheet.create({
+  bigTitle: {
+    fontSize: scale(22),
+    marginBottom: scale(10),
+  },
   input: {
     backgroundColor: colors.backgroundColor.normal,
     fontSize: scale(14),
@@ -411,5 +420,6 @@ const modalStyles = StyleSheet.create({
   stretchyContainer: {
     flex: 1,
     backgroundColor: colors.backgroundColor.dark,
+    paddingHorizontal: 0,
   }
 });

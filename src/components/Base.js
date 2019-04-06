@@ -110,7 +110,7 @@ const PlainViewContainer = props => (
 
 const ViewContainer = props => (
   <PlainViewContainer>
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView keyboardShouldPersistTaps='handled' style={{ flex: 1 }}>
       <View style={[styles.container, props.style]}>{props.children}</View>
     </ScrollView>
   </PlainViewContainer>
@@ -163,7 +163,7 @@ const HorizontalLine = props => (
 const Spacing = props => <View style={styles.spacing} />;
 
 const ModalContent = props => (
-  <ScrollView keyboardShouldPersistTaps={'handled'}>
+  <ScrollView keyboardShouldPersistTaps='handled'>
     <View style={[styles.modal, props.style]}>{props.children}</View>
   </ScrollView>
 );

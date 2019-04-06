@@ -5,10 +5,13 @@ import { P } from './Text';
 import { colors } from './Colors';
 
 export default function SwitchInput(props) {
+    console.log(props.isDisabled);
     return (
         <TouchableOpacity 
             style={props.style}
-            onPress={props.onPress}
+            onPress={() => {
+                props.isDisabled || props.onPress();
+            }}
             activeOpacity={1}
         >
             <P style={props.textStyle}>{props.text}</P>
@@ -16,6 +19,7 @@ export default function SwitchInput(props) {
                 trackColor={colors.primaryColor}
                 value={props.value}
                 onValueChange={props.onPress}
+                disabled={props.isDisabled}
             />
         </TouchableOpacity>
     );
@@ -27,6 +31,7 @@ SwitchInput.propTypes = {
     onPress: PropTypes.func.isRequired,
     textStyle: stylePropType,
     text: PropTypes.string.isRequired,
-    value: PropTypes.bool.isRequired
+    value: PropTypes.bool.isRequired,
+    isDisabled: PropTypes.bool,
 };
 
