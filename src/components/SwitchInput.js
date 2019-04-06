@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Switch } from 'react-native';
+import { TouchableOpacity, Switch, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { P } from './Text';
 import { colors } from './Colors';
@@ -8,7 +8,7 @@ export default function SwitchInput(props) {
     console.log(props.isDisabled);
     return (
         <TouchableOpacity 
-            style={props.style}
+            style={[styles.container, props.style]}
             onPress={() => {
                 props.isDisabled || props.onPress();
             }}
@@ -24,6 +24,14 @@ export default function SwitchInput(props) {
         </TouchableOpacity>
     );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    }
+});
 
 const stylePropType = PropTypes.oneOfType([PropTypes.object, PropTypes.array]);
 SwitchInput.propTypes = {

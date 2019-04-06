@@ -46,7 +46,6 @@ export default class Mentors extends Component<Props> {
       listData: [],
       needsDesignMentor: false
     };
-    this.sendQuestion = this.sendQuestion.bind(this);
     this.showToast = this.showToast.bind(this);
     this._handleAppStateChange = this._handleAppStateChange.bind(this);
   }
@@ -128,10 +127,23 @@ export default class Mentors extends Component<Props> {
   }
 
   async sendQuestion() {
-    if (this.state.question === "" || (this.state.location === "" && this.state.needsInPersonAssistance)) {
+    const hasNoQuestion = this.state.question === "";
+    const hasNoLocation = this.state.location === "" && this.state.needsInPersonAssistance;
+    const hasNoUsername = this.state.slackUsername === "" && !this.state.needsInPersonAssistance;
+
+    let errorMessage;
+    if(hasNoQuestion) {
+      errorMessage = "Your question was empty";
+    } else if(hasNoLocation) {
+      errorMessage = "Your location was empty";
+    } else if(hasNoUsername) {
+      errorMessage = "Your slack username was empty";
+    }
+
+    if (hasNoQuestion || hasNoLocation || hasNoUsername) {
       Alert.alert(
         "Try Again",
-        "Your question or location was empty.",
+        errorMessage,
         [{ text: "OK", onPress: () => console.log("OK Pressed") }],
         { cancelable: false }
       );
@@ -239,14 +251,14 @@ export default class Mentors extends Component<Props> {
               I WOULD LIKE
             </H3>
             <SwitchInput
-              style={[modalStyles.input, modalStyles.switchInput]}
+              style={[modalStyles.input, modalStyles.topInput]}
               onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-              text="In person assistance"
+              text="In-person assistance"
               value={needsInPersonAssistance}
               isDisabled={needsDesignMentor}
             />
             <SwitchInput
-              style={[modalStyles.input, modalStyles.switchInput]}
+              style={modalStyles.input}
               onPress={() => this.setState({ 
                 needsDesignMentor: !needsDesignMentor,
                 needsInPersonAssistance: (!needsDesignMentor) ? true : needsInPersonAssistance
@@ -256,14 +268,11 @@ export default class Mentors extends Component<Props> {
             />
           </View>
           <View style={modalStyles.inputGroup}>
-          
-          </View>
-          <View style={modalStyles.inputGroup}>
             <H3 style={modalStyles.inputGroupTitle}>
              ABOUT YOU
             </H3>
             <TextInput
-              style={modalStyles.input}
+              style={[modalStyles.input, modalStyles.topInput]}
               onChangeText={text => this.setState({ location: text })}
               value={location}
               underlineColorAndroid="transparent"
@@ -390,11 +399,9 @@ const modalStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  switchInput: {
+  topInput: {
     borderBottomColor: colors.borderColor.light,
     borderBottomWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between'
   },
   textArea: {
     textAlignVertical: 'top',
