@@ -22,7 +22,7 @@ import KeyboardShift from "../components/KeyboardShift";
 import firebase from "react-native-firebase";
 import QuestionCard from "../components/QuestionCard";
 import { AsyncStorage } from "react-native";
-import { H1, H2, H3, H4, H6, P } from "../components/Text";
+import { H1, H2, H3, H4, H6, P, BaseText } from "../components/Text";
 import Toast from "react-native-simple-toast";
 import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
@@ -30,6 +30,7 @@ import { red100 } from "react-native-paper/src/styles/colors";
 import { scale, verticalScale } from "../actions/scale";
 import AltModalHeader from '../components/AltModalHeader';
 import SwitchInput from '../components/SwitchInput';
+import ExternalLink from "../components/ExternalLink";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
@@ -266,6 +267,12 @@ export default class Mentors extends Component<Props> {
               text="A Design Den mentor"
               value={needsDesignMentor}
             />
+            <View style={modalStyles.inputDescriptionContainer}>
+              {"Design Den mentors can help your team create effective visual design for your project."
+                .split(' ').map((word, index) => <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>)
+              }
+              <ExternalLink text="Learn More..." url="https://medium.com/@bitcmp/design-den-907a6f40c3a9"/>
+            </View>
           </View>
           <View style={modalStyles.inputGroup}>
             <H3 style={modalStyles.inputGroupTitle}>
@@ -290,9 +297,12 @@ export default class Mentors extends Component<Props> {
               autoCapitalize="none"
               returnKeyType="done"
             />
-            <P style={modalStyles.inputDescription}>
-              A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed
-            </P>
+            <View style={modalStyles.inputDescriptionContainer}>
+              {"A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed. Make sure that you"
+                .split(' ').map((word, index) => <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>)
+              }
+              <ExternalLink text="join Bitcamp's Slack workspace." url="https://bit.camp/slack"/>
+            </View>
           </View>
         </ModalContent>
       </Modal>
@@ -418,9 +428,13 @@ const modalStyles = StyleSheet.create({
     marginTop: verticalScale(20),
     marginBottom: 5,
   },
-  inputDescription: {
+  inputDescriptionContainer: {
     padding: 15,
     paddingTop: 8,
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  },
+  inputDescription: {
     fontSize: scale(12),
     color: '#6d6d72'
   },
@@ -428,5 +442,8 @@ const modalStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor.dark,
     paddingHorizontal: 0,
+  },
+  externalLink: {
+    color: colors.primaryColor,
   }
 });
