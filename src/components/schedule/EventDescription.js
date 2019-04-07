@@ -26,8 +26,7 @@ import PillBadge from "../PillBadge";
 const styles = StyleSheet.create({
   column: {
     flexDirection: "column",
-    paddingLeft: 0,
-    paddingRight: 0
+    paddingHorizontal: 0
   },
   row: {
     flexDirection: "row",
@@ -46,7 +45,7 @@ const styles = StyleSheet.create({
     marginTop: -2
   },
   eventcard: {
-    padding: 12.5
+    padding: 12.5,
     //marginTop: -5
     //padding: 15,
     //borderBottomColor: colors.textColor.light,
@@ -96,11 +95,6 @@ export default class EventDescription extends Component<Props> {
           <View style={[styles.row, styles.eventcard]}>
             <View style={[styles.col, { flex: 4 }]}>
               <H3 style={{ fontSize: 20 }}>{event.title}</H3>
-              {/*<H4 style={{ color: colors.textColor.light }}>
-                {event.startTime == event.endTime
-                  ? `${event.startTimeFormatted}`
-                  : `${event.startTimeFormatted} - ${event.endTimeFormatted}`}
-              </H4>*/}
               <H4 style={{ fontSize: 17.5, color: colors.textColor.light }}>{event.location}</H4>
               <View style={{ alignItems: 'flex-start', flexDirection:'row' }}>
                 {event.category.map((category,index) =>

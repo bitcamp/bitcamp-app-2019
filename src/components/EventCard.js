@@ -126,8 +126,7 @@ export default class EventCard extends Component {
                       marginTop: 6,
                       marginRight: 6,
                       borderRadius: 8,
-                      paddingLeft: 10,
-                      paddingRight: 10,
+                      paddingHorizontal: 10,
                       height: scale(23),
                       backgroundColor: color,
                       flexDirection: 'row',
@@ -149,16 +148,7 @@ export default class EventCard extends Component {
                   <BaseText numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</BaseText>
                 </View></React.Fragment>}
                 </ImageBackground>
-                <BaseText style={{color: colors.textColor.light}} numberOfLines={1}>{event.caption}</BaseText>
-                {/*!big &&
-                  <View>
-                    <H3 style={{width: imageWidth}} numberOfLines={1}>{titleClipped}</H3>
-                    <H6 style={{ opacity: .8 }}>
-                      <Icon name="star" size={12} color={colors.starColor.selected} />{' '}
-                      {eventManager.getSavedCount(event.eventID)}
-                    </H6>
-                  </View>
-                */}
+                {!big && <BaseText style={{color: colors.textColor.light}} numberOfLines={1}>{event.caption}</BaseText>}
               </React.Fragment>)
               : (
               <ImageBackground

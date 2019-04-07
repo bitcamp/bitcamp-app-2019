@@ -55,7 +55,7 @@ export default class Saved extends Component<Props> {
               />
             </TouchableOpacity>
           </View>*/}
-          <SubHeading style={{marginTop: 10}}>
+          <SubHeading style={styles.subSectionHeading}>
             {events.length} events saved
           </SubHeading>
           {
@@ -120,12 +120,12 @@ class EventsList extends Component<Props> {
           events.map((event) => (
             <EventCard
               key={event.eventID}
-              event = {event}
+              event={event}
               eventManager={eventManager}
-              big
               style={styles.eventCard}
               imageStyle={event.hasPassed ? styles.eventImgPassed : null}
               origin={'Saved'}
+              big
             />
           ))
         }
@@ -138,15 +138,20 @@ class EventsList extends Component<Props> {
 
 const styles = StyleSheet.create({
   eventCard: {
-    marginBottom: 20,
+    marginBottom: 25
   },
   eventImgPassed: {
     opacity: .3,
   },
   subSectionHeading: {
-    paddingBottom: 20
+    marginBottom: 0,
+    paddingVertical: 25,
+    textAlign: 'center'
   },
-  showPastEventsButton: { marginLeft: 0, marginRight: 0, marginBottom: 20 },
+  showPastEventsButton: { 
+    marginHorizontal: 0,
+    marginBottom: 20 
+  },
   headingRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
