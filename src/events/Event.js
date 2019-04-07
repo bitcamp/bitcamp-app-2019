@@ -5,6 +5,7 @@ export default class Event {
     eventID,
     title,
     category,
+    caption,
     description,
     startTime,
     endTime,
@@ -15,6 +16,7 @@ export default class Event {
     this.eventID = eventID;
     this.title = title;
     this.category = category;
+    this.caption = caption;
     this.description = description;
     this.startTime = startTime;
     this.endTime = endTime;

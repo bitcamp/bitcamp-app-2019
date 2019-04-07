@@ -89,7 +89,7 @@ export default class EventModal extends Component {
                 <H4 style={{ color: colors.secondaryColor }}>FEATURED EVENT</H4>
               </View>
             )}
-            <P style={styles.viewWithSpacing}>{props.event.description}</P>
+            <P style={styles.viewWithSpacing}>{props.event.description === "" ? props.event.caption : props.event.description}</P>
           </ScrollView>
         </ModalContent>
       </Modal>

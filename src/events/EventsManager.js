@@ -91,7 +91,6 @@ export default class EventsManager {
     for (let i in rawData) {
       newEventDays.push(createEventDay(rawData[i]));
     }
-
     newCombinedEvents = _.flatten(
       _.flatten(
         _.map(newEventDays, eventDay =>
@@ -183,12 +182,12 @@ export default class EventsManager {
 
   compareUserData(oldData, newData) {
     return oldData.admin === newData.admin &&
-      _.isEqual(oldData.confirmation, newData.confirmation) && 
-      oldData.email === newData.email && 
-      _.isEmpty(_.xor(oldData.favoritedEvents, newData.favoritedEvents)) && 
-      _.isEmpty(_.xor(oldData.favoritedFirebaseEvents, newData.favoritedFirebaseEvents)) && 
-      oldData.id === newData.id && 
-      _.isEqual(oldData.profile, newData.profile) && 
+      _.isEqual(oldData.confirmation, newData.confirmation) &&
+      oldData.email === newData.email &&
+      _.isEmpty(_.xor(oldData.favoritedEvents, newData.favoritedEvents)) &&
+      _.isEmpty(_.xor(oldData.favoritedFirebaseEvents, newData.favoritedFirebaseEvents)) &&
+      oldData.id === newData.id &&
+      _.isEqual(oldData.profile, newData.profile) &&
       _.isEqual(oldData.status, newData.status)
   }
 
@@ -296,7 +295,7 @@ export default class EventsManager {
             this.createNotification(event);
 
             this.updateHearts();
-            //console.log(this);
+            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
 
@@ -342,7 +341,7 @@ export default class EventsManager {
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
             this.updateHearts();
-            //console.log(this);
+            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
           } else {

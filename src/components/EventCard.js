@@ -149,6 +149,7 @@ export default class EventCard extends Component {
                   <BaseText numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</BaseText>
                 </View></React.Fragment>}
                 </ImageBackground>
+                <BaseText style={{color: colors.textColor.light}}>{event.caption}</BaseText>
                 {/*!big &&
                   <View>
                     <H3 style={{width: imageWidth}} numberOfLines={1}>{titleClipped}</H3>

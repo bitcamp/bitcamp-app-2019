@@ -38,6 +38,7 @@ export function createEventGroup(eventGroupLabel, rawEventArray) {
         rawEvent.eventID,
         rawEvent.title,
         rawEvent.category,
+        rawEvent.caption,
         rawEvent.description,
         rawEvent.startTime,
         rawEvent.endTime,
