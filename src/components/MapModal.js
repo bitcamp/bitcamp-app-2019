@@ -114,7 +114,6 @@ export default class MapModal extends Component {
           <ScrollableTabView
             renderTabBar={() => <CustomScheduleTabBar/> }
             style={{height: 530}}
-            prerenderingSiblingsNumber={Infinity}
           >
             {floors}
           </ScrollableTabView>

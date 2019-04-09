@@ -55,7 +55,6 @@ export default class Schedule extends Component<Props> {
         <PlainViewContainer>
           <ScrollableTabView
             renderTabBar={() => <CustomScheduleTabBar/> }
-            prerenderingSiblingsNumber={Infinity}
           >
             {eventDays.map((eventDay,index) =>
               <ScrollView key={index} tabLabel={eventDay.label} style={styles.tabView}>

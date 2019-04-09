@@ -36,7 +36,7 @@ const AltModalHeader = props => (
 const ConditionalSideText = props => (
     <View style={[styles.menuItem, props.containerStyle]}>
         {props.text &&
-            <TouchableOpacity onPress={props.func}>
+            <TouchableOpacity onPress={props.func} hitSlop={{top: 10, bottom: 10, left: 5, right: 5}}>
                 <P style={[
                     styles.text, 
                     styles.link,

@@ -52,7 +52,6 @@ export default class SearchBarTabView extends React.Component {
         renderTabBar={() => <CustomScheduleTabBar/>}
         style={{height: (this.props.screenHeight - (this.props.offsetHeight + 2 + this.props.keyboardHeight))}}
         initialPage={0}
-        prerenderingSiblingsNumber={Infinity}
       >
         {this.props.schedule.length > 0 &&
           this.renderSearchResults(this.props.schedule)

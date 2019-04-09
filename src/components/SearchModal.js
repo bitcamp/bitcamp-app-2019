@@ -200,20 +200,3 @@ export default class SearchModal extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  header: {
-    paddingLeft: 15,
-    paddingBottom: 3,
-    paddingTop: 3,
-    color: 'white',
-    backgroundColor: colors.primaryColor,
-    fontWeight: '500',
-    fontSize: 25,
-    //borderBottomWidth: 5,
-    //borderTopWidth: 0.5,
-    //borderBottomColor: colors.primaryColor,
-    //borderTopColor: 'black',
-    //textAlign: 'center'
-  },
-});
