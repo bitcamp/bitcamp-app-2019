@@ -72,7 +72,7 @@ export default class EventModal extends Component {
             <View style={styles.viewWithSpacing}>
               <View>
                 <H3 style={styles.date}>
-                  {moment(props.event.endTime).format('dddd, MMMM D, YYYY')}
+                  {moment(props.event.startTime).format('dddd, MMMM D, YYYY')}
                 </H3>
                 <H3 style={styles.date}>
                   {
