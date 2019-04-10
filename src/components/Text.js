@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     color: colors.primaryColor,
     fontFamily: 'Aleo-Bold',
     fontSize: scale(32),
+    fontWeight: 'normal'
   },
   h2: {
     fontWeight: 'bold',
