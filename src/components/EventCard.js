@@ -148,7 +148,7 @@ export default class EventCard extends Component {
                   <BaseText numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</BaseText>
                 </View></React.Fragment>}
                 </ImageBackground>
-                {!big && <BaseText style={{color: colors.textColor.light}} numberOfLines={1}>{event.caption}</BaseText>}
+                {!big && <BaseText style={{color: colors.textColor.light, width: imageWidth}} numberOfLines={1}>{event.caption}</BaseText>}
               </React.Fragment>)
               : (
               <ImageBackground
