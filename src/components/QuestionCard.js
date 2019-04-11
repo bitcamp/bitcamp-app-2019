@@ -58,6 +58,8 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: questionColors.unclaimed,
+    flex: 1,
+    flexWrap: 'wrap'
   },
   claimedText: { 
     color: questionColors.claimed 
