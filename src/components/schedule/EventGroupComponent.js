@@ -23,7 +23,6 @@ export default class EventGroupComponent extends Component<Props> {
             return (
               <EventDescription
                 event = {event}
-                disabled={event.hasPassed && !HACKING_IS_OVER}
                 eventManager={this.props.eventManager}
                 origin={this.props.origin}
               />

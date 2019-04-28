@@ -123,7 +123,6 @@ class EventsList extends Component<Props> {
               event={event}
               eventManager={eventManager}
               style={styles.eventCard}
-              imageStyle={event.hasPassed ? styles.eventImgPassed : null}
               origin={'Saved'}
               big
             />
