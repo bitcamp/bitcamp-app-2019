@@ -66,11 +66,17 @@ export default class HappeningNowSlideshow extends Component {
               locations={[0.3, 1]}
             >
               <PadContainer style={styles.textGroup}>
-                <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>
+                <H3 style={styles.happeningTitle}>
+                {HACKING_IS_OVER
+                    ? 'Bitcamp 2019'
+                    : 'HAPPENING NOW'
+                  }
+                </H3>
                 <H2 style={styles.eventTitle}>
                   {HACKING_IS_OVER
                     ? 'Thanks for Hacking!'
-                    : 'No events at this time'}
+                    : 'No events at this time'
+                  }
                 </H2>
               </PadContainer>
             </LinearGradient>
