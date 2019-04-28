@@ -202,13 +202,6 @@ export default class AppContainer extends Component<Props> {
             eventManager={this.props.screenProps.eventManager}
             navigation={this.props.navigation}
           />
-          { hackingIsOver &&
-          <Expo
-            tabLabel="expo"
-            eventManager={this.props.screenProps.eventManager}
-            navigation={this.props.navigation}
-          />
-          }
           <Mentors tabLabel="mentors" />
           <Profile tabLabel="profile" navigation={navigate} />
         </ScrollableTabView>

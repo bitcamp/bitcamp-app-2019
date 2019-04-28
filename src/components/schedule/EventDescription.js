@@ -88,8 +88,7 @@ export default class EventDescription extends Component<Props> {
       <Fragment>
         {this.renderModal()}
         <TouchableOpacity
-          disabled={disabled}
-          style={event.hasPassed ? [this.props.style, styles.disabled] : this.props.style}
+          style={disabled ? [this.props.style, styles.disabled] : this.props.style}
           onPress={() => this.toggleModal()}
         >
           <View style={[styles.row, styles.eventcard]}>

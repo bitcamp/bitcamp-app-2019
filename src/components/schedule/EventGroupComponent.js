@@ -2,7 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Platform, StyleSheet, Text, View, FlatList } from 'react-native';
 import { BaseText } from '../Text';
 import EventDescription from './EventDescription';
+import moment from 'moment';
 
+const HACKING_IS_OVER = moment().isAfter(moment("2019-04-14 09:00"));
 export default class EventGroupComponent extends Component<Props> {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ export default class EventGroupComponent extends Component<Props> {
             return (
               <EventDescription
                 event = {event}
-                disabled={event.hasPassed}
+                disabled={event.hasPassed && !HACKING_IS_OVER}
                 eventManager={this.props.eventManager}
                 origin={this.props.origin}
               />
