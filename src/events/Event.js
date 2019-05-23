@@ -1,4 +1,4 @@
-import { hasTimePassed, normalizeTimeLabel } from '../events/util';
+import { hasTimePassed, normalizeTimeLabel } from './utils';
 
 export default class Event {
   constructor(

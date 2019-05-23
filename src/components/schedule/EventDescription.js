@@ -19,7 +19,7 @@ import { H1, H2, H3, H4, P } from "../Text";
 import { colors } from "../Colors";
 import Icon from "react-native-vector-icons/FontAwesome";
 import EventModal from "../EventModal";
-import { normalizeTimeLabel } from "../../events/util";
+import { normalizeTimeLabel } from "../../events/utils";
 import EventStar from "../EventStar";
 import PillBadge from "../PillBadge";
 

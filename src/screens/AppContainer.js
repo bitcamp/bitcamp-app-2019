@@ -3,6 +3,7 @@ import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, Text, Toucha
 import firebase from 'react-native-firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Images from '../../assets/imgs/index';
 import { colors } from '../components/Colors';
@@ -34,8 +35,8 @@ export default class AppContainer extends Component<Props> {
     },
     headerLayoutPreset: 'center',
     headerTintColor: colors.primaryColor,
-    headerRight: this.getHeaderRight(),
-    headerLeft: this.getHeaderLeft()
+    headerRight: AppContainer.getHeaderRight(navigation),
+    headerLeft: AppContainer.getHeaderLeft(navigation)
   });
 
   constructor(props) {
@@ -74,33 +75,38 @@ export default class AppContainer extends Component<Props> {
     });
   };
 
-  getHeaderRight = () => {
+  static getHeaderRight = navigation => {
     if(!navigation.getParam("showMapIcon") && !navigation.getParam("showSearchIcon")) {
       return <View/>;
     }
 
     const searchShouldDisplay = navigation.getParam("showSearchIcon");
+    const iconProps = { size: 30, color: colors.primaryColor };
 
     return (  
       <View>
         <View style={{flexDirection:"row", paddingRight: 15}}>
           <View style={{flex:1}}>
-            <TouchableHighlight
-              onPress={ searchShouldDisplay 
-                ? navigation.getParam("toggleSearchModal")
-                : navigation.getParam("toggleMapModal")
-              }
-              underlayColor={ searchShouldDisplay
-                ? "#f9f9f9"
-                : Colors.white
-              }
-            >
-              <FontAwesome
-                name={searchShouldDisplay ? "magnifier" : "map"}
-                size={30}
-                color={colors.primaryColor}
-              />
-            </TouchableHighlight>
+          {searchShouldDisplay
+            ? <TouchableHighlight
+                onPress={navigation.getParam("toggleSearchModal")}
+                underlayColor="#f9f9f9"
+              >
+                <Icon
+                  name="magnifier"
+                  {...iconProps}
+                />
+              </TouchableHighlight>
+            : <TouchableHighlight
+                onPress={navigation.getParam("toggleMapModal")}
+                underlayColor={Colors.white}
+              >
+                <FontAwesome
+                  name="map"
+                  {...iconProps}
+                />
+              </TouchableHighlight>
+          }
           </View>
         </View>
         {searchShouldDisplay 
@@ -123,16 +129,15 @@ export default class AppContainer extends Component<Props> {
               toggleModal={() => navigation.state.params.toggleMapModal()}
             />
         }
-        
       </View>
     );
   };
 
-  getHeaderLeft = () => (
+  static getHeaderLeft = navigation => (
     <View style={{flexDirection:"row", paddingLeft: 15}}>
       <View style={{flex:1}}>
         <Image
-          source={}
+          source={Images.bitcamp_logo}
           style={{width: 50, height: 50, paddingVertical: scale(10)}}
         />
       </View>

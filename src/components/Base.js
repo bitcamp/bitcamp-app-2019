@@ -254,7 +254,7 @@ const Button = props => (
   </View>
 );
 
-const modalStyle = { margin: 0 }
+const modalStyle = { margin: 0 } //TODO: remove
 
 export {
   PlainViewContainer,

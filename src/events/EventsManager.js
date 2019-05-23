@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
 
-import { createEventDay } from '../actions/util.js';
+import { createEventDay } from './utils';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -108,7 +108,7 @@ export default class EventsManager {
       // this event hasn't been seen yet
       if(oldEvent == null) {
         changed = true;
-        this.eventIDToEventMap[eventID] = newEvent;
+        this.eventIDToEventMap[newEvent.eventID] = newEvent;
       } else {
         if(!_.isEqual(oldEvent, newEvent)) {
           // if the start time has changed we need to create a new notification and delete the original one
@@ -119,8 +119,9 @@ export default class EventsManager {
             this.createNotification(newEvent);
           }
           changed = true;
-          //console.log(newEvent);
+          
           //update Event object with new properties
+          // TODO: clean this up
           oldEvent.title = newEvent.title;
           oldEvent.category = newEvent.category;
           oldEvent.description = newEvent.description;
