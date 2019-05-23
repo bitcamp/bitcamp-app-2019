@@ -8,7 +8,7 @@ import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from '
 import { colors } from './Colors';
 import PillBadge from "./PillBadge";
 import Images from '../../assets/imgs/index';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 // TODO TECH DEBT: Replace <Spacing /> with proper margins
 

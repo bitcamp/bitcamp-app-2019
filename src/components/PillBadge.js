@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 import { BaseText } from './Text';
 
 const badgeColors = {

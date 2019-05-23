@@ -1,4 +1,4 @@
-import { hasTimePassed, normalizeTimeLabel } from '../actions/util.js';
+import { hasTimePassed, normalizeTimeLabel } from '../events/util';
 
 export default class Event {
   constructor(
@@ -24,7 +24,6 @@ export default class Event {
     this.location = location;
     this.img = img;
   }
-
 
   get startTimeFormatted() {
     return normalizeTimeLabel(this.startTime)

@@ -27,7 +27,7 @@ import Toast from "react-native-simple-toast";
 import moment from "moment";
 import { StyleSheet, StatusBar, Switch } from "react-native";
 import { red100 } from "react-native-paper/src/styles/colors";
-import { scale, verticalScale } from "../actions/scale";
+import { scale, verticalScale } from "../utils/scale";
 import AltModalHeader from '../components/AltModalHeader';
 import SwitchInput from '../components/SwitchInput';
 import ExternalLink from "../components/ExternalLink";

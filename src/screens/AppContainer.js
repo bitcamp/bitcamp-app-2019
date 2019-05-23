@@ -3,9 +3,8 @@ import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, Text, Toucha
 import firebase from 'react-native-firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import Images from '../../assets/imgs/index';
 import { colors } from '../components/Colors';
 import CustomTabBar from '../components/CustomTabBar';
 import MapModal from '../components/MapModal';
@@ -14,9 +13,8 @@ import Home from './Home';
 import Mentors from './Mentors';
 import Profile from './Profile';
 import Schedule from './Schedule';
-import Expo from './Expo';
 import moment from 'moment';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 import { H1 } from '../components/Text';
 
 const channelId = "bitcamp-push-notifications";
@@ -36,79 +34,8 @@ export default class AppContainer extends Component<Props> {
     },
     headerLayoutPreset: 'center',
     headerTintColor: colors.primaryColor,
-    headerRight:
-    navigation.getParam("showMapIcon") ?
-    (
-      <View>
-        <View style={{flexDirection:"row", paddingRight: 15}}>
-          <View style={{flex:1}}>
-            <TouchableHighlight
-            onPress={navigation.getParam("toggleMapModal")}
-            underlayColor={Colors.white}
-            >
-              <FontAwesome
-                name="map"
-                size={30}
-                color={colors.primaryColor}
-              />
-            </TouchableHighlight>
-          </View>
-        </View>
-        <MapModal
-          isModalVisible={
-            navigation.state.params
-              ? navigation.getParam("isMapModalVisible")
-              : false
-          }
-          toggleModal={() => navigation.state.params.toggleMapModal()}
-        />
-      </View>
-    )
-    :
-    navigation.getParam("showSearchIcon") ? (
-      <View>
-        <View style={{flexDirection:"row", paddingRight: 15}}>
-          <View style={{flex:1}}>
-          <TouchableHighlight
-            onPress={navigation.getParam("toggleSearchModal")}
-            underlayColor={"#f9f9f9"}
-            >
-              <Icon
-                name="magnifier"
-                size={30}
-                color={colors.primaryColor}
-              />
-            </TouchableHighlight>
-          </View>
-        </View>
-        <SearchModal
-          isModalVisible={
-            navigation.state.params
-              ? navigation.getParam("isSearchModalVisible")
-              : false
-          }
-          toggleModal={() => navigation.state.params.toggleSearchModal()}
-          eventDays={navigation.getParam("eventDays")}
-          eventManager={navigation.getParam("eventManager")}
-        />
-      </View>
-    )
-    :
-    (<View>
-    </View>),
-    headerLeft: (
-      <View style={{flexDirection:"row", paddingLeft: 15}}>
-        <View style={{flex:1}}>
-          <Image
-            source={require('../../assets/imgs/bitcamp-logo-icon.png')}
-            style={{width: 50, height: 50, paddingVertical: scale(10)}}
-          />
-        </View>
-        <View style={{flex:1, paddingLeft: 20, paddingTop: 5}}>
-          <H1>{navigation.getParam("title")}</H1>
-        </View>
-      </View>
-    ),
+    headerRight: this.getHeaderRight(),
+    headerLeft: this.getHeaderLeft()
   });
 
   constructor(props) {
@@ -147,6 +74,75 @@ export default class AppContainer extends Component<Props> {
     });
   };
 
+  getHeaderRight = () => {
+    if(!navigation.getParam("showMapIcon") && !navigation.getParam("showSearchIcon")) {
+      return <View/>;
+    }
+
+    const searchShouldDisplay = navigation.getParam("showSearchIcon");
+
+    return (  
+      <View>
+        <View style={{flexDirection:"row", paddingRight: 15}}>
+          <View style={{flex:1}}>
+            <TouchableHighlight
+              onPress={ searchShouldDisplay 
+                ? navigation.getParam("toggleSearchModal")
+                : navigation.getParam("toggleMapModal")
+              }
+              underlayColor={ searchShouldDisplay
+                ? "#f9f9f9"
+                : Colors.white
+              }
+            >
+              <FontAwesome
+                name={searchShouldDisplay ? "magnifier" : "map"}
+                size={30}
+                color={colors.primaryColor}
+              />
+            </TouchableHighlight>
+          </View>
+        </View>
+        {searchShouldDisplay 
+          ? <SearchModal
+              isModalVisible={
+                navigation.state.params
+                  ? navigation.getParam("isSearchModalVisible")
+                  : false
+              }
+              toggleModal={() => navigation.state.params.toggleSearchModal()}
+              eventDays={navigation.getParam("eventDays")}
+              eventManager={navigation.getParam("eventManager")}
+            />
+          : <MapModal
+              isModalVisible={
+                navigation.state.params
+                  ? navigation.getParam("isMapModalVisible")
+                  : false
+              }
+              toggleModal={() => navigation.state.params.toggleMapModal()}
+            />
+        }
+        
+      </View>
+    );
+  };
+
+  getHeaderLeft = () => (
+    <View style={{flexDirection:"row", paddingLeft: 15}}>
+      <View style={{flex:1}}>
+        <Image
+          source={}
+          style={{width: 50, height: 50, paddingVertical: scale(10)}}
+        />
+      </View>
+      <View style={{flex:1, paddingLeft: 20, paddingTop: 5}}>
+        <H1>{navigation.getParam("title")}</H1>
+      </View>
+    </View>
+  );
+
+
   render() {
     this.configureNotificationSettings();
     const eventManager = this.props.screenProps.eventManager;
@@ -168,12 +164,10 @@ export default class AppContainer extends Component<Props> {
             const tabIndex = tab.i;
             const tabNames = [
               "bitcamp",
-              "Schedule"
+              "Schedule",
+              "Mentors",
+              "Profile"
             ];
-            // if (hackingIsOver) {
-            //   tabNames.push("Expo");
-            // }
-            tabNames.push("Mentors", "Profile");
             this.props.navigation.setParams({ title: tabNames[tabIndex] });
             if (tabIndex == 1 || (hackingIsOver && tabIndex == 2)) {
               this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: true, eventDays: eventManager.getEventDays() });

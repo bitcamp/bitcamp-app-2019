@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Platform
 } from 'react-native';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 const styles = StyleSheet.create({
   text: {

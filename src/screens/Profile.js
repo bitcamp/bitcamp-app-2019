@@ -33,7 +33,7 @@ import MCI from "react-native-vector-icons/MaterialCommunityIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import RNRestart from 'react-native-restart'; // Import package from node modules
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting

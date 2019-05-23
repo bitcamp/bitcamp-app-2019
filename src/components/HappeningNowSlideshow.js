@@ -59,7 +59,7 @@ export default class HappeningNowSlideshow extends Component {
               { width: imageWidth, height: imageHeight }
             ]}
             source={Images['banner_campfire']}
-            >
+          >
             <LinearGradient
               style={styles.darkImageMask}
               colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.65)']}

@@ -8,7 +8,7 @@ import {
 import { H3, P } from './Text';
 import { colors } from './Colors';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { scale } from '../actions/scale'; 
+import { scale } from '../utils/scale'; 
 import PropTypes from 'prop-types';
 
 // An alternative modal style with a black, centered title and configurable action text

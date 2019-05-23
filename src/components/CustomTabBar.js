@@ -7,7 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
 import { colors } from './Colors';
 import { P } from './Text';
-import { scale, verticalScale } from '../actions/scale';
+import { scale, verticalScale } from '../utils/scale';
 
 const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 

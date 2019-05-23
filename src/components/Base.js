@@ -17,7 +17,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 import EventStar from './EventStar';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 const styles = StyleSheet.create({
   bg: {

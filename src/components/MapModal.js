@@ -9,6 +9,7 @@ import { ModalContent, modalStyle } from './Base';
 import { colors } from './Colors';
 import RNFetchBlob from 'rn-fetch-blob';
 import { Platform } from 'react-native';
+import Images from '../../assets/imgs';
 
 const dimensions = require('Dimensions').get('window');
 const screenWidth = dimensions.width;
@@ -60,7 +61,7 @@ export default class MapModal extends Component {
           <PhotoView
             key={floorNumber}
             tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-            source={require('../../assets/imgs/floor-maps/not_found.png')}
+            source={Images.not_found}
             minimumZoomScale={1}
             maximumZoomScale={8}
             androidScaleType="fitCenter"

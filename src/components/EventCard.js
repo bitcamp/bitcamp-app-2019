@@ -10,7 +10,7 @@ import EventModal from './EventModal';
 import EventDescription from './schedule/EventDescription';
 import Images from '../../assets/imgs/index';
 import LinearGradient from 'react-native-linear-gradient';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 const styles = StyleSheet.create({
   darkImageMask: {

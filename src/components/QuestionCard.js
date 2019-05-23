@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { H3, H4, H6 } from "./Text";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import AnimatedEllipsis from "react-native-animated-ellipsis";
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 
 export default function QuestionCard(props) {
   const { question, status } = props;

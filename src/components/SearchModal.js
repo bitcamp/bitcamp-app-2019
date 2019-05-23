@@ -9,7 +9,7 @@ import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
 import PillBadge from './PillBadge';
 import {badgeStyles} from './PillBadge.js';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBarTabView from './SearchBarTabView';

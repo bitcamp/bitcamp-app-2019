@@ -1,6 +1,7 @@
 // Use this file to staticly import images https://stackoverflow.com/questions/33907218/react-native-use-variable-for-image-file
 
 const Images = {
+    // Banners
     banner_food: require('./event-banners/food.jpg'),
     banner_demo: require('./event-banners/demo.jpg'),
     banner_main: require('./event-banners/main.jpg'),
@@ -12,7 +13,11 @@ const Images = {
     banner_ceremony: require('./event-banners/ceremony.jpg'),
     banner_colorwar: require('./event-banners/colorwar.jpg'),
 
-    bitcamp_logo: require('./bitcamp-logo.png')
+    // Logos
+    bitcamp_logo: require('./bitcamp-logo.png'),
+
+    // Floor Maps
+    not_found: require('./floor-maps/not_found.png')
 };
 
 export default Images;
