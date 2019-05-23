@@ -104,33 +104,31 @@ export default class EventsManager {
 
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
-      let eventID = newEvent.eventID;
+      const oldEvent = this.eventIDToEventMap[newEvent.eventID];
       // this event hasn't been seen yet
-      if(this.eventIDToEventMap[eventID] == null) {
+      if(oldEvent == null) {
         changed = true;
         this.eventIDToEventMap[eventID] = newEvent;
       } else {
-        curEventObj = this.eventIDToEventMap[newEvent.eventID];
-        if(!_.isEqual(curEventObj, newEvent)) {
-
+        if(!_.isEqual(oldEvent, newEvent)) {
           // if the start time has changed we need to create a new notification and delete the original one
-          if(newEvent.startTime != curEventObj.startTime &&
-             this.isFavorited[newEvent.eventID] &&
-           rescheduleNotifications) {
+          if(newEvent.startTime !== oldEvent.startTime
+            && this.isFavorited[newEvent.eventID]
+            && rescheduleNotifications) {
             this.deleteNotification(newEvent);
             this.createNotification(newEvent);
           }
           changed = true;
           //console.log(newEvent);
           //update Event object with new properties
-          curEventObj.title = newEvent.title;
-          curEventObj.category = newEvent.category;
-          curEventObj.description = newEvent.description;
-          curEventObj.startTime = newEvent.startTime;
-          curEventObj.endTime = newEvent.endTime;
-          curEventObj.featured = newEvent.featured;
-          curEventObj.location = newEvent.location;
-          curEventObj.img = newEvent.img;
+          oldEvent.title = newEvent.title;
+          oldEvent.category = newEvent.category;
+          oldEvent.description = newEvent.description;
+          oldEvent.startTime = newEvent.startTime;
+          oldEvent.endTime = newEvent.endTime;
+          oldEvent.featured = newEvent.featured;
+          oldEvent.location = newEvent.location;
+          oldEvent.img = newEvent.img;
         }
       }
     });
