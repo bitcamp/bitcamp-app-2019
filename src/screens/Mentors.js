@@ -32,7 +32,7 @@ import FullScreenModal from "../components/FullScreenModal";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
-export default class Mentors extends Component<Props> {
+export default class Mentors extends Component {
   constructor(props) {
     super(props);
     this.state = {

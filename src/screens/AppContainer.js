@@ -22,7 +22,7 @@ const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
 const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
-export default class AppContainer extends Component<Props> {
+export default class AppContainer extends Component {
   static navigationOptions = ({navigation}) => ({
     headerStyle: {
       elevation: 0,
@@ -280,7 +280,7 @@ export default class AppContainer extends Component<Props> {
 
     this.notificationDisplayedListener = firebase
       .notifications()
-      .onNotificationDisplayed((notification: Notification) => {
+      .onNotificationDisplayed(notification => {
         // Process your notification as required
         // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
         console.log("notification displayed", notification);
@@ -288,7 +288,7 @@ export default class AppContainer extends Component<Props> {
 
     this.notificationListener = firebase
       .notifications()
-      .onNotification((notification: Notification) => {
+      .onNotification(notification => {
         console.log("notification received", notification);
         notification.android.setChannelId(channelId);
         firebase.notifications().displayNotification(notification);

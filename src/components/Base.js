@@ -169,7 +169,7 @@ const ModalContent = props => (
   </ScrollView>
 );
 
-class ModalHeader extends Component<Props> {
+class ModalHeader extends Component {
   constructor(props) {
     super(props);
   }

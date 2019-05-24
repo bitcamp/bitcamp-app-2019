@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PillBadge extends Component<Props> {
+export default class PillBadge extends Component {
   constructor(props) {
     super(props);
   }

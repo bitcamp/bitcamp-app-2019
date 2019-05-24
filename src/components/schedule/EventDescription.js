@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class EventDescription extends Component<Props> {
+export default class EventDescription extends Component {
   constructor(props) {
     super(props);
     this.toggleModal = this.toggleModal.bind(this);

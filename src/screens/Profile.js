@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class Profile extends Component<Props> {
+export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
