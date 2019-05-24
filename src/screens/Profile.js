@@ -34,6 +34,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import RNRestart from 'react-native-restart'; // Import package from node modules
 import { scale } from '../utils/scale';
+import FullScreenModal from "../components/FullScreenModal";
 
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
@@ -277,50 +278,39 @@ export default class Profile extends Component<Props> {
 
     const scannerView = (() => {
       return (
-        <Modal
+        <FullScreenModal
           isVisible={this.state.scanner}
-          backdropColor={colors.backgroundColor.normal}
-          backdropOpacity={1}
-          animationInTiming={250}
-          animationIn="fadeInUp"
-          animationOut="fadeOutDown"
-          animationOutTiming={300}
-          backdropTransitionInTiming={250}
-          backdropTransitionOutTiming={300}
-          avoidKeyboard={true}
           onBackButtonPress={() => this.toggleScanner()}
-          style={modalStyle}
+          contentStyle={{ padding: 0 }}
+          header={
+            <ModalHeader
+              heading="QR Scanner"
+              onBackButtonPress={() => this.toggleScanner()}
+            />
+          }
         >
-          <ModalContent style={{ padding: 0 }}>
-            <View style={{ padding: 20, paddingBottom: 0 }}>
-              <ModalHeader
-                heading="QR Scanner"
-                onBackButtonPress={() => this.toggleScanner()}
-              />
-            </View>
-            <ViewContainer>
-              <QRCodeScanner
-                ref={node => {
-                  this.scanner = node;
-                }}
-                onRead={this.onScanSuccess.bind(this)}
-                showMarker
-                reactivate={false}
-                customMarker={
-                  <View style={styles.QRMarker}/>
-                }
-              />
-              <ScanResponseModal
-                isVisible={this.state.scannedUser}
-                scannedUserData={this.state.scannedUserData}
-                onBack={() => {
-                  this.setState({ scannedUser: false });
-                  this.scanner.reactivate();
-                }}
-              />
-            </ViewContainer>
-          </ModalContent>
-        </Modal>
+          <ViewContainer>
+            <QRCodeScanner
+              ref={node => {
+                this.scanner = node;
+              }}
+              onRead={this.onScanSuccess.bind(this)}
+              showMarker
+              reactivate={false}
+              customMarker={
+                <View style={styles.QRMarker}/>
+              }
+            />
+            <ScanResponseModal
+              isVisible={this.state.scannedUser}
+              scannedUserData={this.state.scannedUserData}
+              onBack={() => {
+                this.setState({ scannedUser: false });
+                this.scanner.reactivate();
+              }}
+            />
+          </ViewContainer>
+        </FullScreenModal>
       );
     })();
 

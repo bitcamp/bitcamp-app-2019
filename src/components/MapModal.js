@@ -1,14 +1,12 @@
-import React, { Component, Fragment } from 'react';
-import Modal from 'react-native-modal';
+import React, { Component } from 'react';
+import FullScreenModal from './FullScreenModal';
 import PhotoView from 'react-native-photo-view';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import AltModalHeader from '../components/AltModalHeader';
 import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
-import { ModalContent, modalStyle } from './Base';
 import { colors } from './Colors';
 import RNFetchBlob from 'rn-fetch-blob';
-import { Platform } from 'react-native';
 import Images from '../../assets/imgs';
 
 const dimensions = require('Dimensions').get('window');
@@ -91,35 +89,28 @@ export default class MapModal extends Component {
         />  
       );
     });
+
     return (
-      <Modal
+      <FullScreenModal
         isVisible={props.isModalVisible}
         backdropColor={colors.backgroundColor.dark}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={[modalStyle, {flex: 1}]}
-      >
-        <ModalContent style={{ padding: 0, flex: 1 }}>
+        contentStyle={{ padding: 0 }}
+        header={
           <AltModalHeader
             title="Map"
             rightText="Done"
-            rightFunc={props.toggleModal}
+            rightAction={props.toggleModal}
           />
+        }
+      >
           <ScrollableTabView
             renderTabBar={() => <CustomScheduleTabBar/> }
             style={{height: 530}}
           >
             {floors}
           </ScrollableTabView>
-        </ModalContent>
-      </Modal>
+      </FullScreenModal>
     );
   }
 }

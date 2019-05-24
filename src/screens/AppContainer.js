@@ -173,14 +173,16 @@ export default class AppContainer extends Component<Props> {
               "Mentors",
               "Profile"
             ];
-            this.props.navigation.setParams({ title: tabNames[tabIndex] });
-            if (tabIndex == 1 || (hackingIsOver && tabIndex == 2)) {
-              this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: true, eventDays: eventManager.getEventDays() });
-            } else if (tabIndex == 0) {
-              this.props.navigation.setParams({ showMapIcon: true, showSearchIcon: false });
-            } else {
-              this.props.navigation.setParams({ showMapIcon: false, showSearchIcon: false });
-            }
+
+            this.props.navigation.setParams({ 
+              title: tabNames[tabIndex],
+              showMapIcon: (tabIndex === 0),
+              showSearchIcon: (tabIndex === 1)
+            });
+
+            if(tabIndex === 1) {
+              this.props.navigation.setParams({ eventDays: eventManager.getEventDays() });
+            } 
           }}
         >
           <Home

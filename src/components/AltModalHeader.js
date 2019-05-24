@@ -19,7 +19,7 @@ const AltModalHeader = props => (
 
         <ConditionalSideText
             text={props.leftText}
-            func={props.leftFunc}
+            func={props.leftAction}
             textStyle={[styles.leftText, props.leftTextStyle]}
         />
 
@@ -27,7 +27,7 @@ const AltModalHeader = props => (
 
         <ConditionalSideText
             text={props.rightText}
-            func={props.rightFunc}
+            func={props.rightAction}
             textStyle={props.rightTextStyle}
             containerStyle={styles.rightMenuItem}
         />
@@ -55,11 +55,11 @@ const ConditionalSideText = props => (
 AltModalHeader.propTypes = {
     title: PropTypes.string.isRequired,
     leftText: PropTypes.string,
-    leftFunc: requireFunctionIfPresent('leftText'),
+    leftAction: requireFunctionIfPresent('leftText'),
     leftTextStyle: PropTypes.object,
     rightText: PropTypes.string,
     rightTextStyle: PropTypes.object,
-    rightFunc: requireFunctionIfPresent('rightText'),
+    rightAction: requireFunctionIfPresent('rightText'),
 };
 
 const headerPadding = scale(15);

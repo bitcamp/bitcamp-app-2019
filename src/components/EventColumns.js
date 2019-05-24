@@ -133,35 +133,6 @@ export default class EventColumns extends Component {
     );
   }
 
-  /*renderModal() {
-    return (
-      <Modal
-        isVisible={false}
-        backdropColor={colors.backgroundColor.normal}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInRight"
-        animationOut="fadeOutRight"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
-        onBackButtonPress={() => this.toggleModal()}
-        style={modalStyle}
-      >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleModal()}
-            heading={this.props.heading}
-            eventManager={this.props.eventManager}
-            origin={'Home'}
-          />
-          {this.getRows(false)}
-        </ModalContent>
-      </Modal>
-    );
-  }*/
-
   render() {
     const { width, height } = require("Dimensions").get("window");
     return (

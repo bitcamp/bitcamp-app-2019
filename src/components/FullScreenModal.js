@@ -1,11 +1,12 @@
+import React from 'react';
 import Modal from 'react-native-modal';
-import { modalStyle } from './Base';
+import { modalStyle, ModalContent } from './Base';
 import { colors } from './Colors';
 import { ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
-/* A wrapper for a generic modal that standardizes animation timings, and colors modal properties */
-const BaseModal = props => (
+/* A <Modal> wrapper that uses a standard set of animations and colors */
+const FullScreenModal = props => (
     <Modal
         backdropColor={colors.backgroundColor.normal}
         backdropOpacity={1}
@@ -16,17 +17,21 @@ const BaseModal = props => (
         backdropTransitionInTiming={250}
         backdropTransitionOutTiming={300}
         avoidKeyboard={true}
-        style={[modalStyle, props.style]}
+        style={modalStyle}
         {...props}
     >
-        {props.children}
+        {props.header}
+        <ModalContent style={props.contentStyle}>
+            {props.children}
+        </ModalContent>
     </Modal>
 );
 
-BaseModal.propTypes = {
+FullScreenModal.propTypes = {
     isVisible: PropTypes.bool.isRequired,
     onBackButtonPress: PropTypes.func.isRequired,
-    style: ViewPropTypes.style
+    contentStyle: ViewPropTypes.style,
+    header: PropTypes.element
 };
 
-export default BaseModal;
+export default FullScreenModal;

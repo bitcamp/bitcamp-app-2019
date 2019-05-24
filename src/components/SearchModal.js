@@ -1,14 +1,10 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
-import Modal from 'react-native-modal';
+import FullScreenModal from './FullScreenModal';
 import { SearchBar } from 'react-native-elements';
 import { H3 } from "./Text";
-import EventDay from '../events/EventDay';
-import EventGroup from '../events/EventGroup';
-import { ModalContent, ModalHeader, modalStyle } from './Base';
 import { colors } from './Colors';
-import PillBadge from './PillBadge';
-import {badgeStyles} from './PillBadge.js';
+import PillBadge, { badgeStyles } from './PillBadge';
 import { scale } from '../utils/scale';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
@@ -106,7 +102,6 @@ export default class SearchModal extends Component {
             category={obj}
             from='Modal'
             margin={5}
-            isLast={obj === 'Mentor' ? true : false}
           />
         </TouchableOpacity>);
     }
@@ -119,84 +114,75 @@ export default class SearchModal extends Component {
     const dimensions = require('Dimensions').get('window');
     const newSchedule = this.state.newSchedule.filter(day => day.eventGroups.length > 0);
     return (
-      <Modal
+      <FullScreenModal
         isVisible={props.isModalVisible}
         backdropColor={'#f7f7f7'}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
         onBackButtonPress={() => props.toggleModal()}
-        style={[modalStyle]}
+        contentStyle={{ padding: 0, justifyContent: 'flex-start' }}
       >
-      <ModalContent style={{padding:0}}>
-          <View style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingHorizontal: scale(15),
-              paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
-            }}
-            onLayout={(event) => this.measureView(event, 'SearchBar')}
-          >
-            <SearchBar
-              placeholder="Search"
-              platform="android"
-              onChangeText={query => this.filterEvents(query)}
-              onClear={query => this.filterEvents('')}
-              value={this.state.search}
-              autoFocus={true}
-              autoCapitalize='none'
-              containerStyle={{flex: 1}}
-              inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
-              leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
-              rightIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
-              returnKeyType="search"
-            />
-            <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
-              <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
-                <H3 style={{
-                  color: colors.primaryColor,
-                  padding: scale(15),
-                  paddingRight: 0,
-                  flex: 0,
-                  fontWeight: '500'
-                }}>
-                  Cancel
-                </H3>
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={{flex: 1}} onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
-            <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
-              <ScrollView
-                horizontal={true}
-                onLayout={(event) => this.measureView(event, 'TagScrollView')}
-                showsHorizontalScrollIndicator={false}>
-                {this.renderBadges()}
-              </ScrollView>
-              <LinearGradient
-                  colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
-                  locations={[0, 0.1, 0.8, 1]}
-                  start={{x: 0, y: 0}}
-                  end={{x: 1, y: 0}}
-                  style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
-                  pointerEvents={'none'}
-                />
-            </View>
-          </View>
-          <SearchBarTabView
-            screenHeight={dimensions.height}
-            offsetHeight={this.state.offsetHeight}
-            keyboardHeight={this.state.keyboardHeight}
-            schedule={newSchedule}
-            eventManager={this.props.eventManager}
+        <View style={{
+            flex: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: scale(15),
+            paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
+          }}
+          onLayout={(event) => this.measureView(event, 'SearchBar')}
+        >
+          <SearchBar
+            placeholder="Search"
+            platform="android"
+            onChangeText={query => this.filterEvents(query)}
+            onClear={query => this.filterEvents('')}
+            value={this.state.search}
+            autoFocus={true}
+            autoCapitalize='none'
+            containerStyle={{flex: 1}}
+            inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
+            leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
+            rightIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
+            returnKeyType="search"
           />
-        </ModalContent>
-      </Modal>
+          <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
+              <H3 style={{
+                color: colors.primaryColor,
+                padding: scale(15),
+                paddingRight: 0,
+                flex: 0,
+                fontWeight: '500'
+              }}>
+                Cancel
+              </H3>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{flex: 1}} onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
+          <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
+            <ScrollView
+              horizontal={true}
+              onLayout={(event) => this.measureView(event, 'TagScrollView')}
+              showsHorizontalScrollIndicator={false}>
+              {this.renderBadges()}
+            </ScrollView>
+            <LinearGradient
+                colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
+                locations={[0, 0.1, 0.8, 1]}
+                start={{x: 0, y: 0}}
+                end={{x: 1, y: 0}}
+                style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
+                pointerEvents={'none'}
+              />
+          </View>
+        </View>
+        <SearchBarTabView
+          screenHeight={dimensions.height}
+          offsetHeight={this.state.offsetHeight}
+          keyboardHeight={this.state.keyboardHeight}
+          schedule={newSchedule}
+          eventManager={this.props.eventManager}
+        />
+      </FullScreenModal>
     );
   }
 }
