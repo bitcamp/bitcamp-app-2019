@@ -4,11 +4,11 @@ import PhotoView from 'react-native-photo-view';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
 import AltModalHeader from '../components/AltModalHeader';
-import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
-import { colors } from './Colors';
+import CustomScheduleTabBar from '../schedule/CustomScheduleTabBar';
+import { colors } from '../Colors';
 import RNFetchBlob from 'rn-fetch-blob';
-import Images from '../../assets/imgs';
-import { getDeviceWidth } from '../utils/sizing';
+import Images from '../../../assets/imgs';
+import { getDeviceWidth } from '../../utils/sizing';
 
 export default class MapModal extends Component {
 

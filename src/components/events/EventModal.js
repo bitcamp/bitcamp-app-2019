@@ -1,16 +1,16 @@
 import moment from 'moment';
 import React, { Component, Fragment } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import FullScreenModal from './FullScreenModal';
+import FullScreenModal from '../modals/FullScreenModal';
 import Modal from 'react-native-modal';
 
-import { H2, H3, H4, P } from '../components/Text';
-import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from './Base';
-import { colors } from './Colors';
-import PillBadge from "./PillBadge";
-import Images from '../../assets/imgs/index';
-import { scale } from '../utils/scale';
-import { getDeviceDimensions } from '../utils/sizing';
+import { H2, H3, H4, P } from '../Text';
+import { HorizontalLine, ModalContent, ModalHeader, modalStyle, Spacing } from '../Base';
+import { colors } from '../Colors';
+import PillBadge from "../PillBadge";
+import Images from '../../../assets/imgs/index';
+import { scale } from '../../utils/scale';
+import { getDeviceDimensions } from '../../utils/sizing';
 export default class EventModal extends Component {
   render() {
     const props = this.props;

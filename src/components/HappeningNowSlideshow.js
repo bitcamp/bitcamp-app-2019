@@ -1,44 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { ImageBackground } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import Swiper from 'react-native-swiper';
-import { StyleSheet } from 'react-native';
-import { PadContainer } from "../components/Base";
-import EventCard from "./EventCard";
-import { H2, H3 } from '../components/Text';
+import EventCard from "./events/EventCard";
 import { colors } from "./Colors";
 import Images from '../../assets/imgs/index';
 import EventsManager from '../events/EventsManager';
-import { getDeviceWidth } from '../utils/sizing';
-
-const styles = StyleSheet.create({
-    textIfNoEvents: {
-      marginBottom: 10,
-    },
-    dotContainer: {
-      bottom: 18,
-    },
-    imageBg: {
-      position: 'relative'
-    },
-    darkImageMask: {
-      flex: 1,
-    },
-    happeningTitle: {
-      fontWeight: 'bold',
-      color: colors.textColor.primary,
-    },
-    eventTitle: {
-      color: colors.textColor.primary,
-      fontSize: 26,
-    },
-    textGroup: {
-      marginBottom: 40,
-      flex: 1,
-      justifyContent: 'flex-end',
-    },
-});
 
 export default class HappeningNowSlideshow extends Component {
   constructor(props) {
@@ -46,40 +12,20 @@ export default class HappeningNowSlideshow extends Component {
   }
 
   render() {
-    // TODO: componetize the special happening now slideshow event card
-    const imageWidth = getDeviceWidth();
-    const imageHeight = Math.round((imageWidth * 38) / 67);
-
+    // If there are now events happening now...
     if (this.props.dataSource.length === 0) {
         return (
-          <ImageBackground
-            style={[
-              styles.imageBg,
-              { width: imageWidth, height: imageHeight }
-            ]}
-            source={Images['banner_campfire']}
-          >
-            <LinearGradient
-              style={styles.darkImageMask}
-              colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.65)']}
-              locations={[0.3, 1]}
-            >
-              <PadContainer style={styles.textGroup}>
-                <H3 style={styles.happeningTitle}>
-                  {EventsManager.hackingIsOver()
-                    ? 'Bitcamp 2019'
-                    : 'HAPPENING NOW'
-                  }
-                </H3>
-                <H2 style={styles.eventTitle}>
-                  {EventsManager.hackingIsOver()
-                    ? 'Thanks for Hacking!'
-                    : 'No events at this time'
-                  }
-                </H2>
-              </PadContainer>
-            </LinearGradient>
-          </ImageBackground>
+          <Banner
+            imageSource={Images['banner_campfire']}
+            title={EventsManager.hackingIsOver()
+              ? 'Thanks for Hacking!'
+              : 'No events at this time'
+            }
+            description={EventsManager.hackingIsOver()
+              ? 'Bitcamp 2019'
+              : 'HAPPENING NOW'
+            }
+          />
         );
     }
 
@@ -98,7 +44,7 @@ export default class HappeningNowSlideshow extends Component {
         height={Math.round((windowWidth * 38) / 67)}
         dotColor={'rgba(255,255,255,.6)'}
         activeDotColor={colors.textColor.primary}
-        paginationStyle={styles.dotContainer}
+        paginationStyle={{ bottom: 18 }}
         autoplay={true}
         autoplayTimeout={5}
         loop

@@ -1,34 +1,17 @@
-import React, { Component } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  AppState,
-  Text,
-} from "react-native";
-import {
-  ViewContainer,
-  Button,
-  PadContainer,
-} from "../components/Base";
-import { colors } from "../components/Colors";
-import KeyboardShift from "../components/KeyboardShift";
-import firebase from "react-native-firebase";
-import QuestionCard from "../components/QuestionCard";
-import { AsyncStorage } from "react-native";
-import { H1, H2, H3, H4, H6, P, BaseText } from "../components/Text";
-import Toast from "react-native-simple-toast";
 import moment from "moment";
-import { StyleSheet, StatusBar, Switch } from "react-native";
-import { red100 } from "react-native-paper/src/styles/colors";
-import { scale, verticalScale } from "../utils/scale";
+import React, { Component } from "react";
+import { Alert, AppState, AsyncStorage, FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import firebase from "react-native-firebase";
+import Toast from "react-native-simple-toast";
 import AltModalHeader from '../components/AltModalHeader';
-import SwitchInput from '../components/SwitchInput';
+import { Button, PadContainer, ViewContainer } from "../components/Base";
+import { colors } from "../components/Colors";
 import ExternalLink from "../components/ExternalLink";
 import FullScreenModal from "../components/FullScreenModal";
+import QuestionCard from "../components/QuestionCard";
+import SwitchInput from '../components/SwitchInput';
+import { H2, H3, P } from "../components/Text";
+import { scale, verticalScale } from "../utils/scale";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 

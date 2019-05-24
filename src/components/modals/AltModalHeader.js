@@ -5,11 +5,11 @@ import {
     TouchableOpacity,
     Platform
 } from 'react-native';
-import { H3, P } from './Text';
-import { colors } from './Colors';
+import { H3, P } from '../Text';
+import { colors } from '../Colors';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { scale } from '../utils/scale';
-import { requireFunctionIfPresent } from '../utils/PropTypeUtils';
+import { scale } from '../../utils/scale';
+import { requireFunctionIfPresent } from '../../utils/PropTypeUtils';
 import PropTypes from 'prop-types';
 
 /* An alternative modal header desgin with a centered title and 

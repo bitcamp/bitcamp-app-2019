@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { FlatList, View, Platform, ScrollView, TouchableOpacity, StyleSheet, Text, Keyboard } from 'react-native';
 import FullScreenModal from './FullScreenModal';
 import { SearchBar } from 'react-native-elements';
-import { H3 } from "./Text";
-import { colors } from './Colors';
-import PillBadge, { badgeStyles } from './PillBadge';
-import { scale } from '../utils/scale';
+import { H3 } from "../Text";
+import { colors } from '../Colors';
+import PillBadge, { badgeStyles } from '../PillBadge';
+import { scale } from '../../utils/scale';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
-import SearchBarTabView from './SearchBarTabView';
+import SearchBarTabView from '../SearchBarTabView';
 import _ from 'lodash';
-import { getDeviceHeight } from '../utils/sizing';
+import { getDeviceHeight } from '../../utils/sizing';
 
 export default class SearchModal extends Component {
 

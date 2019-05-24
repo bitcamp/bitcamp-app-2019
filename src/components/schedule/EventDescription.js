@@ -1,27 +1,13 @@
-import React, { Fragment, Component } from "react";
-
-import {
-  Platform,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View
-} from "react-native";
-
-import {
-  GradientBackground,
-  ViewContainer,
-  PadContainer,
-  Heading
-} from "../Base";
-
-import { H1, H2, H3, H4, P } from "../Text";
+import React, { Component, Fragment } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { colors } from "../Colors";
-import Icon from "react-native-vector-icons/FontAwesome";
-import EventModal from "../EventModal";
-import { normalizeTimeLabel } from "../../events/utils";
+import EventModal from "../events/EventModal";
 import EventStar from "../EventStar";
 import PillBadge from "../PillBadge";
+import { H3, H4 } from "../Text";
+
+
+
 
 const styles = StyleSheet.create({
   column: {

@@ -1,17 +1,15 @@
-import React, { Component, Fragment } from 'react';
-import { Text, Image, ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import IonIcon from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
-import { H2, H3, BaseText } from '../components/Text';
-import { PadContainer } from './Base';
-import { colors } from './Colors';
-import EventModal from './EventModal';
-import EventDescription from './schedule/EventDescription';
-import Images from '../../assets/imgs/index';
+import React, { Component } from 'react';
+import { ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { scale } from '../utils/scale';
-import { getDeviceDimensions } from '../utils/sizing';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Images from '../../../assets/imgs/index';
+import { scale } from '../../utils/scale';
+import { getDeviceDimensions } from '../../utils/sizing';
+import { PadContainer } from '../Base';
+import { colors } from '../Colors';
+import EventDescription from '../schedule/EventDescription';
+import { BaseText, H2, H3 } from '../Text';
+import EventModal from './EventModal';
 
 const styles = StyleSheet.create({
   darkImageMask: {

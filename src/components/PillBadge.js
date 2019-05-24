@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { scale } from '../utils/scale';
 import { BaseText } from './Text';
 

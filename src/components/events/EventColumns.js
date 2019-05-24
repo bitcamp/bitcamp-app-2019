@@ -7,13 +7,13 @@ import {
   ModalContent,
   modalStyle,
   ModalHeader
-} from "./Base";
+} from "../Base";
 import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import { H3 } from "../components/Text";
+import { H3 } from "../Text";
 import Modal from "react-native-modal";
-import { colors } from "./Colors";
-import { getDeviceWidth } from "../utils/sizing";
+import { colors } from "../Colors";
+import { getDeviceWidth } from "../../utils/sizing";
 
 const CLIP_LIMIT = 6;
 

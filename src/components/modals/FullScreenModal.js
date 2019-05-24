@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import { modalStyle, ModalContent } from './Base';
-import { colors } from './Colors';
+import { modalStyle, ModalContent } from '../Base';
+import { colors } from '../Colors';
 import { ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
