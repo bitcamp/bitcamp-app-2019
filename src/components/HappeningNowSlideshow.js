@@ -9,7 +9,8 @@ import EventCard from "./EventCard";
 import { H2, H3 } from '../components/Text';
 import { colors } from "./Colors";
 import Images from '../../assets/imgs/index';
-import moment from 'moment';
+import EventsManager from '../events/EventsManager';
+import { getDeviceWidth } from '../utils/sizing';
 
 const styles = StyleSheet.create({
     textIfNoEvents: {
@@ -38,7 +39,6 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
     },
 });
-const HACKING_IS_OVER = moment().isAfter(moment("2019-04-14 09:00"));
 
 export default class HappeningNowSlideshow extends Component {
   constructor(props) {
@@ -47,11 +47,10 @@ export default class HappeningNowSlideshow extends Component {
 
   render() {
     // TODO: componetize the special happening now slideshow event card
-    const windowWidth = require('Dimensions').get('window').width;
-    const imageWidth = windowWidth;
+    const imageWidth = getDeviceWidth();
     const imageHeight = Math.round((imageWidth * 38) / 67);
 
-    if (this.props.dataSource.length == 0) {
+    if (this.props.dataSource.length === 0) {
         return (
           <ImageBackground
             style={[
@@ -67,13 +66,13 @@ export default class HappeningNowSlideshow extends Component {
             >
               <PadContainer style={styles.textGroup}>
                 <H3 style={styles.happeningTitle}>
-                {HACKING_IS_OVER
+                  {EventsManager.hackingIsOver()
                     ? 'Bitcamp 2019'
                     : 'HAPPENING NOW'
                   }
                 </H3>
                 <H2 style={styles.eventTitle}>
-                  {HACKING_IS_OVER
+                  {EventsManager.hackingIsOver()
                     ? 'Thanks for Hacking!'
                     : 'No events at this time'
                   }

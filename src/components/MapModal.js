@@ -8,9 +8,7 @@ import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
 import { colors } from './Colors';
 import RNFetchBlob from 'rn-fetch-blob';
 import Images from '../../assets/imgs';
-
-const dimensions = require('Dimensions').get('window');
-const screenWidth = dimensions.width;
+import { getDeviceWidth } from '../utils/sizing';
 
 export default class MapModal extends Component {
 
@@ -65,7 +63,7 @@ export default class MapModal extends Component {
             androidScaleType="fitCenter"
             onLoad={() => console.log("Image loaded!")}
             style={{
-              width: screenWidth,
+              width: getDeviceWidth(),
               flex: 1,
               backgroundColor: colors.backgroundColor.dark,
             }}
@@ -82,7 +80,7 @@ export default class MapModal extends Component {
           androidScaleType="fitCenter"
           onLoad={() => console.log("Image loaded!")}
           style={{
-            width: screenWidth,
+            width: getDeviceWidth(),
             flex: 1,
             backgroundColor: colors.backgroundColor.dark,
           }}

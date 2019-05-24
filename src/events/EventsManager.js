@@ -20,6 +20,7 @@ const UPDATES_STORE = 'RECENT_UPDATES_STORE';
 
 const notificationBufferMins = 15;
 const savedCountRefreshInterval = 10 * 60 * 1000;
+const HACKING_END_TIME = moment("2019-04-14 09:00");
 
 const channelId = 'technica-push-notifications';
 
@@ -438,5 +439,9 @@ export default class EventsManager {
         component.forceUpdate();
       }
     })
+  }
+
+  static hackingIsOver() {
+    return moment().isAfter(HACKING_END_TIME);
   }
 }

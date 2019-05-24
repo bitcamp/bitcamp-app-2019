@@ -9,14 +9,7 @@ import { colors } from './Colors';
 import { P } from './Text';
 import { scale, verticalScale } from '../utils/scale';
 
-const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
-
-let LABELS = ["Home", "Schedule"];
-
-// if (hackingIsOver) {
-//   LABELS.push("Expo");
-// }
-LABELS.push("Mentors", "Profile");
+const LABELS = ["Home", "Schedule", "Mentors", "Profile"];
 
 class CustomTabBar extends Component {
   render() {

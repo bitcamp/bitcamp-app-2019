@@ -20,7 +20,6 @@ import { H1 } from '../components/Text';
 
 const channelId = "bitcamp-push-notifications";
 const channelName = "Bitcamp Announcements";
-const hackingIsOver = moment().isAfter(moment("2019-04-14 09:00"));
 
 export default class AppContainer extends Component {
   static navigationOptions = ({navigation}) => ({

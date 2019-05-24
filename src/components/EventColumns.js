@@ -13,6 +13,7 @@ import PropTypes from "prop-types";
 import { H3 } from "../components/Text";
 import Modal from "react-native-modal";
 import { colors } from "./Colors";
+import { getDeviceWidth } from "../utils/sizing";
 
 const CLIP_LIMIT = 6;
 
@@ -67,7 +68,6 @@ export default class EventColumns extends Component {
 
   getRows(isClipped) {
     const { eventsArr } = this.props;
-    const { width } = require("Dimensions").get("window");
 
     const limit = isClipped
       ? eventsArr.length >= CLIP_LIMIT
@@ -94,7 +94,7 @@ export default class EventColumns extends Component {
           style={[
             styles.row,
             { marginLeft: isClipped == false ? -20 : 0 },
-            { width: width },
+            { width: getDeviceWidth() },
           ]}
         >
           {this.getCardCol(left, i)}
@@ -134,7 +134,6 @@ export default class EventColumns extends Component {
   }
 
   render() {
-    const { width, height } = require("Dimensions").get("window");
     return (
       <View style={{ flex: 1}}>
         {this.getRowOfEvents()}

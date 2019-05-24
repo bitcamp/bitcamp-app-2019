@@ -11,6 +11,7 @@ import EventDescription from './schedule/EventDescription';
 import Images from '../../assets/imgs/index';
 import LinearGradient from 'react-native-linear-gradient';
 import { scale } from '../utils/scale';
+import { getDeviceDimensions } from '../utils/sizing';
 
 const styles = StyleSheet.create({
   darkImageMask: {
@@ -59,7 +60,7 @@ export default class EventCard extends Component {
 
   render() {
     const { big, event, eventManager, inSlideshow } = this.props;
-    const dimensions = require('Dimensions').get('window');
+    const dimensions = getDeviceDimensions();
     let imageWidth = big ? dimensions.width - 40 : (dimensions.width / 2) + 10;
     imageWidth = inSlideshow ? dimensions.width : imageWidth;
     const imageHeight = Math.round((imageWidth * 38) / 67);

@@ -10,10 +10,11 @@ import { colors } from './Colors';
 import PillBadge from "./PillBadge";
 import Images from '../../assets/imgs/index';
 import { scale } from '../utils/scale';
+import { getDeviceDimensions } from '../utils/sizing';
 export default class EventModal extends Component {
   render() {
     const props = this.props;
-    const dimensions = require('Dimensions').get('window');
+    const dimensions = getDeviceDimensions();
     const imageWidth = dimensions.width;
     const imageHeight = Math.round((imageWidth * 38) / 67);
     return (

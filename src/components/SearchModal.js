@@ -10,6 +10,7 @@ import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import LinearGradient from 'react-native-linear-gradient';
 import SearchBarTabView from './SearchBarTabView';
 import _ from 'lodash';
+import { getDeviceHeight } from '../utils/sizing';
 
 export default class SearchModal extends Component {
 
@@ -111,7 +112,6 @@ export default class SearchModal extends Component {
   render() {
     console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (this.state) ? this.state : "");
     const props = this.props;
-    const dimensions = require('Dimensions').get('window');
     const newSchedule = this.state.newSchedule.filter(day => day.eventGroups.length > 0);
     return (
       <FullScreenModal
@@ -176,7 +176,7 @@ export default class SearchModal extends Component {
           </View>
         </View>
         <SearchBarTabView
-          screenHeight={dimensions.height}
+          screenHeight={getDeviceHeight()}
           offsetHeight={this.state.offsetHeight}
           keyboardHeight={this.state.keyboardHeight}
           schedule={newSchedule}
