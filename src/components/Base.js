@@ -1,23 +1,13 @@
-import React, { Fragment, Component } from 'react';
-import { colors } from './Colors';
-import { H1, H2, H3, H4, P } from './Text';
+import React, { Component, Fragment } from 'react';
+import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Paper } from 'react-native-paper';
-import {
-  View,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
-  Text,
-} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import EventStar from './EventStar';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
 import { scale } from '../utils/scale';
+import { colors } from './Colors';
+import EventStar from './events/EventStar';
+import { H1, H2, H3 } from './Text';
 
 const styles = StyleSheet.create({
   bg: {
@@ -257,18 +247,5 @@ const Button = props => (
 
 const modalStyle = { margin: 0 } //TODO: remove
 
-export {
-  PlainViewContainer,
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-  HorizontalLine,
-  Spacing,
-  ModalContent,
-  ModalHeader,
-  modalStyle,
-  CenteredActivityIndicator,
-  Button
-};
+export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalContent, ModalHeader, modalStyle, CenteredActivityIndicator, Button };
+

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, Text, TouchableHighlight, View } from 'react-native';
+import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, TouchableHighlight, View } from 'react-native';
 import firebase from 'react-native-firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
@@ -8,13 +8,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Images from '../../assets/imgs/index';
 import { colors } from '../components/Colors';
 import CustomTabBar from '../components/CustomTabBar';
-import MapModal from '../components/MapModal';
-import SearchModal from '../components/SearchModal';
+import MapModal from '../components/modals/MapModal';
+import SearchModal from '../components/modals/SearchModal';
 import Home from './Home';
 import Mentors from './Mentors';
 import Profile from './Profile';
 import Schedule from './Schedule';
-import moment from 'moment';
 import { scale } from '../utils/scale';
 import { H1 } from '../components/Text';
 

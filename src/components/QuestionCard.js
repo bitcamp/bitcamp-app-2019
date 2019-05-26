@@ -1,9 +1,9 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { H3, H4, H6 } from "./Text";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import AnimatedEllipsis from "react-native-animated-ellipsis";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { scale } from '../utils/scale';
+import { H3, H6 } from "./Text";
 
 export default function QuestionCard(props) {
   const { question, status } = props;
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   },
   statusContainer: {
     flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     marginTop: scale(5),
   },
@@ -58,8 +59,6 @@ const styles = StyleSheet.create({
   },
   statusText: {
     color: questionColors.unclaimed,
-    flex: 1,
-    flexWrap: 'wrap'
   },
   claimedText: { 
     color: questionColors.claimed 

@@ -3,8 +3,8 @@ import { Animated, Keyboard, StyleSheet, TextInput, UIManager } from 'react-nati
 import { getDeviceDimensions } from '../utils/sizing';
 const { State: TextInputState } = TextInput;
 
-// Class adapted from https://gist.github.com/larkintuckerllc/15644c314207df00c212ecb14b981439#file-keyboardshift-js
-// See this article for usage information: https://codeburst.io/react-native-keyboard-covering-inputs-72a9d3072689
+/** Class adapted from https://gist.github.com/larkintuckerllc/15644c314207df00c212ecb14b981439#file-keyboardshift-js
+    See this article for usage information: https://codeburst.io/react-native-keyboard-covering-inputs-72a9d3072689 */
 export default class KeyboardShift extends Component {
 
   constructor(props) {

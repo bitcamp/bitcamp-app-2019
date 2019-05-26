@@ -1,27 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView
-} from 'react-native';
-import { H1, H2, H3, H4, P } from '../components/Text';
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  Button,
-  PaperSheet,
-  PadContainer,
-} from '../components/Base';
-import EventCard from '../components/EventCard';
-import EventDescription from '../components/schedule/EventDescription';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { colors } from '../components/Colors';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Button, PadContainer, SubHeading } from '../components/Base';
+import EventCard from '../components/events/EventCard';
 
-export default class Saved extends Component<Props> {
+export default class Saved extends Component {
 
   constructor(props) {
     super(props);

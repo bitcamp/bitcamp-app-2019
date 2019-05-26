@@ -1,40 +1,17 @@
 import React, { Component } from "react";
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View,
-  AsyncStorage,
-  Alert,
-  TouchableOpacity,
-  ActivityIndicator,
-  Fragment
-} from "react-native";
-import { H1, H2, H3, H4, P } from "../components/Text";
-import {
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-  modalStyle,
-  ModalHeader,
-  ModalContent,
-  CenteredActivityIndicator,
-  Button,
-  PlainViewContainer
-} from "../components/Base";
-import QRCodeScanner from "react-native-qrcode-scanner";
-import QRCode from "react-native-qrcode";
-import _ from "lodash";
-import { colors } from "../components/Colors";
+import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-native";
 import Modal from "react-native-modal";
-import MCI from "react-native-vector-icons/MaterialCommunityIcons";
+import QRCode from "react-native-qrcode";
+import QRCodeScanner from "react-native-qrcode-scanner";
+import RNRestart from 'react-native-restart'; // Import package from node modules
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import MCI from "react-native-vector-icons/MaterialCommunityIcons";
+import { CenteredActivityIndicator, Heading, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
+import { colors } from "../components/Colors";
+import FullScreenModal from "../components/modals/FullScreenModal";
+import { H1, H2, H3 } from "../components/Text";
 import { scale } from '../utils/scale';
-import FullScreenModal from "../components/FullScreenModal";
 
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting

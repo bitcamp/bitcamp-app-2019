@@ -1,13 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ImageBackground, StyleSheet } from 'react-native';
-import { PadContainer, H3, H2 } from './Base';
+import { PadContainer } from './Base';
+import { H2, H3 } from './Text';
 import LinearGradient from 'react-native-linear-gradient';
 import { getDeviceWidth, getImageHeight } from '../utils/sizing';
+import { colors } from './Colors';
+import { imageType } from '../utils/PropTypeUtils';
 
-/* A banner that fills the width of the screen. It has a background image, 
-   a title, and a description */
-const Banner = () => (
+/** A banner that fills the width of the screen. It has a background image, 
+    a title, and a description */
+const Banner = props => (
     <ImageBackground
         style={styles.imageBg}
         source={props.imageSource}
@@ -31,7 +34,7 @@ const Banner = () => (
 
 Banner.propTypes = {
     title: PropTypes.string.isRequired,
-    imageSource: PropTypes.string.isRequired,
+    imageSource: imageType.isRequired,
     description: PropTypes.string.isRequired
 };
 

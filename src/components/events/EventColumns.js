@@ -1,19 +1,10 @@
-import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import {
-  PadContainer,
-  Spacing,
-  Button,
-  ModalContent,
-  modalStyle,
-  ModalHeader
-} from "../Base";
-import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import { H3 } from "../Text";
-import Modal from "react-native-modal";
-import { colors } from "../Colors";
+import React, { Component } from "react";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { getDeviceWidth } from "../../utils/sizing";
+import { Button } from "../Base";
+import { H3 } from "../Text";
+import EventCard from "./EventCard";
 
 const CLIP_LIMIT = 6;
 

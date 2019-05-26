@@ -3,7 +3,7 @@ import FullScreenModal from './FullScreenModal';
 import PhotoView from 'react-native-photo-view';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
-import AltModalHeader from '../components/AltModalHeader';
+import AltModalHeader from './AltModalHeader';
 import CustomScheduleTabBar from '../schedule/CustomScheduleTabBar';
 import { colors } from '../Colors';
 import RNFetchBlob from 'rn-fetch-blob';

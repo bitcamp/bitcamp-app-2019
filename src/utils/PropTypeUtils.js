@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 // A utility for making a function required if the dependentProp is passed into this component
 export function requireFunctionIfPresent(dependentProp) {
     return (props, propName) => {
@@ -10,3 +12,13 @@ export function requireFunctionIfPresent(dependentProp) {
         }
     }
 }
+
+export const imageType = PropTypes.oneOfType([
+    PropTypes.number, // When using require('PATH_TO_IMG'), it returns a number
+    PropTypes.shape({
+        uri: PropTypes.string, 
+        width: PropTypes.number, 
+        height: PropTypes.number, 
+        scale: PropTypes.number
+    })
+]);

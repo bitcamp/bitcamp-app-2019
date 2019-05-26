@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { colors } from "../Colors";
 import EventModal from "../events/EventModal";
-import EventStar from "../EventStar";
+import EventStar from "../events/EventStar";
 import PillBadge from "../PillBadge";
 import { H3, H4 } from "../Text";
 

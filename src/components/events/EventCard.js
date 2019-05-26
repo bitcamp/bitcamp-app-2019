@@ -4,34 +4,12 @@ import LinearGradient from 'react-native-linear-gradient';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Images from '../../../assets/imgs/index';
 import { scale } from '../../utils/scale';
-import { getDeviceDimensions } from '../../utils/sizing';
+import { getDeviceDimensions, getImageHeight } from '../../utils/sizing';
 import { PadContainer } from '../Base';
 import { colors } from '../Colors';
 import EventDescription from '../schedule/EventDescription';
 import { BaseText, H2, H3 } from '../Text';
 import EventModal from './EventModal';
-
-const styles = StyleSheet.create({
-  darkImageMask: {
-    flex: 1,
-  },
-  textGroup: {
-    marginBottom: 40,
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  imageBg: {
-    position: 'relative',
-  },
-  happeningTitle: {
-    fontWeight: 'bold',
-    color: colors.textColor.primary,
-  },
-  eventTitle: {
-    color: colors.textColor.primary,
-    fontSize: 26,
-  }
-});
 
 export default class EventCard extends Component {
   constructor(props) {
@@ -61,10 +39,10 @@ export default class EventCard extends Component {
     const dimensions = getDeviceDimensions();
     let imageWidth = big ? dimensions.width - 40 : (dimensions.width / 2) + 10;
     imageWidth = inSlideshow ? dimensions.width : imageWidth;
-    const imageHeight = Math.round((imageWidth * 38) / 67);
+    const imageHeight = getImageHeight(imageWidth);
 
     let titleClipped = event.title;
-    let titleLimit = 30;
+    const titleLimit = 30;
     if (titleClipped && titleClipped.length > titleLimit) {
       titleClipped = titleClipped.substring(0, titleLimit) + "…";
     }
@@ -181,3 +159,25 @@ export default class EventCard extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  darkImageMask: {
+    flex: 1,
+  },
+  textGroup: {
+    marginBottom: 40,
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+  imageBg: {
+    position: 'relative',
+  },
+  happeningTitle: {
+    fontWeight: 'bold',
+    color: colors.textColor.primary,
+  },
+  eventTitle: {
+    color: colors.textColor.primary,
+    fontSize: 26,
+  }
+});

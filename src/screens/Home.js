@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { PadContainer, ViewContainer } from '../components/Base';
 import CountdownTimer from '../components/CountdownTimer';
-import EventColumns from '../components/EventColumns';
+import EventColumns from '../components/events/EventColumns';
 import { H2 } from '../components/Text';
 import HappeningNowSlideshow from '../components/HappeningNowSlideshow';
 
