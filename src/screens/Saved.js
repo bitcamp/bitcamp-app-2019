@@ -9,7 +9,7 @@ export default class Saved extends Component {
     super(props);
     this.state = {
       refresh: false,
-      showPastEvents: false,
+      isShowingPastEvents: false,
     };
   }
 
@@ -23,58 +23,33 @@ export default class Saved extends Component {
     return (
       <ScrollView>
         <PadContainer>
-          {/*<View style={styles.headingRow}>
-            <TouchableOpacity onPress={() => {this.setState({ refresh: !this.state.refresh })}}>
-              <Icon
-                name="refresh"
-                size={30}
-                color="black"
-                style={{
-                  paddingTop: 34,
-                  marginBottom: 20,
-                  opacity: .8,
-                }}
-              />
-            </TouchableOpacity>
-          </View>*/}
           <SubHeading style={styles.subSectionHeading}>
             {events.length} events saved
           </SubHeading>
-          {
-            (pastEvents.length > 0) &&
-              <Fragment>
-                <TouchableOpacity
-                  onPress={() => {
-                    this.setState({ showPastEvents: !this.state.showPastEvents});
-                  }}
-                >
-                  <Button
-                    text={`${this.state.showPastEvents ? 'Hide' : 'Show'} ${pastEvents.length} past event${pastEvents.length > 1 ? 's' : ''}`}
-                    style={styles.showPastEventsButton}
-                  />
-                </TouchableOpacity>
-              </Fragment>
-          }
-          {
-            (pastEvents.length > 0) && (this.state.showPastEvents) &&
-            <Fragment>
-              <EventsList
-                events={pastEvents}
-                eventManager={eventManager}
-              />
-            </Fragment>
-          }
-          {
-            (upcomingEvents.length > 0) &&
-            <Fragment>
-              <EventsList
-                events={upcomingEvents}
-                eventManager={eventManager}
-              />
-            </Fragment>
-          }
-        </PadContainer>
 
+          { // Show the past events button if there are past events
+            (pastEvents.length > 0) &&
+            <Button
+              text={`${this.state.isShowingPastEvents ? 'Hide' : 'Show'} ${pastEvents.length} past event${pastEvents.length > 1 ? 's' : ''}`}
+              style={styles.showPastEventsButton}
+              onPress={() => {
+                this.setState({ showPastEvents: !this.state.isShowingPastEvents});
+              }}
+            />
+          }
+
+          <EventsList
+            events={pastEvents}
+            eventManager={eventManager}
+            shouldDisplay={pastEvents.length > 0 && this.state.isShowingPastEvents}
+          />
+
+         <EventsList
+            events={upcomingEvents}
+            eventManager={eventManager}
+            shouldDisplay={upcomingEvents.length > 0}
+          />
+        </PadContainer>
       </ScrollView>
     );
   }
@@ -90,8 +65,8 @@ class EventsList extends Component {
   }
 
   render() {
-    const { events, eventManager } = this.props;
-    return (
+    const { events, eventManager, shouldDisplay } = this.props;
+    return shouldDisplay && (
       <View
         ref={myEventsList => {
           this.myEventsList = myEventsList;
@@ -109,11 +84,9 @@ class EventsList extends Component {
           ))
         }
       </View>
-    )
+    );
   }
 }
-
-
 
 const styles = StyleSheet.create({
   eventImgPassed: {

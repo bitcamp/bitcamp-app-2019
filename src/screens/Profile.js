@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-native";
-import Modal from "react-native-modal";
 import QRCode from "react-native-qrcode";
 import QRCodeScanner from "react-native-qrcode-scanner";
-import RNRestart from 'react-native-restart'; // Import package from node modules
+import RNRestart from 'react-native-restart';
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
 import MCI from "react-native-vector-icons/MaterialCommunityIcons";
-import { CenteredActivityIndicator, Heading, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
+import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
 import FullScreenModal from "../components/modals/FullScreenModal";
 import { H1, H2, H3 } from "../components/Text";
 import { scale } from '../utils/scale';
-
+import EasterEggUsername from '../components/EasterEggUsername';
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -21,42 +20,12 @@ const USER_TOKEN = APP_ID + 'JWT';
 const USER_DATA_STORE = "USER_DATA_STORE";
 const SCHEDULE_STORAGE_KEY = APP_ID + 'schedule';
 
-const styles = StyleSheet.create({
-  actionButton: {
-    marginBottom: scale(5),
-    borderRadius: scale(15),
-    padding: scale(15),
-  },
-  QRMarker: {
-    width: '60%',
-    aspectRatio: 1,
-    borderRadius: 8,
-    borderWidth: 2,
-    borderColor: colors.secondaryColor
-  },
-  QRCode: {
-    marginTop: scale(15),
-    backgroundColor: "white",
-    borderRadius: 8,
-    borderColor: 'transparent',
-    borderWidth: 0,
-    padding: scale(7)
-  },
-  username: {
-    textAlign: "center",
-    marginTop: scale(-15),
-  }
-});
-
 export default class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: {},
       scanner: false,
-      modalVisible: true,
-      userModal: false,
-      modalContent: "",
 
       scannedUser: false,
       scannedUserData: {},
@@ -67,8 +36,15 @@ export default class Profile extends Component {
       nameColor: colors.textColor.normal,
       timeInterval: null
     };
-    this.onNamePress = this.onNamePress.bind(this);
   }
+
+  getFullName(user) {
+    const {email, profile: {firstName, lastName}} = user;
+    return (firstName && lastName) 
+        ? `${firstName} ${lastName}`
+        : email;
+  }
+
 
   async logout() {
     Alert.alert(
@@ -117,7 +93,7 @@ export default class Profile extends Component {
         // Set state for SUCCESS modal
         this.setState({
           scannedUserData: {
-            displayName: this.getDisplayName(responseJSON),
+            displayName: this.getFullName(responseJSON),
             minorStatus: !userProfile.adult,
             dietaryRestrictions: userProfile.dietaryRestrictions
           },
@@ -169,88 +145,7 @@ export default class Profile extends Component {
       });
     }
   }
-
-  getDisplayName(user) {
-    const {email, profile: {firstName, lastName}} = user;
-    return (firstName && lastName) 
-      ? `${firstName} ${lastName}`
-      : email;
-  }
-
-  toggleModal() {
-    this.setState({ modalVisible: !this.state.modalVisible });
-  }
-
-  onNamePress() {
-    this.setState({ namePresses: this.state.namePresses + 1 });
-
-    if (this.state.namePresses > 3) {
-      // If turning on devoolooperMode
-      if (!this.state.devoolooperMode) {
-        Alert.alert(
-          "Congratulations!",
-          "You have found the easter egg!",
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-          { cancelable: false }
-        );
-
-        let intervalID = setInterval(() => {
-          // Your logic here
-          this.setState({
-            nameColor:
-              this.state.nameColor !== colors.primaryColor
-                ? colors.primaryColor
-                : colors.secondaryColor
-          });
-          if(!this.state.devoolooperMode) {
-            clearInterval(intervalID);
-            this.setState({
-              nameColor: colors.textColor.normal
-            });
-          }
-        }, 250);
-      } else {
-        Alert.alert(
-          "Okay :(",
-          "You can be a normal person again.",
-          [{ text: "OK", onPress: () => console.log("OK Pressed") }],
-          { cancelable: false }
-        );
-      }
-
-      this.setState({
-        devoolooperMode: !this.state.devoolooperMode,
-        namePresses: 0
-      });
-    }
-  }
-
-  getDevoolooperName(name) {
-    // A, E, I, O, U
-    let vowels = new Set();
-    vowels.add("A");
-    vowels.add("E");
-    vowels.add("I");
-    vowels.add("O");
-    vowels.add("U");
-
-    name = name.toUpperCase();
-
-    let newName = "";
-    for (let i = 0; i < name.length; i++) {
-      if (vowels.has(name.charAt(i))) {
-        newName += "oo";
-      } else {
-        newName += name.charAt(i);
-      }
-    }
-
-    // Turn to title case
-    return newName.replace(/\w\S*/g, function(txt) {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  }
-
+  
   render() {
 
     const scannerView = (() => {
@@ -293,7 +188,6 @@ export default class Profile extends Component {
 
     const defaultView = (() => {
       if (this.state.user.profile) {
-        const displayName = this.getDisplayName(this.state.user);
         const phone_number = this.state.user.profile.phoneNumber
           ? this.state.user.profile.phoneNumber
           : "";
@@ -301,8 +195,6 @@ export default class Profile extends Component {
         const id = this.state.user.id
           ? this.state.user.id
           : "";
-
-        console.log(id);
 
         const isOrganizer = this.state.user.admin || this.state.user.organizer;
 
@@ -331,13 +223,10 @@ export default class Profile extends Component {
             <PadContainer>
               {this.state.user.profile &&
                 <View style={{ alignItems: "center" }}>
-                  <TouchableOpacity onPress={this.onNamePress}>
-                    <Heading style={[styles.username, {color: this.state.nameColor}]}>
-                      {this.state.devoolooperMode
-                        ? this.getDevoolooperName(displayName)
-                        : displayName}
-                    </Heading>
-                  </TouchableOpacity>
+                  <EasterEggUsername
+                    username={this.getFullName(this.state.user)}
+                    style={styles.username}
+                  />
                   <SubHeading style={{ textAlign: "center", marginTop: -10 }}>
                     {this.state.user.email}
                   </SubHeading>
@@ -389,17 +278,9 @@ export default class Profile extends Component {
 // TODO make this code less redundant
 const ScanResponseModal = props => {
   return (
-    <Modal
+    <FullScreenModal
       isVisible={props.isVisible}
-      backdropColor={colors.backgroundColor.light}
       backdropOpacity={0.6}
-      animationInTiming={200}
-      animationIn="fadeInUp"
-      animationOut="fadeOutDown"
-      animationOutTiming={200}
-      backdropTransitionInTiming={200}
-      backdropTransitionOutTiming={200}
-      avoidKeyboard={true}
       onBackdropPress={props.onBack}
       onBackButtonPress={props.onBack}
       style={{ margin: 40 }}
@@ -445,6 +326,34 @@ const ScanResponseModal = props => {
             </React.Fragment>
         }
       </View>
-    </Modal>
+    </FullScreenModal>
   );
 };
+
+
+const styles = StyleSheet.create({
+  actionButton: {
+    marginBottom: scale(5),
+    borderRadius: scale(15),
+    padding: scale(15),
+  },
+  QRMarker: {
+    width: '60%',
+    aspectRatio: 1,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: colors.secondaryColor
+  },
+  QRCode: {
+    marginTop: scale(15),
+    backgroundColor: "white",
+    borderRadius: 8,
+    borderColor: 'transparent',
+    borderWidth: 0,
+    padding: scale(7)
+  },
+  username: {
+    textAlign: "center",
+    marginTop: scale(-15),
+  }
+});
