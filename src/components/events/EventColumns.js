@@ -8,21 +8,6 @@ import EventCard from "./EventCard";
 
 const CLIP_LIMIT = 6;
 
-const styles = StyleSheet.create({
-  row: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  halfColumn: {
-    flex: 5,
-    flexDirection: "column",
-    marginRight: 20
-  },
-  event: {
-    marginBottom: 15
-  }
-});
-
 export default class EventColumns extends Component {
   constructor(props) {
     super(props);
@@ -43,18 +28,15 @@ export default class EventColumns extends Component {
   }
 
   getCardCol(event, index) {
-    if (event) {
-      return (
-        <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
-          <EventCard
-            event={event}
-            eventManager={this.props.eventManager}
-            origin={this.props.origin}/>
-        </View>
-      );
-    } else {
-      return null;
-    }
+    return (event) && (
+      <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
+        <EventCard
+          event={event}
+          eventManager={this.props.eventManager}
+          origin={this.props.origin}
+        />
+      </View>
+    );
   }
 
   getRows(isClipped) {
@@ -118,7 +100,8 @@ export default class EventColumns extends Component {
       <ScrollView
         horizontal={true}
         style={{paddingRight: 10}}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+      >
         {rowEventsList}
       </ScrollView>
     );
@@ -141,3 +124,19 @@ EventColumns.propTypes = {
 EventColumns.defaultProps = {
   eventsArr: []
 };
+
+
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  halfColumn: {
+    flex: 5,
+    flexDirection: "column",
+    marginRight: 20
+  },
+  event: {
+    marginBottom: 15
+  }
+});

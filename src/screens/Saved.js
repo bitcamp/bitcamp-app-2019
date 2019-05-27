@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Button, PadContainer, SubHeading } from '../components/Base';
-import EventCard from '../components/events/EventCard';
+import LargeEventCard from '../components/events/LargeEventCard';
 
 export default class Saved extends Component {
 
@@ -80,7 +80,7 @@ export default class Saved extends Component {
   }
 }
 
-class EventsList extends Component<Props> {
+class EventsList extends Component {
   constructor(props) {
     super(props);
   }
@@ -100,13 +100,11 @@ class EventsList extends Component<Props> {
       >
         {
           events.map((event) => (
-            <EventCard
+            <LargeEventCard
               key={event.eventID}
               event={event}
               eventManager={eventManager}
-              style={styles.eventCard}
-              origin={'Saved'}
-              big
+              origin='Saved'
             />
           ))
         }
@@ -118,9 +116,6 @@ class EventsList extends Component<Props> {
 
 
 const styles = StyleSheet.create({
-  eventCard: {
-    marginBottom: 25
-  },
   eventImgPassed: {
     opacity: .3,
   },
