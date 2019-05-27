@@ -1,52 +1,20 @@
 import React, { Component } from 'react';
-import { ImageBackground, StyleSheet, TouchableOpacity, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import { ImageBackground, StyleSheet, View } from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import Images from '../../../assets/imgs/index';
 import { scale } from '../../utils/scale';
-import { getDeviceDimensions, getImageHeight } from '../../utils/sizing';
-import { PadContainer } from '../Base';
+import { getDeviceWidth, getImageHeight } from '../../utils/sizing';
 import { colors } from '../Colors';
 import EventDescription from '../schedule/EventDescription';
-import { BaseText, H2, H3 } from '../Text';
-import EventModal from './EventModal';
+import { BaseText } from '../Text';
+import ClickableEvent from './ClickableEvent';
 
 export default class EventCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isModalVisible: false
-    };
-    this.toggleModal = this.toggleModal.bind(this);
   }
 
-  toggleModal() {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  }
-
-  renderModal() {
-    return <EventModal
-      isModalVisible={this.state.isModalVisible}
-      toggleModal={this.toggleModal}
-      eventManager={this.props.eventManager}
-      event={this.props.event}
-      origin={this.props.origin}
-    />
-  }
-
-  render() {
-    const { big, event, eventManager, inSlideshow } = this.props;
-    const dimensions = getDeviceDimensions();
-    let imageWidth = big ? dimensions.width - 40 : (dimensions.width / 2) + 10;
-    imageWidth = inSlideshow ? dimensions.width : imageWidth;
-    const imageHeight = getImageHeight(imageWidth);
-
-    let titleClipped = event.title;
-    const titleLimit = 30;
-    if (titleClipped && titleClipped.length > titleLimit) {
-      titleClipped = titleClipped.substring(0, titleLimit) + "…";
-    }
-
+  getColor() {
     const overlayColor = {
       Main: '#5996B3',
       Food: '#AB622A',
@@ -59,6 +27,7 @@ export default class EventCard extends Component {
       Colorwar: '#405962',
       Campfire: '#81581F'
     };
+    const { event } = this.props;
 
     let color = overlayColor[event.category[0]];
     if (event.title === 'Opening Ceremony' || event.title === 'Closing Ceremony') {
@@ -69,115 +38,99 @@ export default class EventCard extends Component {
       color = overlayColor.Colorwar;
     }
 
+    return color;
+  }
+
+  render() {
+    const { event, eventManager, origin } = this.props;
+
     return (
-      <View>
-        {this.renderModal()}
-        <TouchableOpacity
-          onPress={() => this.toggleModal()}
-          activeOpacity={0.7}
-        >
-          <View>
-            {!inSlideshow ?
-              (<React.Fragment>
-                <ImageBackground
-                  style={[
-                    {
-                      width: imageWidth,
-                      height: big ? imageHeight / 2 : imageHeight,
-                      marginBottom: 5,
-                    },
-                    this.props.imageStyle,
-                  ]}
-                  source={Images[event.img]}
-                  imageStyle={{ borderRadius: 13 }}
-                >
-                {!big &&
-                <React.Fragment>
-                  <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'flex-end'
-                  }}
-                  >
-                    <View style={{
-                      marginTop: 6,
-                      marginRight: 6,
-                      borderRadius: 8,
-                      paddingHorizontal: 10,
-                      height: scale(23),
-                      backgroundColor: color,
-                      flexDirection: 'row',
-                      alignItems: 'center'
-                    }}
-                    >
-                      <IonIcon name="ios-star" size={scale(15)} color={'white'} />
-                      <BaseText style={{
-                          color: 'white',
-                          fontSize: scale(13),
-                          marginLeft: 5,
-                        }}
-                      >
-                        {eventManager.getSavedCount(event.eventID)}
-                      </BaseText>
-                    </View>
-                  </View>
-                <View style={{backgroundColor: color, borderBottomLeftRadius: 13, borderBottomRightRadius: 13, marginTop: (imageHeight - 60)}}>
-                  <BaseText numberOfLines={1} style={{width: (imageWidth - 10), color: 'white', fontWeight: 'bold', paddingLeft: 13, paddingTop: 5, paddingBottom: 5, fontSize: 15}}>{event.title}</BaseText>
-                </View></React.Fragment>}
-                </ImageBackground>
-                {!big && <BaseText style={{color: colors.textColor.light, width: imageWidth}} numberOfLines={1}>{event.caption}</BaseText>}
-              </React.Fragment>)
-              : (
-              <ImageBackground
-                style={[
-                  styles.imageBg,
-                  { width: imageWidth, height: imageHeight }
-                ]}
-                source={Images[event.img]}
-                >
-                <LinearGradient
-                  style={styles.darkImageMask}
-                  colors={['rgba(0,0,0,0)', 'rgba(0,0,0,0.65)']}
-                  locations={[0.3, 1]}
-                >
-                  <PadContainer style={styles.textGroup}>
-                    <H3 style={styles.happeningTitle}>HAPPENING NOW</H3>
-                    <H2 style={styles.eventTitle}>{titleClipped}</H2>
-                  </PadContainer>
-                </LinearGradient>
-              </ImageBackground>
-            )}
-          </View>
-          {big &&
-            <EventDescription
-              {...this.props}
-              disabled
-            />
-          }
-        </TouchableOpacity>
-      </View>
+      <ClickableEvent
+        eventManager={eventManager}
+        event={event}
+        origin={origin}
+      >
+        <View>
+          <ImageBackground
+            style={styles.imgBg}
+            source={Images[event.img]}
+            imageStyle={{ borderRadius: 13 }}
+          >
+            <View style={styles.favoriteBar}>
+              <View style={[
+                { backgroundColor: this.getColor() },
+                styles.favoriteInfo,
+              ]}>
+                <IonIcon name="ios-star" size={scale(15)} color={'white'} />
+                <BaseText style={styles.favoriteCount}>
+                  {eventManager.getSavedCount(event.eventID)}
+                </BaseText>
+              </View>
+            </View>
+
+            <View style={[
+              { backgroundColor: this.getColor() },
+              styles.titleContainer
+            ]}>
+              <BaseText numberOfLines={1} style={styles.eventTitle}>
+                {event.title}
+              </BaseText>
+            </View>
+          </ImageBackground>
+          
+          <BaseText style={styles.caption} numberOfLines={1}>
+              {event.caption}
+          </BaseText>
+        </View>
+      </ClickableEvent>
     );
   }
 }
 
+const imageWidth = (getDeviceWidth() / 2) + 10;
+const imageHeight = getImageHeight(imageWidth);
+
 const styles = StyleSheet.create({
-  darkImageMask: {
+  imgBg: {
+    marginBottom: 5,
+    width: imageWidth,
+    height: imageHeight
+  },
+  favoriteBar: {
     flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
-  textGroup: {
-    marginBottom: 40,
-    flex: 1,
-    justifyContent: 'flex-end',
+  favoriteInfo: {
+    marginTop: 6,
+    marginRight: 6,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    height: scale(23),
+    flexDirection: 'row',
+    alignItems: 'center'
   },
-  imageBg: {
-    position: 'relative',
+  favoriteCount: {
+    color: 'white',
+    fontSize: scale(13),
+    marginLeft: 5,
   },
-  happeningTitle: {
-    fontWeight: 'bold',
-    color: colors.textColor.primary,
+  caption: {
+    color: colors.textColor.light, 
+    width: imageWidth
   },
   eventTitle: {
-    color: colors.textColor.primary,
-    fontSize: 26,
+    color: 'white', 
+    fontWeight: 'bold', 
+    paddingLeft: 13, 
+    paddingTop: 5, 
+    paddingBottom: 5, 
+    fontSize: 15,
+    width: imageWidth - 10
+  },
+  titleContainer: {
+    borderBottomLeftRadius: 13, 
+    borderBottomRightRadius: 13,
+    marginTop: imageHeight - 60,
   }
 });

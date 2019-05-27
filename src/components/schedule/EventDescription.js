@@ -32,10 +32,6 @@ const styles = StyleSheet.create({
   },
   eventcard: {
     padding: 12.5,
-    //marginTop: -5
-    //padding: 15,
-    //borderBottomColor: colors.textColor.light,
-    //borderBottomWidth: 1,
   }
 });
 

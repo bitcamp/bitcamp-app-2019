@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 import Event from '../../events/Event';
 import EventsManager from '../../events/EventsManager';
+import EventModal from './EventModal';
 
 /**
  * A card that will reveal a modal with extra info about an event when clicked
@@ -22,7 +23,7 @@ export default class ClickableEvent extends Component {
 
     render() {
         return (
-            <View>
+            <View style={this.props.style}>
                 <EventModal
                     isModalVisible={this.state.isModalVisible}
                     toggleModal={this.toggleModal}
@@ -34,7 +35,7 @@ export default class ClickableEvent extends Component {
                     onPress={this.toggleModal}
                     activeOpacity={0.7}
                 >
-                    {props.children}
+                    {this.props.children}
                 </TouchableOpacity>
             </View>
         );
@@ -44,5 +45,6 @@ export default class ClickableEvent extends Component {
 ClickableEvent.propTypes = {
     event: PropTypes.instanceOf(Event),
     eventManager: PropTypes.instanceOf(EventsManager),
-    origin: PropTypes.string.isRequired
+    origin: PropTypes.string.isRequired,
+    style: ViewPropTypes.style
 };
