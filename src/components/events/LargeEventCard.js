@@ -14,7 +14,11 @@ const LargeEventCard = props => (
     >
         <Image
             style={styles.image}
+<<<<<<< HEAD
             source={Images[props.event.img]}
+=======
+            source={console.log(props.event.img) || Images[props.event.img]}
+>>>>>>> dfab5f21ca98ab8f0853ac046d8f9003d7f34cdc
             imageStyle={{ borderRadius: 13 }}
         />
         <EventDescription

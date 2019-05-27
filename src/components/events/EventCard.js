@@ -77,8 +77,18 @@ export default class EventCard extends Component {
               </BaseText>
             </View>
           </ImageBackground>
+<<<<<<< HEAD
           
           <BaseText style={styles.caption} numberOfLines={1}>
+=======
+          <BaseText 
+            style={{
+              color: colors.textColor.light, 
+              width: imageWidth
+            }} 
+            numberOfLines={1}
+          >
+>>>>>>> dfab5f21ca98ab8f0853ac046d8f9003d7f34cdc
               {event.caption}
           </BaseText>
         </View>
@@ -114,10 +124,13 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: scale(13),
     marginLeft: 5,
+<<<<<<< HEAD
   },
   caption: {
     color: colors.textColor.light, 
     width: imageWidth
+=======
+>>>>>>> dfab5f21ca98ab8f0853ac046d8f9003d7f34cdc
   },
   eventTitle: {
     color: 'white', 
