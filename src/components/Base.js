@@ -171,8 +171,6 @@ class ModalHeader extends Component {
       noArrow,
       eventID,
       eventManager,
-      goToSchedule,
-      small
     } = this.props;
 
     return (
@@ -182,15 +180,15 @@ class ModalHeader extends Component {
             style={{ marginLeft: -10, padding: scale(4), }}
             onPress={onBackButtonPress}
           >
-          <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
-            <IonIcon
-              name={'ios-arrow-back'}
-              size={35}
-              color={colors.primaryColor}
-              style={{paddingRight: 7}}
-            />
-            <H3 style={{color: colors.primaryColor, fontSize: 20}}>{this.props.origin}</H3>
-          </View>
+            <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
+              <IonIcon
+                name={'ios-arrow-back'}
+                size={35}
+                color={colors.primaryColor}
+                style={{paddingRight: 7}}
+              />
+              <H3 style={{color: colors.primaryColor, fontSize: 20}}>{this.props.origin}</H3>
+            </View>
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -205,11 +203,6 @@ class ModalHeader extends Component {
                 origin={this.props.origin}
               />
             </View>
-          }
-          {small ?
-              null
-              :
-              (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
           }
         </View>
       </View>
@@ -238,11 +231,11 @@ const CenteredActivityIndicator = props => (
   </View>
 );
 const Button = props => (
-  <View>
+  <TouchableOpacity onPress={props.onPress} activeOpacity={0.7}>
     <View style={[styles.button, props.style]}>
       <H3 style={styles.buttonText}>{props.text}</H3>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const modalStyle = { margin: 0 } //TODO: remove

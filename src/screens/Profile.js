@@ -156,7 +156,7 @@ export default class Profile extends Component {
           contentStyle={{ padding: 0 }}
           header={
             <ModalHeader
-              heading="QR Scanner"
+              origin="Profile"
               onBackButtonPress={() => this.toggleScanner()}
             />
           }
@@ -313,7 +313,7 @@ const ScanResponseModal = props => {
                 style={{ marginBottom: 10 }}
               />
               <H2 style={{ color: colors.secondaryColor, marginBottom: 20 }}>SUCCESS</H2>
-              <H1 style={{ marginBottom: 20 }}>{props.scannedUserData.displayName}</H1>
+              <H1 style={{ marginBottom: 20, textAlign: 'center' }}>{props.scannedUserData.displayName}</H1>
               {props.scannedUserData.minorStatus && (
                 <H3 style={{ color: colors.primaryColor }}>+ Minor</H3>
               )}

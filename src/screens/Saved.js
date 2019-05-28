@@ -32,9 +32,10 @@ export default class Saved extends Component {
             <Button
               text={`${this.state.isShowingPastEvents ? 'Hide' : 'Show'} ${pastEvents.length} past event${pastEvents.length > 1 ? 's' : ''}`}
               style={styles.showPastEventsButton}
-              onPress={() => {
-                this.setState({ showPastEvents: !this.state.isShowingPastEvents});
-              }}
+              onPress={() => (
+                this.setState({ isShowingPastEvents: !this.state.isShowingPastEvents})
+              )}
+              accessibilityLabel='Toggle Past Events'
             />
           }
 

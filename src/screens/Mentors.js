@@ -335,18 +335,19 @@ export default class Mentors extends Component {
           {this.renderNewQuestionModal()}
         </PadContainer>
         <TouchableOpacity
-          onPress={() => {
-            this.toggleModal();
-          }}
-          style={{ marginBottom: 40 }}
+          
         >
           <Button 
             style={{ 
               padding: 16, 
               borderRadius: 8,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              marginBottom: 40
             }} 
-            text="Ask a Question" 
+            text="Ask a Question"
+            onPress={() => (
+              this.toggleModal()
+            )}
           />
         </TouchableOpacity>
         <PadContainer>

@@ -26,7 +26,6 @@ const EventModal = props => (
         isModalVisible={props.isModalVisible}
         heart
         noArrow
-        small
       />
     }
   >
