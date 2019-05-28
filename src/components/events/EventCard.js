@@ -5,7 +5,6 @@ import Images from '../../../assets/imgs/index';
 import { scale } from '../../utils/scale';
 import { getDeviceWidth, getImageHeight } from '../../utils/sizing';
 import { colors } from '../Colors';
-import EventDescription from '../schedule/EventDescription';
 import { BaseText } from '../Text';
 import ClickableEvent from './ClickableEvent';
 
@@ -77,7 +76,6 @@ export default class EventCard extends Component {
               </BaseText>
             </View>
           </ImageBackground>
-          
           <BaseText style={styles.caption} numberOfLines={1}>
               {event.caption}
           </BaseText>

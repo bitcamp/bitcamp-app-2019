@@ -206,10 +206,8 @@ class ModalHeader extends Component {
               />
             </View>
           }
-          {small ?
-              null
-              :
-              (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
+          {small &&
+            (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
           }
         </View>
       </View>
@@ -238,11 +236,11 @@ const CenteredActivityIndicator = props => (
   </View>
 );
 const Button = props => (
-  <View>
+  <TouchableOpacity onPress={props.onPress} activeOpacity={0.7}>
     <View style={[styles.button, props.style]}>
       <H3 style={styles.buttonText}>{props.text}</H3>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
 const modalStyle = { margin: 0 } //TODO: remove
