@@ -1,40 +1,21 @@
-import React, { Component } from "react";
-import {
-  View,
-  ScrollView,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Alert,
-  AppState,
-  Text,
-} from "react-native";
-import {
-  ViewContainer,
-  modalStyle,
-  Button,
-  PadContainer,
-  ModalContent,
-} from "../components/Base";
-import Modal from "react-native-modal";
-import { colors } from "../components/Colors";
-import KeyboardShift from "../components/KeyboardShift";
-import firebase from "react-native-firebase";
-import QuestionCard from "../components/QuestionCard";
-import { AsyncStorage } from "react-native";
-import { H1, H2, H3, H4, H6, P, BaseText } from "../components/Text";
-import Toast from "react-native-simple-toast";
 import moment from "moment";
-import { StyleSheet, StatusBar, Switch } from "react-native";
-import { red100 } from "react-native-paper/src/styles/colors";
-import { scale, verticalScale } from "../actions/scale";
-import AltModalHeader from '../components/AltModalHeader';
-import SwitchInput from '../components/SwitchInput';
+import React, { Component } from "react";
+import { Alert, AppState, AsyncStorage, FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import firebase from "react-native-firebase";
+import Toast from "react-native-simple-toast";
+import AltModalHeader from '../components/modals/AltModalHeader';
+import { Button, PadContainer, ViewContainer } from "../components/Base";
+import { colors } from "../components/Colors";
 import ExternalLink from "../components/ExternalLink";
+import FullScreenModal from "../components/modals/FullScreenModal";
+import QuestionCard from "../components/QuestionCard";
+import SwitchInput from '../components/SwitchInput';
+import { H2, H3, P } from "../components/Text";
+import { scale, verticalScale } from "../utils/scale";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
-export default class Mentors extends Component<Props> {
+export default class Mentors extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -208,104 +189,98 @@ export default class Mentors extends Component<Props> {
       needsDesignMentor } = this.state;
 
     return (
-      <Modal
+      <FullScreenModal
         isVisible={newQuestionScreen}
         backdropColor={colors.backgroundColor.dark}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
         onBackButtonPress={() => this.toggleModal()}
-        style={modalStyle}
+        contentStyle={modalStyles.stretchyContainer}
+        header={
+          <AltModalHeader
+            title="Request Help"
+            leftText="Cancel"
+            leftAction={this.cancelQuestion.bind(this)}
+            rightText="Submit"
+            rightAction={this.sendQuestion.bind(this)}
+          />
+        }
       >
-        <AltModalHeader
-          title="Request Help"
-          leftText="Cancel"
-          leftFunc={this.cancelQuestion.bind(this)}
-          rightText="Submit"
-          rightFunc={this.sendQuestion.bind(this)}
-        />
-        <ModalContent style={modalStyles.stretchyContainer}>
-          <View style={modalStyles.inputGroup}>
-            <H3 style={modalStyles.inputGroupTitle}>
-              QUESTION
-            </H3>
-            <TextInput
-              style={[ modalStyles.input, modalStyles.textArea ]}
-              multiline={true}
-              numberOfLines={10}
-              onChangeText={text => this.setState({ question: text })}
-              value={question}
-              underlineColorAndroid="transparent"
-              placeholder="How do I make X using Y?"
-              placeholderTextColor={colors.textColor.light}
-              returnKeyType="next"
-              autoFocus
-            />
+        <View style={modalStyles.inputGroup}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            QUESTION
+          </H3>
+          <TextInput
+            style={[ modalStyles.input, modalStyles.textArea ]}
+            multiline={true}
+            numberOfLines={10}
+            onChangeText={text => this.setState({ question: text })}
+            value={question}
+            underlineColorAndroid="transparent"
+            placeholder="How do I make X using Y?"
+            placeholderTextColor={colors.textColor.light}
+            autoFocus
+          />
+        </View>
+        <View style={modalStyles.inputGroup}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            I WOULD LIKE
+          </H3>
+          <SwitchInput
+            style={[modalStyles.input, modalStyles.topInput]}
+            onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
+            text="In-person assistance"
+            value={needsInPersonAssistance}
+            isDisabled={needsDesignMentor}
+          />
+          <SwitchInput
+            style={modalStyles.input}
+            onPress={() => this.setState({ 
+              needsDesignMentor: !needsDesignMentor,
+              needsInPersonAssistance: !needsDesignMentor || needsInPersonAssistance
+            })}
+            text="A Design Den mentor"
+            value={needsDesignMentor}
+          />
+          <View style={modalStyles.inputDescriptionContainer}>
+            {"Design Den mentors can help your team create effective visual design for your project."
+              .split(' ').map((word, index) => <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>)
+            }
+            <ExternalLink text="Learn More..." url="https://medium.com/@bitcmp/design-den-907a6f40c3a9"/>
           </View>
-          <View style={modalStyles.inputGroup}>
-            <H3 style={modalStyles.inputGroupTitle}>
-              I WOULD LIKE
-            </H3>
-            <SwitchInput
-              style={[modalStyles.input, modalStyles.topInput]}
-              onPress={() => this.setState({ needsInPersonAssistance: !needsInPersonAssistance})}
-              text="In-person assistance"
-              value={needsInPersonAssistance}
-              isDisabled={needsDesignMentor}
-            />
-            <SwitchInput
-              style={modalStyles.input}
-              onPress={() => this.setState({ 
-                needsDesignMentor: !needsDesignMentor,
-                needsInPersonAssistance: (!needsDesignMentor) ? true : needsInPersonAssistance
-              })}
-              text="A Design Den mentor"
-              value={needsDesignMentor}
-            />
-            <View style={modalStyles.inputDescriptionContainer}>
-              {"Design Den mentors can help your team create effective visual design for your project."
-                .split(' ').map((word, index) => <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>)
-              }
-              <ExternalLink text="Learn More..." url="https://medium.com/@bitcmp/design-den-907a6f40c3a9"/>
-            </View>
+        </View>
+        <View style={modalStyles.inputGroup}>
+          <H3 style={modalStyles.inputGroupTitle}>
+            ABOUT YOU
+          </H3>
+          <TextInput
+            style={[modalStyles.input, modalStyles.topInput]}
+            onChangeText={text => this.setState({ location: text })}
+            value={location}
+            underlineColorAndroid="transparent"
+            placeholder="Table Number (B5)"
+            placeholderTextColor={colors.textColor.light}
+          />
+          <TextInput
+            style={modalStyles.input}
+            onChangeText={text => this.setState({ slackUsername: text })}
+            value={slackUsername}
+            underlineColorAndroid="transparent"
+            placeholder="Slack Username (bitcamper)"
+            placeholderTextColor={colors.textColor.light}
+            autoCapitalize="none"
+          />
+          <View style={modalStyles.inputDescriptionContainer}>
+            { // In order for the link and the rest of the paragraph to display on one block, 
+              // we split the message into words and make each word its own text element
+              "A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed. Make sure that you"
+                .split(' ')
+                .map((word, index) => 
+                  <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>
+                )
+            }
+            <ExternalLink text="join Bitcamp's Slack workspace." url="https://bit.camp/slack"/>
           </View>
-          <View style={modalStyles.inputGroup}>
-            <H3 style={modalStyles.inputGroupTitle}>
-             ABOUT YOU
-            </H3>
-            <TextInput
-              style={[modalStyles.input, modalStyles.topInput]}
-              onChangeText={text => this.setState({ location: text })}
-              value={location}
-              underlineColorAndroid="transparent"
-              placeholder="Table Number (B5)"
-              placeholderTextColor={colors.textColor.light}
-              returnKeyType="next"
-            />
-            <TextInput
-              style={modalStyles.input}
-              onChangeText={text => this.setState({ slackUsername: text })}
-              value={slackUsername}
-              underlineColorAndroid="transparent"
-              placeholder="Slack Username (bitcamper)"
-              placeholderTextColor={colors.textColor.light}
-              autoCapitalize="none"
-              returnKeyType="done"
-            />
-            <View style={modalStyles.inputDescriptionContainer}>
-              {"A Bitcamp mentor will respond to your message over Slack and may approach your table to assist if needed. Make sure that you"
-                .split(' ').map((word, index) => <P key={index} style={modalStyles.inputDescription}>{word+' '}</P>)
-              }
-              <ExternalLink text="join Bitcamp's Slack workspace." url="https://bit.camp/slack"/>
-            </View>
-          </View>
-        </ModalContent>
-      </Modal>
+        </View>
+      </FullScreenModal>
     );
   }
 
@@ -360,18 +335,19 @@ export default class Mentors extends Component<Props> {
           {this.renderNewQuestionModal()}
         </PadContainer>
         <TouchableOpacity
-          onPress={() => {
-            this.toggleModal();
-          }}
-          style={{ marginBottom: 40 }}
+          
         >
           <Button 
             style={{ 
               padding: 16, 
               borderRadius: 8,
-              fontWeight: 'bold'
+              fontWeight: 'bold',
+              marginBottom: 40
             }} 
-            text="Ask a Question" 
+            text="Ask a Question"
+            onPress={() => (
+              this.toggleModal()
+            )}
           />
         </TouchableOpacity>
         <PadContainer>

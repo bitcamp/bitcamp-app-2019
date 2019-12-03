@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Animated, Dimensions, Keyboard, StyleSheet, TextInput, UIManager } from 'react-native';
+import { Animated, Keyboard, StyleSheet, TextInput, UIManager } from 'react-native';
+import { getDeviceDimensions } from '../utils/sizing';
 const { State: TextInputState } = TextInput;
 
-// Class adapted from https://gist.github.com/larkintuckerllc/15644c314207df00c212ecb14b981439#file-keyboardshift-js
-// See this article for usage information: https://codeburst.io/react-native-keyboard-covering-inputs-72a9d3072689
+/** Class adapted from https://gist.github.com/larkintuckerllc/15644c314207df00c212ecb14b981439#file-keyboardshift-js
+    See this article for usage information: https://codeburst.io/react-native-keyboard-covering-inputs-72a9d3072689 */
 export default class KeyboardShift extends Component {
 
   constructor(props) {
@@ -34,7 +35,7 @@ export default class KeyboardShift extends Component {
   }
 
   handleKeyboardDidShow = (event) => {
-    const { height: windowHeight } = Dimensions.get('window');
+    const { height: windowHeight } = getDeviceDimensions();
     const keyboardHeight = event.endCoordinates.height;
     const currentlyFocusedField = TextInputState.currentlyFocusedField();
     UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {

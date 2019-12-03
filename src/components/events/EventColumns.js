@@ -1,35 +1,12 @@
-import React, { Component } from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
-import {
-  PadContainer,
-  Spacing,
-  Button,
-  ModalContent,
-  modalStyle,
-  ModalHeader
-} from "./Base";
-import EventCard from "./EventCard";
 import PropTypes from "prop-types";
-import { H3 } from "../components/Text";
-import Modal from "react-native-modal";
-import { colors } from "./Colors";
+import React, { Component } from "react";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
+import { getDeviceWidth } from "../../utils/sizing";
+import { Button } from "../Base";
+import { H3 } from "../Text";
+import EventCard from "./EventCard";
 
 const CLIP_LIMIT = 6;
-
-const styles = StyleSheet.create({
-  row: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  halfColumn: {
-    flex: 5,
-    flexDirection: "column",
-    marginRight: 20
-  },
-  event: {
-    marginBottom: 15
-  }
-});
 
 export default class EventColumns extends Component {
   constructor(props) {
@@ -51,23 +28,19 @@ export default class EventColumns extends Component {
   }
 
   getCardCol(event, index) {
-    if (event) {
-      return (
-        <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
-          <EventCard
-            event={event}
-            eventManager={this.props.eventManager}
-            origin={this.props.origin}/>
-        </View>
-      );
-    } else {
-      return null;
-    }
+    return (event) && (
+      <View style={[styles.halfColumn, (index === 0 ? {marginLeft: 20} : {marginLeft: 0})]} key={index}>
+        <EventCard
+          event={event}
+          eventManager={this.props.eventManager}
+          origin={this.props.origin}
+        />
+      </View>
+    );
   }
 
   getRows(isClipped) {
     const { eventsArr } = this.props;
-    const { width } = require("Dimensions").get("window");
 
     const limit = isClipped
       ? eventsArr.length >= CLIP_LIMIT
@@ -94,7 +67,7 @@ export default class EventColumns extends Component {
           style={[
             styles.row,
             { marginLeft: isClipped == false ? -20 : 0 },
-            { width: width },
+            { width: getDeviceWidth() },
           ]}
         >
           {this.getCardCol(left, i)}
@@ -127,43 +100,14 @@ export default class EventColumns extends Component {
       <ScrollView
         horizontal={true}
         style={{paddingRight: 10}}
-        showsHorizontalScrollIndicator={false}>
+        showsHorizontalScrollIndicator={false}
+      >
         {rowEventsList}
       </ScrollView>
     );
   }
 
-  /*renderModal() {
-    return (
-      <Modal
-        isVisible={false}
-        backdropColor={colors.backgroundColor.normal}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInRight"
-        animationOut="fadeOutRight"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
-        onBackButtonPress={() => this.toggleModal()}
-        style={modalStyle}
-      >
-        <ModalContent>
-          <ModalHeader
-            onBackButtonPress={() => this.toggleModal()}
-            heading={this.props.heading}
-            eventManager={this.props.eventManager}
-            origin={'Home'}
-          />
-          {this.getRows(false)}
-        </ModalContent>
-      </Modal>
-    );
-  }*/
-
   render() {
-    const { width, height } = require("Dimensions").get("window");
     return (
       <View style={{ flex: 1}}>
         {this.getRowOfEvents()}
@@ -180,3 +124,19 @@ EventColumns.propTypes = {
 EventColumns.defaultProps = {
   eventsArr: []
 };
+
+
+const styles = StyleSheet.create({
+  row: {
+    flex: 1,
+    flexDirection: "row"
+  },
+  halfColumn: {
+    flex: 5,
+    flexDirection: "column",
+    marginRight: 20
+  },
+  event: {
+    marginBottom: 15
+  }
+});

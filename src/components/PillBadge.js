@@ -1,6 +1,6 @@
-import React, { Component, Fragment } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
-import { scale } from '../actions/scale';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { scale } from '../utils/scale';
 import { BaseText } from './Text';
 
 const badgeColors = {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class PillBadge extends Component<Props> {
+export default class PillBadge extends Component {
   constructor(props) {
     super(props);
   }
@@ -66,7 +66,10 @@ export default class PillBadge extends Component<Props> {
       <View style={[
         (this.props.from === 'Modal' ? styles.modal : styles.description),
         styles.width,
-        {backgroundColor: badgeStyles[this.props.category].bgColor, marginLeft: (this.props.margin !== null ? this.props.margin : 0), marginRight: (this.props.isLast ? 30 : 0)}
+        {
+          backgroundColor: badgeStyles[this.props.category].bgColor, 
+          marginLeft: (this.props.margin ? this.props.margin : 0)
+        }
       ]}>
         <BaseText style={[
           styles.width,
@@ -74,7 +77,11 @@ export default class PillBadge extends Component<Props> {
           {color: badgeStyles[this.props.category].text},
           this.props.from === 'Modal' ? styles.modalText : {}
         ]}>
-            {(this.props.category === 'Main' || this.props.category === 'Mini' ? this.props.category + '-Event' : this.props.category).toUpperCase()}
+            {(this.props.category === 'Main' || this.props.category === 'Mini' 
+              ? this.props.category + '-Event'
+              : this.props.category)
+               .toUpperCase()
+            }
         </BaseText>
       </View>
     );

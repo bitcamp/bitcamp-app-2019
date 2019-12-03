@@ -1,17 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import Modal from 'react-native-modal';
+import React, { Component } from 'react';
+import FullScreenModal from './FullScreenModal';
 import PhotoView from 'react-native-photo-view';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 
-import AltModalHeader from '../components/AltModalHeader';
-import CustomScheduleTabBar from '../components/schedule/CustomScheduleTabBar';
-import { ModalContent, modalStyle } from './Base';
-import { colors } from './Colors';
+import AltModalHeader from './AltModalHeader';
+import CustomScheduleTabBar from '../schedule/CustomScheduleTabBar';
+import { colors } from '../Colors';
 import RNFetchBlob from 'rn-fetch-blob';
-import { Platform } from 'react-native';
-
-const dimensions = require('Dimensions').get('window');
-const screenWidth = dimensions.width;
+import Images from '../../../assets/imgs';
+import { getDeviceWidth } from '../../utils/sizing';
 
 export default class MapModal extends Component {
 
@@ -60,13 +57,13 @@ export default class MapModal extends Component {
           <PhotoView
             key={floorNumber}
             tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-            source={require('../../assets/imgs/floor-maps/not_found.png')}
+            source={Images.not_found}
             minimumZoomScale={1}
             maximumZoomScale={8}
             androidScaleType="fitCenter"
             onLoad={() => console.log("Image loaded!")}
             style={{
-              width: screenWidth,
+              width: getDeviceWidth(),
               flex: 1,
               backgroundColor: colors.backgroundColor.dark,
             }}
@@ -83,42 +80,35 @@ export default class MapModal extends Component {
           androidScaleType="fitCenter"
           onLoad={() => console.log("Image loaded!")}
           style={{
-            width: screenWidth,
+            width: getDeviceWidth(),
             flex: 1,
             backgroundColor: colors.backgroundColor.dark,
           }}
         />  
       );
     });
+
     return (
-      <Modal
+      <FullScreenModal
         isVisible={props.isModalVisible}
         backdropColor={colors.backgroundColor.dark}
-        backdropOpacity={1}
-        animationInTiming={250}
-        animationIn="fadeInUp"
-        animationOut="fadeOutDown"
-        animationOutTiming={300}
-        backdropTransitionInTiming={250}
-        backdropTransitionOutTiming={300}
-        avoidKeyboard={true}
         onBackButtonPress={() => props.toggleModal()}
-        style={[modalStyle, {flex: 1}]}
-      >
-        <ModalContent style={{ padding: 0, flex: 1 }}>
+        contentStyle={{ padding: 0 }}
+        header={
           <AltModalHeader
             title="Map"
             rightText="Done"
-            rightFunc={props.toggleModal}
+            rightAction={props.toggleModal}
           />
+        }
+      >
           <ScrollableTabView
             renderTabBar={() => <CustomScheduleTabBar/> }
             style={{height: 530}}
           >
             {floors}
           </ScrollableTabView>
-        </ModalContent>
-      </Modal>
+      </FullScreenModal>
     );
   }
 }

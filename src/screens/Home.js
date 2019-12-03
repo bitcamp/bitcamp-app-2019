@@ -1,21 +1,9 @@
-import React, { Component, Fragment } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Modal from 'react-native-modal';
-
-import {
-  HorizontalLine,
-  ModalContent,
-  ModalHeader,
-  modalStyle,
-  PadContainer,
-  PaperSheet,
-  Spacing,
-  ViewContainer,
-} from '../components/Base';
-import { colors } from '../components/Colors';
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { PadContainer, ViewContainer } from '../components/Base';
 import CountdownTimer from '../components/CountdownTimer';
-import EventColumns from '../components/EventColumns';
-import { H2, H4, H6 } from '../components/Text';
+import EventColumns from '../components/events/EventColumns';
+import { H2 } from '../components/Text';
 import HappeningNowSlideshow from '../components/HappeningNowSlideshow';
 
 export default class Home extends Component<Props> {
@@ -75,7 +63,10 @@ export default class Home extends Component<Props> {
   };
 
   renderHappeningNow = () => {
-    const events = this.state.happeningNow.length == 0 ? this.props.eventManager.getHappeningNow() : this.state.happeningNow;
+    const events = (this.state.happeningNow.length === 0) 
+      ? this.props.eventManager.getHappeningNow() 
+      : this.state.happeningNow;
+
     return (
       <View style={styles.subSection}>
         <HappeningNowSlideshow
@@ -104,7 +95,6 @@ export default class Home extends Component<Props> {
 
 const styles = StyleSheet.create({
   bottomContainer: {
-    // paddingBottom: 20,
     backgroundColor: "white"
   },
   heading: {
@@ -116,7 +106,6 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   subSection: {
-    // paddingTop: 20,
     paddingBottom: 20
   },
   subSectionHeading: {
@@ -131,7 +120,6 @@ const styles = StyleSheet.create({
     flexDirection: "column"
   },
   event: {
-    // backgroundColor: 'black',
     marginBottom: 15
   }
 });

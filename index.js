@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { AppRegistry, Platform } from 'react-native';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider } from 'react-native-paper';
 import App from './src/App';
-import StatusBar from './src/components/StatusBar';
 import { colors } from './src/components/Colors';
+import StatusBar from './src/components/StatusBar';
 import EventManager from './src/events/EventsManager';
 
 export default (Main = () => {

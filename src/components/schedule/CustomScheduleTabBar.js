@@ -8,7 +8,7 @@ import {
 import { colors } from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { scale } from '../../actions/scale';
+import { scale } from '../../utils/scale';
 import { BaseText } from '../Text';
 
 export default class CustomScheduleTabBar extends Component {

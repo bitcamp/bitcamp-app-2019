@@ -1,8 +1,8 @@
 import moment from 'moment';
 import _ from 'lodash';
-import Event from '../events/Event';
-import EventGroup from '../events/EventGroup';
-import EventDay from '../events/EventDay';
+import Event from './Event';
+import EventGroup from './EventGroup';
+import EventDay from './EventDay';
 
 export function normalizeTimeLabel(t) {
   return moment(t).format("h:mma")
@@ -75,15 +75,9 @@ export function createEventDay(rawEventDay) {
 
   eventGroupLabels = Object.keys(groupedData);
 
-  eventGroupObjs = [];
-  for (let i = 0; i < eventGroupLabels.length; i++) {
-    eventGroupObjs.push(
-      createEventGroup(
-        eventGroupLabels[i],
-        groupedData[eventGroupLabels[i]]
-      )
-    );
-  }
+  eventGroupObjs = eventGroupLabels.map(label => 
+    createEventGroup(label, groupedData[label])
+  );
 
   return new EventDay(dayLabel, eventGroupObjs);
 }

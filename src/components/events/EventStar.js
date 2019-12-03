@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons';
-import { H3 } from './Text';
-import { colors } from './Colors';
+import { H3 } from '../Text';
+import { colors } from '../Colors';
 
 export default class EventStar extends Component {
   constructor(props) {

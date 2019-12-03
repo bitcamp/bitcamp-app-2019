@@ -5,20 +5,21 @@ import {
     TouchableOpacity,
     Platform
 } from 'react-native';
-import { H3, P } from './Text';
-import { colors } from './Colors';
+import { H3, P } from '../Text';
+import { colors } from '../Colors';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import { scale } from '../actions/scale'; 
+import { scale } from '../../utils/scale';
+import { requireFunctionIfPresent } from '../../utils/PropTypeUtils';
 import PropTypes from 'prop-types';
 
-// An alternative modal style with a black, centered title and configurable action text
-// on the left and right
+/* An alternative modal header desgin with a centered title and 
+   configurable action text on the left and right */
 const AltModalHeader = props => (
     <View style={[ styles.menu, props.style ]}>
 
         <ConditionalSideText
             text={props.leftText}
-            func={props.leftFunc}
+            func={props.leftAction}
             textStyle={[styles.leftText, props.leftTextStyle]}
         />
 
@@ -26,13 +27,15 @@ const AltModalHeader = props => (
 
         <ConditionalSideText
             text={props.rightText}
-            func={props.rightFunc}
+            func={props.rightAction}
             textStyle={props.rightTextStyle}
             containerStyle={styles.rightMenuItem}
         />
     </View>
 );
 
+/* A text componenent that acts like a button if a text property is supplied 
+   or like an empty box otherwise */
 const ConditionalSideText = props => (
     <View style={[styles.menuItem, props.containerStyle]}>
         {props.text &&
@@ -52,25 +55,12 @@ const ConditionalSideText = props => (
 AltModalHeader.propTypes = {
     title: PropTypes.string.isRequired,
     leftText: PropTypes.string,
-    leftFunc: requireFunctionIfPresent('leftText'),
+    leftAction: requireFunctionIfPresent('leftText'),
     leftTextStyle: PropTypes.object,
     rightText: PropTypes.string,
     rightTextStyle: PropTypes.object,
-    rightFunc: requireFunctionIfPresent('rightText'),
+    rightAction: requireFunctionIfPresent('rightText'),
 };
-
-// A utility for making a function required if the dependentProp is passed into this component
-function requireFunctionIfPresent(dependentProp) {
-    return (props, propName) => {
-        if(props[dependentProp]) {
-            if (!props[propName]) {
-                return new Error(`You must provide '${propName}' if '${dependentProp}' is present`);
-            } else if(typeof(props[propName]) !== 'function') {
-                return new Error(`The '${propName}' property isn't a function`);
-            }
-        }
-    }
-}
 
 const headerPadding = scale(15);
 const styles = StyleSheet.create({

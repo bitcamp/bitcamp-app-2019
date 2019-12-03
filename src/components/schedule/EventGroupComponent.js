@@ -1,10 +1,8 @@
 import React, { Component, Fragment } from 'react';
-import { Platform, StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { BaseText } from '../Text';
 import EventDescription from './EventDescription';
-import moment from 'moment';
 
-const HACKING_IS_OVER = moment().isAfter(moment("2019-04-14 09:00"));
 export default class EventGroupComponent extends Component<Props> {
   constructor(props) {
     super(props);

@@ -6,7 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
 
-import { createEventDay } from '../actions/util.js';
+import { createEventDay } from './utils';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -20,6 +20,7 @@ const UPDATES_STORE = 'RECENT_UPDATES_STORE';
 
 const notificationBufferMins = 15;
 const savedCountRefreshInterval = 10 * 60 * 1000;
+const HACKING_END_TIME = moment("2019-04-14 09:00");
 
 const channelId = 'technica-push-notifications';
 
@@ -104,33 +105,32 @@ export default class EventsManager {
 
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
-      let eventID = newEvent.eventID;
+      const oldEvent = this.eventIDToEventMap[newEvent.eventID];
       // this event hasn't been seen yet
-      if(this.eventIDToEventMap[eventID] == null) {
+      if(oldEvent == null) {
         changed = true;
-        this.eventIDToEventMap[eventID] = newEvent;
+        this.eventIDToEventMap[newEvent.eventID] = newEvent;
       } else {
-        curEventObj = this.eventIDToEventMap[newEvent.eventID];
-        if(!_.isEqual(curEventObj, newEvent)) {
-
+        if(!_.isEqual(oldEvent, newEvent)) {
           // if the start time has changed we need to create a new notification and delete the original one
-          if(newEvent.startTime != curEventObj.startTime &&
-             this.isFavorited[newEvent.eventID] &&
-           rescheduleNotifications) {
+          if(newEvent.startTime !== oldEvent.startTime
+            && this.isFavorited[newEvent.eventID]
+            && rescheduleNotifications) {
             this.deleteNotification(newEvent);
             this.createNotification(newEvent);
           }
           changed = true;
-          //console.log(newEvent);
+          
           //update Event object with new properties
-          curEventObj.title = newEvent.title;
-          curEventObj.category = newEvent.category;
-          curEventObj.description = newEvent.description;
-          curEventObj.startTime = newEvent.startTime;
-          curEventObj.endTime = newEvent.endTime;
-          curEventObj.featured = newEvent.featured;
-          curEventObj.location = newEvent.location;
-          curEventObj.img = newEvent.img;
+          // TODO: clean this up
+          oldEvent.title = newEvent.title;
+          oldEvent.category = newEvent.category;
+          oldEvent.description = newEvent.description;
+          oldEvent.startTime = newEvent.startTime;
+          oldEvent.endTime = newEvent.endTime;
+          oldEvent.featured = newEvent.featured;
+          oldEvent.location = newEvent.location;
+          oldEvent.img = newEvent.img;
         }
       }
     });
@@ -439,5 +439,9 @@ export default class EventsManager {
         component.forceUpdate();
       }
     })
+  }
+
+  static hackingIsOver() {
+    return moment().isAfter(HACKING_END_TIME);
   }
 }

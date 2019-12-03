@@ -1,23 +1,13 @@
-import React, { Fragment, Component } from 'react';
-import { colors } from './Colors';
-import { H1, H2, H3, H4, P } from './Text';
+import React, { Component, Fragment } from 'react';
+import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Paper } from 'react-native-paper';
-import {
-  View,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  ActivityIndicator,
-  Image,
-  Text,
-} from 'react-native';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-import EventStar from './EventStar';
-import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 import Images from '../../assets/imgs/index';
-import { scale } from '../actions/scale';
+import { scale } from '../utils/scale';
+import { colors } from './Colors';
+import EventStar from './events/EventStar';
+import { H1, H2, H3 } from './Text';
 
 const styles = StyleSheet.create({
   bg: {
@@ -78,6 +68,7 @@ const styles = StyleSheet.create({
   modalHeader: {
     paddingBottom: scale(4),
     paddingTop: Platform.OS === "ios" ? scale(4) + getStatusBarHeight() : scale(4),
+    paddingHorizontal: scale(15),
   },
   modalHeaderNav: {
     justifyContent: 'space-between',
@@ -168,7 +159,7 @@ const ModalContent = props => (
   </ScrollView>
 );
 
-class ModalHeader extends Component<Props> {
+class ModalHeader extends Component {
   constructor(props) {
     super(props);
   }
@@ -180,8 +171,6 @@ class ModalHeader extends Component<Props> {
       noArrow,
       eventID,
       eventManager,
-      goToSchedule,
-      small
     } = this.props;
 
     return (
@@ -191,15 +180,15 @@ class ModalHeader extends Component<Props> {
             style={{ marginLeft: -10, padding: scale(4), }}
             onPress={onBackButtonPress}
           >
-          <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
-            <IonIcon
-              name={'ios-arrow-back'}
-              size={35}
-              color={colors.primaryColor}
-              style={{paddingRight: 7}}
-            />
-            <H3 style={{color: colors.primaryColor, fontSize: 20}}>{this.props.origin}</H3>
-          </View>
+            <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
+              <IonIcon
+                name={'ios-arrow-back'}
+                size={35}
+                color={colors.primaryColor}
+                style={{paddingRight: 7}}
+              />
+              <H3 style={{color: colors.primaryColor, fontSize: 20}}>{this.props.origin}</H3>
+            </View>
           </TouchableOpacity>
           {heart &&
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -214,11 +203,6 @@ class ModalHeader extends Component<Props> {
                 origin={this.props.origin}
               />
             </View>
-          }
-          {small ?
-              null
-              :
-              (this.props.isSearch ? <Fragment></Fragment> : <H2 style={styles.modalHeadingText}>{this.props.heading}</H2>)
           }
         </View>
       </View>
@@ -247,27 +231,14 @@ const CenteredActivityIndicator = props => (
   </View>
 );
 const Button = props => (
-  <View>
+  <TouchableOpacity onPress={props.onPress} activeOpacity={0.7}>
     <View style={[styles.button, props.style]}>
       <H3 style={styles.buttonText}>{props.text}</H3>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-const modalStyle = { margin: 0 }
+const modalStyle = { margin: 0 } //TODO: remove
 
-export {
-  PlainViewContainer,
-  ViewContainer,
-  Heading,
-  SubHeading,
-  PaperSheet,
-  PadContainer,
-  HorizontalLine,
-  Spacing,
-  ModalContent,
-  ModalHeader,
-  modalStyle,
-  CenteredActivityIndicator,
-  Button
-};
+export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalContent, ModalHeader, modalStyle, CenteredActivityIndicator, Button };
+
