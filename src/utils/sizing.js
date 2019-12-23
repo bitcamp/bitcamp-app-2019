@@ -1,4 +1,6 @@
-const DEVICE_DIMENSIONS = require('Dimensions').get('window');
+import {Dimensions} from 'react-native';
+
+const DEVICE_DIMENSIONS = Dimensions.get('window');
 
 const getDeviceDimensions = () => DEVICE_DIMENSIONS;
 const getDeviceWidth = () => DEVICE_DIMENSIONS.width;

@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { AppRegistry, Platform } from 'react-native';
+import { registerRootComponent } from 'expo';
+import { Platform } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import App from './src/App';
 import { colors } from './src/components/Colors';
@@ -21,4 +22,4 @@ export default (Main = () => {
   );
 });
 
-AppRegistry.registerComponent('technica', () => Main);
+registerRootComponent(Main);
