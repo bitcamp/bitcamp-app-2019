@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, TouchableHighlight, View } from 'react-native';
-import firebase from 'react-native-firebase';
+import firebase from 'firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';

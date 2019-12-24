@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
 import { Alert, AppState, AsyncStorage, FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import firebase from "react-native-firebase";
+import firebase from "firebase";
 import Toast from "react-native-simple-toast";
 import AltModalHeader from '../components/modals/AltModalHeader';
 import { Button, PadContainer, ViewContainer } from "../components/Base";

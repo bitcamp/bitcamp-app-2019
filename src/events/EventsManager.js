@@ -1,7 +1,7 @@
 // Use this class to interact with all of the events, never modify the state directly
 
 import { AsyncStorage } from 'react-native';
-import firebase from 'react-native-firebase';
+import firebase from 'firebase';
 import moment from 'moment';
 import _ from 'lodash';
 import Toast from 'react-native-simple-toast';
