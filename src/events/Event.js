@@ -1,4 +1,4 @@
-import { hasTimePassed, normalizeTimeLabel } from './utils';
+import { hasTimePassed, normalizeTimeLabel } from './timeUtils';
 
 export default class Event {
   constructor(
@@ -54,5 +54,10 @@ export default class Event {
     return (this.title && this.title.length > titleLimit)
       ? this.title.substring(0, titleLimit) + "…"
       : this.title;
+  }
+
+  // Temporary for malformed data
+  get category() {
+    return 'colorwar';
   }
 }

@@ -4,6 +4,7 @@
     "slug": "bitcamp",
     "sdkVersion": "36.0.0",
     "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "entryPoint": "./index.js",

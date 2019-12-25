@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-native";
-import QRCode from "react-native-qrcode";
-import QRCodeScanner from "react-native-qrcode-scanner";
+import QRCode from "react-native-qrcode-svg";
+import QRCodeScanner from "../components/QRCodeScanner";
 import RNRestart from 'react-native-restart';
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FAIcon from "react-native-vector-icons/FontAwesome";
@@ -163,15 +163,7 @@ export default class Profile extends Component {
         >
           <ViewContainer>
             <QRCodeScanner
-              ref={node => {
-                this.scanner = node;
-              }}
-              onRead={this.onScanSuccess.bind(this)}
-              showMarker
-              reactivate={false}
-              customMarker={
-                <View style={styles.QRMarker}/>
-              }
+              onScan={this.onScanSuccess.bind(this)}
             />
             <ScanResponseModal
               isVisible={this.state.scannedUser}
@@ -208,8 +200,6 @@ export default class Profile extends Component {
                   <QRCode
                     value={id}
                     size={scale(175)}
-                    bgColor="black"
-                    fgColor="white"
                   />
                 )}
               </View>

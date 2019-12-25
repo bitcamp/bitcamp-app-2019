@@ -236,60 +236,63 @@ export default class AppContainer extends Component {
 
   configureNotificationSettings() {
     //create notifications channel
-    const channel = new firebase.notifications.Android.Channel(
-      channelId,
-      channelName,
-      firebase.notifications.Android.Importance.Max
-    ).setDescription(
-      "Bitcamp notification channel for delivering important announcements"
-    );
+    // TODO: rework push notifications since firebase fcm only works on android when using expo
 
-    firebase.notifications().android.createChannel(channel);
+    // console.warn(firebase.notifications);
+    // const channel = new firebase.notifications.Android.Channel(
+    //   channelId,
+    //   channelName,
+    //   firebase.notifications.Android.Importance.Max
+    // ).setDescription(
+    //   "Bitcamp notification channel for delivering important announcements"
+    // );
 
-    firebase
-      .messaging()
-      .hasPermission()
-      .then(enabled => {
-        if (enabled) {
-          console.log("Permission enabled");
-        } else {
-          try {
-            firebase.messaging().requestPermission();
-          } catch (error) {
-            console.log("Error authenticating", error);
-          }
-        }
-      });
+    // firebase.notifications().android.createChannel(channel);
 
-    firebase
-      .messaging()
-      .getToken()
-      .then(fcmToken => {
-        if (fcmToken) {
-          console.log("fcm token: ", fcmToken);
-          // store FCMToken for use with mentorship notifications
-          AsyncStorage.setItem("FCMToken", fcmToken);
-        } else {
-          console.log("no token");
-        }
-      });
+    // firebase
+    //   .messaging()
+    //   .hasPermission()
+    //   .then(enabled => {
+    //     if (enabled) {
+    //       console.log("Permission enabled");
+    //     } else {
+    //       try {
+    //         firebase.messaging().requestPermission();
+    //       } catch (error) {
+    //         console.log("Error authenticating", error);
+    //       }
+    //     }
+    //   });
 
-    firebase.messaging().subscribeToTopic("announcements");
+    // firebase
+    //   .messaging()
+    //   .getToken()
+    //   .then(fcmToken => {
+    //     if (fcmToken) {
+    //       console.log("fcm token: ", fcmToken);
+    //       // store FCMToken for use with mentorship notifications
+    //       AsyncStorage.setItem("FCMToken", fcmToken);
+    //     } else {
+    //       console.log("no token");
+    //     }
+    //   });
 
-    this.notificationDisplayedListener = firebase
-      .notifications()
-      .onNotificationDisplayed(notification => {
-        // Process your notification as required
-        // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
-        console.log("notification displayed", notification);
-      });
+    // firebase.messaging().subscribeToTopic("announcements");
 
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        console.log("notification received", notification);
-        notification.android.setChannelId(channelId);
-        firebase.notifications().displayNotification(notification);
-      });
+    // this.notificationDisplayedListener = firebase
+    //   .notifications()
+    //   .onNotificationDisplayed(notification => {
+    //     // Process your notification as required
+    //     // ANDROID: Remote notifications do not contain the channel ID. You will have to specify this manually if you'd like to re-display the notification.
+    //     console.log("notification displayed", notification);
+    //   });
+
+    // this.notificationListener = firebase
+    //   .notifications()
+    //   .onNotification(notification => {
+    //     console.log("notification received", notification);
+    //     notification.android.setChannelId(channelId);
+    //     firebase.notifications().displayNotification(notification);
+    //   });
   }
 }
