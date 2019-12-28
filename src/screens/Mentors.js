@@ -11,6 +11,7 @@ import QuestionCard from "../components/QuestionCard";
 import SwitchInput from '../components/SwitchInput';
 import { H2, H3, P } from "../components/Text";
 import { scale, verticalScale } from "../utils/scale";
+import { mockFetch } from "../mockData/mockFetch";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
@@ -32,7 +33,7 @@ export default class Mentors extends Component {
   }
 
   async grabQuestionsFromDB(email) {
-    fetch(`${serverURL}/getquestions/${email}`, {
+    mockFetch(`${serverURL}/getquestions/${email}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -152,7 +153,7 @@ export default class Mentors extends Component {
       }
 
       var questionString = JSON.stringify(questionObject);
-      fetch(`${serverURL}/question`, {
+      mockFetch(`${serverURL}/question`, {
         method: "POST",
         headers: {
           Accept: "application/json",

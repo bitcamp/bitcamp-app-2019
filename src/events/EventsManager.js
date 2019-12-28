@@ -6,6 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import { createEventDay } from './utils';
+import { mockFetch } from '../mockData/mockFetch';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -55,17 +56,21 @@ export default class EventsManager {
           }
 
           //after we load the local schedule we will finally add the database query listener for schedule
-          firebase.database().ref('/Schedule')
-            .on('value', async (snapshot) => {
-              let data = snapshot.val();
-              //store new schedule on phone
-              AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
-                if (error){
-                  console.log(error);
-                }
-              });
+          // TODO: revert to firebase once we update the events database with real data
+          // firebase.database().ref('/Schedule')
+          //   .on('value', async (snapshot) => {
+          // let data = snapshot.val();
+            mockFetch('schedule')
+              .then(responseData => responseData.json())
+              .then(data => {
+                //store new schedule on phone
+                AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
+                  if (error){
+                    console.log(error);
+                  }
+                });
 
-              this.processNewEvents(data, true);
+                this.processNewEvents(data, true);
           });
       });
     });
@@ -158,7 +163,7 @@ export default class EventsManager {
   }
 
   fetchSavedCounts() {
-    fetch("https://api.bit.camp/api/firebaseEvents/favoriteCounts")
+    mockFetch("https://api.bit.camp/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
         newSavedCount = responseJson;

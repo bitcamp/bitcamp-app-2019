@@ -12,6 +12,7 @@ import FullScreenModal from "../components/modals/FullScreenModal";
 import { H1, H2, H3 } from "../components/Text";
 import { scale } from '../utils/scale';
 import EasterEggUsername from '../components/EasterEggUsername';
+import { mockFetch } from "../mockData/mockFetch";
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -78,7 +79,7 @@ export default class Profile extends Component {
       const userId = e.data;
       const url =`https://api.bit.camp/api/users/${userId}/checkIn`;
       const token = await AsyncStorage.getItem(USER_TOKEN);
-      const response = await fetch(url, {
+      const response = await mockFetch(url, {
         method: "POST",
         headers: {
           "Accept": "application/json",

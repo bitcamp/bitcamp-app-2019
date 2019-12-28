@@ -42,9 +42,9 @@ export default class Event {
   }
 
   get timeRangeString() {
-    return this.startTimeFormatted === this.endTimeFormatted 
+    return this.startTimeFormatted === this.endTimeFormatted
       ? this.startTimeFormatted
-      : `from ${this.startTimeFormatted} - ${this.endTimeFormatted}`      
+      : `from ${this.startTimeFormatted} - ${this.endTimeFormatted}`
   }
 
   get clippedTitle() {
@@ -54,10 +54,5 @@ export default class Event {
     return (this.title && this.title.length > titleLimit)
       ? this.title.substring(0, titleLimit) + "…"
       : this.title;
-  }
-
-  // Temporary for malformed data
-  get category() {
-    return 'colorwar';
   }
 }

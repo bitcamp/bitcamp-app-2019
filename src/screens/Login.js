@@ -4,6 +4,7 @@ import { Alert, AsyncStorage, StyleSheet, TextInput, TouchableOpacity } from 're
 import { Button, Heading, PadContainer, SubHeading } from '../components/Base';
 import { colors } from '../components/Colors';
 import KeyboardShift from '../components/KeyboardShift';
+import { mockFetch } from '../mockData/mockFetch';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -54,7 +55,7 @@ export default class Login extends Component<Props> {
     if(validEmail != null){
       let url = "https://api.bit.camp/auth/login/requestCode";
       try {
-          let response = await fetch(url, {
+          let response = await mockFetch(url, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -120,7 +121,7 @@ export default class Login extends Component<Props> {
     let url = "https://api.bit.camp/auth/login/code";
     try {
         let email = this.state.savedEmail;
-        let response = await fetch(url, {
+        let response = await mockFetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
