@@ -49,14 +49,15 @@ export default class EventsManager {
       }
       this.updateHearts();
 
+      // TODO: revert to firebase once we update the events database with real data
       //loads the copy of the schedule on the users phone
-      AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
-          if(result != null){
-            this.processNewEvents(JSON.parse(result), false);
-          }
+      // AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
+      //     if(result != null){
+      //       this.processNewEvents(JSON.parse(result), false);
+      //     }
 
-          //after we load the local schedule we will finally add the database query listener for schedule
           // TODO: revert to firebase once we update the events database with real data
+          //after we load the local schedule we will finally add the database query listener for schedule
           // firebase.database().ref('/Schedule')
           //   .on('value', async (snapshot) => {
           // let data = snapshot.val();
@@ -73,7 +74,6 @@ export default class EventsManager {
                 this.processNewEvents(data, true);
           });
       });
-    });
 
     this.savedCounts = {};
     AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
@@ -103,9 +103,6 @@ export default class EventsManager {
         )
       )
     );
-
-    console.log('newEventDays', newEventDays);
-    console.log('new combined events', newCombinedEvents);
 
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
@@ -167,7 +164,6 @@ export default class EventsManager {
       .then((response) => response.json())
       .then((responseJson) => {
         newSavedCount = responseJson;
-        console.log("SAVED: " + responseJson);
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
         AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
@@ -202,7 +198,7 @@ export default class EventsManager {
       if (result != null && token != null) {
         result = JSON.parse(result);
         id = result.id;
-        let response = await fetch(`https://api.bit.camp/api/users/${id}/`, {
+        let response = await mockFetch(`https://api.bit.camp/api/users/${id}/`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -223,7 +219,7 @@ export default class EventsManager {
     }
     catch(error) {
       console.log(error);
-      Toast.show("Error grabbing new user data.");
+      Toast.show("Error grabbing new user data.", Toast.SHORT);
     }
     this.updateHearts();
     this.updateEventComponents();
@@ -278,7 +274,7 @@ export default class EventsManager {
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
-        let response = fetch(`https://api.bit.camp/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
+        let response = mockFetch(`https://api.bit.camp/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json',
@@ -324,7 +320,7 @@ export default class EventsManager {
 
         id = JSON.parse(result).id;
 
-        fetch(`https://api.bit.camp/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
+        mockFetch(`https://api.bit.camp/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -361,7 +357,7 @@ export default class EventsManager {
     if(event.hasPassed) {
       Toast.show('This event has ended.');
     } else if (event.hasBegun) {
-      Toast.show("This event is currently in progress");
+      Toast.show("This event is currently in progress", Toast.SHORT);
     } else {
 
       let notification = new firebase.notifications.Notification()

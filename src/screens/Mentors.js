@@ -167,7 +167,8 @@ export default class Mentors extends Component {
       this.showToast();
       this.toggleModal();
       // make new question show up immediately at top of list
-      this.setState({ listData: [questionObject].concat(this.state.listData) });
+      this.setState({ listData: [questionObject, ...this.state.listData] });
+      setTimeout(() => console.log("List data", this.state.listData), 1000);
     }
   }
   renderHeading() {
@@ -284,20 +285,21 @@ export default class Mentors extends Component {
     );
   }
 
+  //TODO: reimplement when firebase is setup
   async createNotificationListener() {
-    // updates when app is in foreground
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        this.grabQuestionsFromDB(notification.data.email);
-      });
+    // // updates when app is in foreground
+    // this.notificationListener = firebase
+    //   .notifications()
+    //   .onNotification(notification => {
+    //     this.grabQuestionsFromDB(notification.data.email);
+    //   });
 
-    // updates when app is in the background
-    this.notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(notificationOpen => {
-        this.grabQuestionsFromDB(notificationOpen.notification.data.email);
-      });
+    // // updates when app is in the background
+    // this.notificationOpenedListener = firebase
+    //   .notifications()
+    //   .onNotificationOpened(notificationOpen => {
+    //     this.grabQuestionsFromDB(notificationOpen.notification.data.email);
+    //   });
   }
 
   async updateQuestionStatus(notification) {

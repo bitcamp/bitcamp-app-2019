@@ -1,15 +1,21 @@
-import * as Font from 'expo-font';
+import * as Font from "expo-font";
+import {
+  FontAwesome,
+  Ionicons,
+  EvilIcons,
+  SimpleLineIcons
+} from "@expo/vector-icons";
+
+const fontList = [
+  {
+    "Aleo-Bold": require("../../assets/fonts/Aleo-Bold.otf")
+  },
+  FontAwesome.font,
+  Ionicons.font,
+  EvilIcons.font,
+  SimpleLineIcons.font
+];
 
 export async function loadAssets() {
-    try {
-        await Font.loadAsync({
-            'Aleo-Bold': require('../../assets/fonts/Aleo-Bold.otf'),
-        });
-    } catch (e) {
-        console.warn(
-            'There was an error loading assets, perhaps due to a ' +
-            'network timeout. Reload the app to try again.'
-        );
-        console.log(e.message);
-    }
+  await Promise.all([...fontList.map(font => Font.loadAsync(font))]);
 }

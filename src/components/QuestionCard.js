@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import AnimatedEllipsis from "react-native-animated-ellipsis";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { Ionicons } from "@expo/vector-icons";
 import { scale } from '../utils/scale';
 import { H3, H6 } from "./Text";
 
@@ -16,8 +16,8 @@ export default function QuestionCard(props) {
         {question}
       </H3>
       <View style={styles.statusContainer}>
-        <FontAwesome5
-          name={isClaimed ? "check-circle" : "sync-alt"}
+        <Ionicons
+          name={isClaimed ? "md-checkmark-circle" : "md-sync"}
           color={isClaimed ? questionColors.claimed : questionColors.unclaimed}
           size={iconSize}
           style={styles.icon}

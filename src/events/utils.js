@@ -10,35 +10,33 @@ import { normalizeTimeLabel } from './timeUtils';
 export function createEventGroup(eventGroupLabel, rawEventArray) {
   let eventArray = [];
   for (let i in rawEventArray) {
-      rawEvent = rawEventArray[i];
-      /* TODO : Change this once schedule is fixed */
-      //let img =  "banner_" + rawEvent.category.toLowerCase();
-      let banner_map = {
-        opening_ceremony: "ceremony",
-        closing_ceremony: "ceremony",
-        expo_a: "demo",
-        expo_b: "demo",
-        colorwar: "colorwar"
-      }
-      let title = rawEvent.title.toLowerCase().replace(' ','_');
-      let img =  "banner_" + (banner_map[title] != undefined ?
-        banner_map[title]
-        :
-        banner_map.opening_ceremony);
-      eventArray.push(
-        new Event(
-          rawEvent.eventID,
-          rawEvent.title,
-          rawEvent.category,
-          rawEvent.caption,
-          rawEvent.description,
-          rawEvent.startTime,
-          rawEvent.endTime,
-          rawEvent.featuredEvent,
-          rawEvent.location,
-          img
-        )
-      );
+    rawEvent = rawEventArray[i];
+    let banner_map = {
+      opening_ceremony: "ceremony",
+      closing_ceremony: "ceremony",
+      expo_a: "demo",
+      expo_b: "demo",
+      colorwar: "colorwar"
+    };
+    let title = rawEvent.title.toLowerCase().replace(" ", "_");
+    let img =  "banner_" + (banner_map[title] != undefined ?
+      banner_map[title]
+      :
+      ((Array.isArray(rawEvent.category) ? rawEvent.category[0] : rawEvent.category).toLowerCase()));
+    eventArray.push(
+      new Event(
+        rawEvent.eventID,
+        rawEvent.title,
+        rawEvent.category,
+        rawEvent.caption,
+        rawEvent.description,
+        rawEvent.startTime,
+        rawEvent.endTime,
+        rawEvent.featuredEvent,
+        rawEvent.location,
+        img
+      )
+    );
   }
 
   return new EventGroup(eventGroupLabel, eventArray);
@@ -67,7 +65,7 @@ export function createEventDay(rawEventDay) {
 
   eventGroupLabels = Object.keys(groupedData);
 
-  eventGroupObjs = eventGroupLabels.map(label => 
+  eventGroupObjs = eventGroupLabels.map(label =>
     createEventGroup(label, groupedData[label])
   );
 

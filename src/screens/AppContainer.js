@@ -3,8 +3,8 @@ import { AsyncStorage, BackHandler, Image, SafeAreaView, StatusBar, TouchableHig
 import firebase from 'firebase';
 import { Colors } from 'react-native-paper';
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { SimpleLineIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 import Images from '../../assets/imgs/index';
 import { colors } from '../components/Colors';
 import CustomTabBar from '../components/CustomTabBar';
@@ -90,7 +90,7 @@ export default class AppContainer extends Component {
                 onPress={navigation.getParam("toggleSearchModal")}
                 underlayColor="#f9f9f9"
               >
-                <Icon
+                <SimpleLineIcons
                   name="magnifier"
                   {...iconProps}
                 />
@@ -208,7 +208,7 @@ export default class AppContainer extends Component {
     );
   }
 
-  componentWillMount() {
+  componentDidMount() {
     BackHandler.addEventListener(
       "hardwareBackPress",
       this.handleBackButtonClick

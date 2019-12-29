@@ -3,9 +3,7 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-n
 import QRCode from "react-native-qrcode-svg";
 import QRCodeScanner from "../components/QRCodeScanner";
 import RNRestart from 'react-native-restart';
-import AntDesign from "react-native-vector-icons/AntDesign";
-import FAIcon from "react-native-vector-icons/FontAwesome";
-import MCI from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons } from '@expo/vector-icons';
 import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
 import FullScreenModal from "../components/modals/FullScreenModal";
@@ -187,7 +185,7 @@ export default class Profile extends Component {
 
         const id = this.state.user.id
           ? this.state.user.id
-          : "";
+          : this.state.user.email; // TODO: possibly provide a more reasonable default
 
         const isOrganizer = this.state.user.admin || this.state.user.organizer;
 
@@ -231,8 +229,8 @@ export default class Profile extends Component {
                     style={[styles.actionButton, {backgroundColor: "#d2d1d7"}]}
                     onPress={() => this.toggleScanner()}
                   >
-                    <MCI
-                      name="qrcode-scan"
+                    <Ionicons
+                      name="md-qr-scanner"
                       size={50}
                       color="black"
                     />
@@ -245,8 +243,8 @@ export default class Profile extends Component {
                   style={[styles.actionButton, {backgroundColor: 'red'}]}
                   onPress={() => this.logout()}
                 >
-                  <AntDesign
-                    name="logout"
+                  <Ionicons
+                    name="ios-log-out"
                     size={45}
                     color="white"
                   />
@@ -287,8 +285,8 @@ const ScanResponseModal = props => {
         {
           !props.scannedUserData
           ? <React.Fragment>
-              <FAIcon
-                name="times"
+              <Ionicons
+                name="md-close"
                 size={48}
                 color={colors.iconColor}
                 style={{ marginBottom: 10 }}
@@ -297,8 +295,8 @@ const ScanResponseModal = props => {
               <H3 style={{ color: colors.textColor.light }}>Send to check-in table.</H3>
             </React.Fragment>
           : <React.Fragment>
-              <FAIcon
-                name="check"
+              <Ionicons
+                name="md-checkmark"
                 size={48}
                 color={colors.secondaryColor}
                 style={{ marginBottom: 10 }}

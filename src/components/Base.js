@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Paper } from 'react-native-paper';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import Images from '../../assets/imgs/index';
 import { scale } from '../utils/scale';
 import { colors } from './Colors';
@@ -181,7 +181,7 @@ class ModalHeader extends Component {
             onPress={onBackButtonPress}
           >
             <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
-              <IonIcon
+              <Ionicons
                 name={'ios-arrow-back'}
                 size={35}
                 color={colors.primaryColor}
