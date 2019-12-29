@@ -353,20 +353,18 @@ export default class Mentors extends Component {
           />
         </TouchableOpacity>
         <PadContainer>
-          {this.state.listData && this.state.listData.length > 0 && (
-            <H2 style={modalStyles.bigTitle}>Your Questions</H2>
-          )}
-          <FlatList
-            data={this.state.listData}
-            renderItem={({ item }) => (
+          {this.state.listData &&
+            this.state.listData.length > 0 && (
+              <H2 style={modalStyles.bigTitle}>Your Questions</H2>
+            ) &&
+            this.state.listData.map(question => (
               <QuestionCard
-                question={item.question}
-                status={item.status}
-                location={item.location}
-                time={item.key}
+                question={question.question}
+                status={question.status}
+                key={question.key}
               />
-            )}
-          />
+            ))
+          }
         </PadContainer>
       </ViewContainer>
     );

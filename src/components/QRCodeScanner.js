@@ -30,18 +30,16 @@ export default function QRCodeScanner(props) {
   }
 
   return (
-    <View
+    <BarCodeScanner
+      onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
       style={{
         flex: 1,
         flexDirection: "column",
-        justifyContent: "flex-end"
+        borderWidth: 1,
+        borderColor: "pink"
       }}
-    >
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={{ flex: 1 }}
-      />
-    </View>
+    />
   );
 }
 
