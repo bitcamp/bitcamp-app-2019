@@ -3,7 +3,9 @@ import {
   FontAwesome,
   Ionicons,
   EvilIcons,
-  SimpleLineIcons
+  SimpleLineIcons,
+  MaterialCommunityIcons,
+  AntDesign
 } from "@expo/vector-icons";
 
 const fontList = [
@@ -13,7 +15,9 @@ const fontList = [
   FontAwesome.font,
   Ionicons.font,
   EvilIcons.font,
-  SimpleLineIcons.font
+  SimpleLineIcons.font,
+  MaterialCommunityIcons.font,
+  AntDesign.font
 ];
 
 export async function loadAssets() {

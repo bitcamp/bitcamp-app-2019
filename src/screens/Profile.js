@@ -3,7 +3,7 @@ import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-n
 import QRCode from "react-native-qrcode-svg";
 import QRCodeScanner from "../components/QRCodeScanner";
 import RNRestart from 'react-native-restart';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
 import FullScreenModal from "../components/modals/FullScreenModal";
@@ -131,7 +131,7 @@ export default class Profile extends Component {
 
   async componentDidMount() {
     var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
-    console.log(loggedInUser);
+    
     if (FORCE_NORMAL_USER) {
       loggedInUser.admin = false;
     }
@@ -229,8 +229,8 @@ export default class Profile extends Component {
                     style={[styles.actionButton, {backgroundColor: "#d2d1d7"}]}
                     onPress={() => this.toggleScanner()}
                   >
-                    <Ionicons
-                      name="md-qr-scanner"
+                    <MaterialCommunityIcons
+                      name="qrcode-scan"
                       size={50}
                       color="black"
                     />
@@ -243,8 +243,8 @@ export default class Profile extends Component {
                   style={[styles.actionButton, {backgroundColor: 'red'}]}
                   onPress={() => this.logout()}
                 >
-                  <Ionicons
-                    name="ios-log-out"
+                  <AntDesign
+                    name="logout"
                     size={45}
                     color="white"
                   />

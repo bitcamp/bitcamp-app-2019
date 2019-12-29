@@ -19,7 +19,7 @@ export const mockFetch = async (uri, options) => {
   try {
     const respData = getResponse(uri);
     return {
-      json: () => respData,
+      json: async () => respData,
       status: 200,
       statusText: "OK",
       ok: true
@@ -34,44 +34,46 @@ const apiURL = "https://api.bit.camp";
 const questionServerURL = "https://guarded-brook-59345.herokuapp.com";
 const requestTypes = {
   getUser: {
-    uriPattern: new RegExp(`${apiURL}/api/users/\d+/`),
+    uriPattern: new RegExp(`${apiURL}/api/users/\\d+/?`),
     data: mockUser
   },
   favoriteEvent: {
-    uriPattern: new RegExp(`${apiURL}/api/users/\d+/favoriteFirebaseEvent/\d+`),
+    uriPattern: new RegExp(
+      `${apiURL}/api/users/\\d+/favoriteFirebaseEvent/\\d+/?`
+    ),
     data: mockFavoriteCounts
   },
   unfavoriteEvent: {
     uriPattern: new RegExp(
-      `${apiURL}/api/users/\d+/unfavoriteFirebaseEvent/\d+`
+      `${apiURL}/api/users/\\d+/unfavoriteFirebaseEvent/\\d+/?`
     ),
     data: mockFavoriteCounts
   },
   favoriteCounts: {
-    uriPattern: new RegExp(`${apiURL}/api/firebaseEvents/favoriteCounts`),
+    uriPattern: new RegExp(`${apiURL}/api/firebaseEvents/favoriteCounts/?`),
     data: mockFavoriteCounts
   },
   requestEmailCode: {
-    uriPattern: new RegExp(`${apiURL}/auth/login/requestCode`),
+    uriPattern: new RegExp(`${apiURL}/auth/login/requestCode/?`),
     data: {} // No data needed (getting a 200 status code will run the correct logic)
   },
   submitEmailCode: {
-    uriPattern: new RegExp(`${apiURL}/auth/login/code`),
+    uriPattern: new RegExp(`${apiURL}/auth/login/code/?`),
     data: {
       user: mockUser,
       token: "test"
     }
   },
   getQuestions: {
-    uriPattern: new RegExp(`${questionServerURL}/getquestions/.+@.+\..+`),
+    uriPattern: new RegExp(`${questionServerURL}/getquestions/.+@.+\\..+/?`),
     data: mockQuestions
   },
   submitQuestion: {
-    uriPattern: new RegExp(`${questionServerURL}/question`),
+    uriPattern: new RegExp(`${questionServerURL}/question/?`),
     data: {} // No data needed (getting a 200 status code will run the correct logic)
   },
   checkInWithQRCode: {
-    uriPattern: new RegExp(`${apiURL}/api/users/\d+/checkIn`),
+    uriPattern: new RegExp(`${apiURL}/api/users/\\d+/checkIn/?`),
     data: {} // No data needed (getting a 200 status code will run the correct logic)
   },
   schedule: {
