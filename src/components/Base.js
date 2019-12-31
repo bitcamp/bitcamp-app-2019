@@ -23,12 +23,6 @@ const styles = StyleSheet.create({
     paddingLeft: scale(15),
     paddingRight: scale(15)
   },
-  modal: {
-    flex: 1,
-    backgroundColor: colors.backgroundColor.normal,
-    padding: scale(15),
-    paddingTop: 0,
-  },
   spacing: {
     height: scale(10),
   },
@@ -153,12 +147,6 @@ const HorizontalLine = props => (
 
 const Spacing = props => <View style={styles.spacing} />;
 
-const ModalContent = props => (
-  <ScrollView keyboardShouldPersistTaps='handled'>
-    <View style={[styles.modal, props.style]}>{props.children}</View>
-  </ScrollView>
-);
-
 class ModalHeader extends Component {
   constructor(props) {
     super(props);
@@ -238,7 +226,5 @@ const Button = props => (
   </TouchableOpacity>
 );
 
-const modalStyle = { margin: 0 } //TODO: remove
-
-export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalContent, ModalHeader, modalStyle, CenteredActivityIndicator, Button };
+export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalHeader, CenteredActivityIndicator, Button };
 

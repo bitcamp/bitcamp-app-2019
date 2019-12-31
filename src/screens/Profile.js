@@ -4,13 +4,14 @@ import QRCode from "react-native-qrcode-svg";
 import QRCodeScanner from "../components/QRCodeScanner";
 import RNRestart from 'react-native-restart';
 import { Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
-import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
+import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer, PlainViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
 import FullScreenModal from "../components/modals/FullScreenModal";
 import { H1, H2, H3 } from "../components/Text";
 import { scale } from '../utils/scale';
 import EasterEggUsername from '../components/EasterEggUsername';
 import { mockFetch } from "../mockData/mockFetch";
+import { getDeviceHeight } from "../utils/sizing";
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -153,6 +154,7 @@ export default class Profile extends Component {
           isVisible={this.state.scanner}
           onBackButtonPress={() => this.toggleScanner()}
           contentStyle={{ padding: 0 }}
+          shouldntScroll={true}
           header={
             <ModalHeader
               origin="Profile"
@@ -160,19 +162,16 @@ export default class Profile extends Component {
             />
           }
         >
-          <ViewContainer>
-            <QRCodeScanner
-              onScan={this.onScanSuccess.bind(this)}
-            />
-            <ScanResponseModal
-              isVisible={this.state.scannedUser}
-              scannedUserData={this.state.scannedUserData}
-              onBack={() => {
-                this.setState({ scannedUser: false });
-                this.scanner.reactivate();
-              }}
-            />
-          </ViewContainer>
+          <QRCodeScanner
+            onScan={this.onScanSuccess.bind(this)}
+          />
+          <ScanResponseModal
+            isVisible={this.state.scannedUser}
+            scannedUserData={this.state.scannedUserData}
+            onBack={() => {
+              this.setState({ scannedUser: false });
+            }}
+          />
         </FullScreenModal>
       );
     })();
