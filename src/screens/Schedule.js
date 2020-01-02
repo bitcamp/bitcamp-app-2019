@@ -45,7 +45,6 @@ export default class Schedule extends Component<Props> {
   render() {
     let eventDays = this.props.eventManager.getEventDays();
     let tabNames = eventDays.map(eventDay => eventDay.label);
-    console.log(eventDays);
     if(eventDays.length == 0) {
       return (
         <CenteredActivityIndicator/>
@@ -57,13 +56,14 @@ export default class Schedule extends Component<Props> {
             renderTabBar={() => <CustomScheduleTabBar/> }
           >
             {eventDays.map((eventDay,index) =>
-              <ScrollView key={index} tabLabel={eventDay.label} style={styles.tabView}>
-                <FlatList
-                  data={[eventDay]}
-                  renderItem={this.renderScheduleForDay}
-                  keyExtractor={(event, index) => index.toString()}
-                />
-              </ScrollView>
+              <FlatList
+                data={[eventDay]}
+                renderItem={this.renderScheduleForDay}
+                keyExtractor={(event, index) => index.toString()}
+                tabLabel={eventDay.label}
+                key={index}
+                style={styles.tabView}
+              />
             )}
             <ScrollView tabLabel="ios-star" style={styles.tabView}>
             <Saved

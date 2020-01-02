@@ -29,7 +29,6 @@ export default class SearchModal extends Component {
       offsetHeight: 0,
       keyboardHeight: 0
     }
-    this.renderCount = 0;
   }
 
   escapeRegExp(string) {
@@ -110,7 +109,6 @@ export default class SearchModal extends Component {
   }
 
   render() {
-    console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (this.state) ? this.state : "");
     const props = this.props;
     const newSchedule = this.state.newSchedule.filter(day => day.eventGroups.length > 0);
     return (
@@ -118,10 +116,10 @@ export default class SearchModal extends Component {
         isVisible={props.isModalVisible}
         backdropColor={'#f7f7f7'}
         onBackButtonPress={() => props.toggleModal()}
-        contentStyle={{ padding: 0, justifyContent: 'flex-start' }}
+        contentStyle={{ padding: 0, borderColor: 'pink', borderWidth: 2 }}
+        shouldntScroll={true}
       >
         <View style={{
-          flex: 1,
           flexDirection: 'row',
           alignItems: 'center',
           paddingHorizontal: scale(15),
@@ -157,8 +155,8 @@ export default class SearchModal extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{ flex: 1 }} onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
-          <View style={{ flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10 }}>
+        <View onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
+          <View style={{ flexGrow: 1, padding: 9, paddingTop: 10, paddingBottom: 10 }}>
             <ScrollView
               horizontal={true}
               onLayout={(event) => this.measureView(event, 'TagScrollView')}
