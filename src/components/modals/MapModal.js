@@ -14,13 +14,18 @@ export default class MapModal extends Component {
 
   // TODO: I removed the use of rn-fetch blob to get it to build on expo, since that module isn't compatible with 
   // expo.
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     floors: {},
-  //   }
-  //   this.setFloors();
-  // }
+  constructor() {
+    super();
+    this.state = {
+      floors: {
+        // 1: Images.floor1,
+        // 2: Images.floor2,
+        // 3: Images.floor4,
+        // Parking: Images.parking
+      },
+    }
+    // this.setFloors();
+  }
 
   // async setFloors() {
   //   await RNFetchBlob.session('floorMaps').dispose().then(() => {console.log("Removed all files in cache.")});
@@ -51,67 +56,65 @@ export default class MapModal extends Component {
   // }
 
   render() {
-    return <Text>Test</Text>;
-    // console.log(this.state.floors);
-    // const props = this.props;
-    // const floors = [1, 2, 3, 'Parking'].map(floorNumber => {
-    //   if (this.state.floors[floorNumber] === null) {
-    //     return (
-    //       <PhotoView
-    //         key={floorNumber}
-    //         tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-    //         source={Images.not_found}
-    //         minimumZoomScale={1}
-    //         maximumZoomScale={8}
-    //         androidScaleType="fitCenter"
-    //         onLoad={() => console.log("Image loaded!")}
-    //         style={{
-    //           width: getDeviceWidth(),
-    //           flex: 1,
-    //           backgroundColor: colors.backgroundColor.dark,
-    //         }}
-    //       />
-    //     );
-    //   }
-    //   return (
-    //     <PhotoView
-    //       key={floorNumber}
-    //       tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
-    //       source={{uri : this.state.floors[floorNumber] }}
-    //       minimumZoomScale={1}
-    //       maximumZoomScale={8}
-    //       androidScaleType="fitCenter"
-    //       onLoad={() => console.log("Image loaded!")}
-    //       style={{
-    //         width: getDeviceWidth(),
-    //         flex: 1,
-    //         backgroundColor: colors.backgroundColor.dark,
-    //       }}
-    //     />  
-    //   );
-    // });
+    const props = this.props;
+    const floors = [1, 2, 3, 'Parking'].map(floorNumber => {
+      if (this.state.floors[floorNumber] === null) {
+        return (
+          <PhotoView
+            key={floorNumber}
+            tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
+            source={Images.not_found}
+            minimumZoomScale={1}
+            maximumZoomScale={8}
+            androidScaleType="fitCenter"
+            onLoad={() => console.log("Image loaded!")}
+            style={{
+              width: getDeviceWidth(),
+              flex: 1,
+              backgroundColor: colors.backgroundColor.dark,
+            }}
+          />
+        );
+      }
+      return (
+        <PhotoView
+          key={floorNumber}
+          tabLabel={(floorNumber === 'Parking' ? '' : 'Floor ')  + `${floorNumber}`}
+          source={this.state.floors[floorNumber]}
+          minimumZoomScale={1}
+          maximumZoomScale={8}
+          androidScaleType="fitCenter"
+          onLoad={() => console.log("Image loaded!")}
+          style={{
+            width: getDeviceWidth(),
+            flex: 1,
+            backgroundColor: colors.backgroundColor.dark,
+          }}
+        />  
+      );
+    });
 
-    // return (
-    //   <FullScreenModal
-    //     isVisible={props.isModalVisible}
-    //     backdropColor={colors.backgroundColor.dark}
-    //     onBackButtonPress={() => props.toggleModal()}
-    //     contentStyle={{ padding: 0 }}
-    //     header={
-    //       <AltModalHeader
-    //         title="Map"
-    //         rightText="Done"
-    //         rightAction={props.toggleModal}
-    //       />
-    //     }
-    //   >
-    //       <ScrollableTabView
-    //         renderTabBar={() => <CustomScheduleTabBar/> }
-    //         style={{height: 530}}
-    //       >
-    //         {floors}
-    //       </ScrollableTabView>
-    //   </FullScreenModal>
-    // );
+    return (
+      <FullScreenModal
+        isVisible={props.isModalVisible}
+        backdropColor={colors.backgroundColor.dark}
+        onBackButtonPress={() => props.toggleModal()}
+        contentStyle={{ padding: 0 }}
+        header={
+          <AltModalHeader
+            title="Map"
+            rightText="Done"
+            rightAction={props.toggleModal}
+          />
+        }
+      >
+          <ScrollableTabView
+            renderTabBar={() => <CustomScheduleTabBar/> }
+            style={{height: 530}}
+          >
+            {floors}
+          </ScrollableTabView>
+      </FullScreenModal>
+    );
   }
 }

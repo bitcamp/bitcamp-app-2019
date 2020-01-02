@@ -29,8 +29,6 @@ let networkCallExecuting = false;
 
 export default class EventsManager {
   constructor() {
-    console.log('Initializing event manager');
-
     this.heartListeners = new Set();
     this.eventListeners = new Set();
     this.updatesListeners = new Set();
@@ -83,7 +81,8 @@ export default class EventsManager {
 
       this.fetchSavedCounts();
       this.fetchNewUserData();
-      this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
+      // TODO: rework this fetch scheme
+      // this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
 
       this.updateEventComponents();
       this.updateHearts();
@@ -207,10 +206,7 @@ export default class EventsManager {
           },
         });
         let responseJson = await response.json();
-        console.log(responseJson);
         if(response.status == 200){
-          console.log({result});
-          console.log({responseJson});
           if (!this.compareUserData(result, responseJson)) {
             Toast.show("Your user information is out of date! Please log out and log in again.", Toast.LONG);
           }
@@ -295,7 +291,6 @@ export default class EventsManager {
             this.createNotification(event);
 
             this.updateHearts();
-            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
 
@@ -341,7 +336,6 @@ export default class EventsManager {
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
             this.updateHearts();
-            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
           } else {
@@ -355,27 +349,27 @@ export default class EventsManager {
 
   createNotification(event) {
     if(event.hasPassed) {
-      Toast.show('This event has ended.');
+      Toast.show('This event has ended.', Toast.SHORT);
     } else if (event.hasBegun) {
       Toast.show("This event is currently in progress", Toast.SHORT);
     } else {
+      // TODO: reimplement notifications
+      // let notification = new firebase.notifications.Notification()
+      //   .setNotificationId(EVENT_ID_PREFIX + event.eventID)
+      //   .setTitle(event.title)
+      //   .setBody(notificationBufferMins + ' minutes until event starts.');
 
-      let notification = new firebase.notifications.Notification()
-        .setNotificationId(EVENT_ID_PREFIX + event.eventID)
-        .setTitle(event.title)
-        .setBody(notificationBufferMins + ' minutes until event starts.');
+      // notification.android
+      //   .setChannelId(channelId)
+      //   .android.setSmallIcon('ic_launcher');
 
-      notification.android
-        .setChannelId(channelId)
-        .android.setSmallIcon('ic_launcher');
+      // firebase.notifications().scheduleNotification(notification, {
+      //   fireDate: moment(event.startTime)
+      //     .subtract(notificationBufferMins, 'minutes')
+      //     .valueOf()
+      // });
 
-      firebase.notifications().scheduleNotification(notification, {
-        fireDate: moment(event.startTime)
-          .subtract(notificationBufferMins, 'minutes')
-          .valueOf()
-      });
-
-      Toast.show('You will be notified 15 min before this event.');
+      // Toast.show('You will be notified 15 min before this event.');
     }
   }
 
@@ -384,9 +378,10 @@ export default class EventsManager {
       Toast.show('You will no longer be notified about this event.');
     }
 
-    firebase
-      .notifications()
-      .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
+    // TODO: reimplement notification deletion
+    // firebase
+    //   .notifications()
+    //   .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
   }
 
   getSavedCount(key) {

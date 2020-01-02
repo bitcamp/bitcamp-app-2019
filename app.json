@@ -6,12 +6,12 @@
     "version": "1.0.0",
     "platforms": ["ios", "android", "web"],
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/imgs/app-icon.png",
     "entryPoint": "./index.js",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/imgs/splash-screen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FF6F3F"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

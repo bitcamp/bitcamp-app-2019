@@ -19,7 +19,6 @@ export default class EventStar extends Component {
     } else {
       eventManager.favoriteEvent(eventID);
     }
-    console.log(this.props.origin);
     if (this.props.origin === 'Event Description') {
       eventManager.updateEventComponents();
     }

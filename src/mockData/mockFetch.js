@@ -73,8 +73,8 @@ const requestTypes = {
     data: {} // No data needed (getting a 200 status code will run the correct logic)
   },
   checkInWithQRCode: {
-    uriPattern: new RegExp(`${apiURL}/api/users/\\d+/checkIn/?`),
-    data: {} // No data needed (getting a 200 status code will run the correct logic)
+    uriPattern: new RegExp(`${apiURL}/api/users/.+/checkIn/?`),
+    data: mockUser
   },
   schedule: {
     uriPattern: /schedule/,
