@@ -37,17 +37,22 @@ const HappeningNowSlideshow = ({ dataSource, eventManager }) => {
   );
 
   return (
-    <Swiper
-      height={Math.round((windowWidth * 38) / 67)}
-      dotColor={'rgba(255,255,255,.6)'}
-      activeDotColor={colors.textColor.primary}
-      paginationStyle={{ bottom: 18 }}
-      autoplay={true}
-      autoplayTimeout={5}
-      loop
-    >
-      {slideshow_content}
-    </Swiper>
+    <EventBanner
+      key={'Cool Event Banner'}
+      event={dataSource[0]}
+      eventManager={eventManager}
+    />
+    // <Swiper
+    //   height={Math.round((windowWidth * 38) / 67)}
+    //   dotColor={'rgba(255,255,255,.6)'}
+    //   activeDotColor={colors.textColor.primary}
+    //   paginationStyle={{ bottom: 18 }}
+    //   autoplay={true}
+    //   autoplayTimeout={5}
+    //   loop
+    // >
+    //   {slideshow_content}
+    // </Swiper>
   );
 };
 

@@ -1,11 +1,14 @@
 import React from 'react';
-import { Linking, Alert, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, TouchableOpacity, StyleSheet } from 'react-native';
 import { BaseText } from './Text';
 import { colors } from './Colors';
 import PropTypes from 'prop-types';
+import { Linking } from 'expo';
 
 export default class ExternalLink extends React.Component {
     openURL() {
+        // TODO: update to follow the expo API here: 
+        // https://docs.expo.io/versions/v33.0.0/workflow/linking/
         const { url } = this.props;
         Linking.canOpenURL(url)
             .then((supported) => {

@@ -1,12 +1,12 @@
 // Use this class to interact with all of the events, never modify the state directly
 
-import { AsyncStorage } from 'react-native';
-import firebase from 'react-native-firebase';
+import { AsyncStorage, ToastAndroid as Toast } from 'react-native';
+import firebase from 'firebase';
 import moment from 'moment';
 import _ from 'lodash';
-import Toast from 'react-native-simple-toast';
 
 import { createEventDay } from './utils';
+import { mockFetch } from '../mockData/mockFetch';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -29,8 +29,6 @@ let networkCallExecuting = false;
 
 export default class EventsManager {
   constructor() {
-    console.log('Initializing event manager');
-
     this.heartListeners = new Set();
     this.eventListeners = new Set();
     this.updatesListeners = new Set();
@@ -49,27 +47,31 @@ export default class EventsManager {
       }
       this.updateHearts();
 
+      // TODO: revert to firebase once we update the events database with real data
       //loads the copy of the schedule on the users phone
-      AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
-          if(result != null){
-            this.processNewEvents(JSON.parse(result), false);
-          }
+      // AsyncStorage.getItem(SCHEDULE_STORAGE_KEY, (err, result) => {
+      //     if(result != null){
+      //       this.processNewEvents(JSON.parse(result), false);
+      //     }
 
+          // TODO: revert to firebase once we update the events database with real data
           //after we load the local schedule we will finally add the database query listener for schedule
-          firebase.database().ref('/Schedule')
-            .on('value', async (snapshot) => {
-              let data = snapshot.val();
-              //store new schedule on phone
-              AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
-                if (error){
-                  console.log(error);
-                }
-              });
+          // firebase.database().ref('/Schedule')
+          //   .on('value', async (snapshot) => {
+          // let data = snapshot.val();
+            mockFetch('schedule')
+              .then(responseData => responseData.json())
+              .then(data => {
+                //store new schedule on phone
+                AsyncStorage.setItem(SCHEDULE_STORAGE_KEY, JSON.stringify(data), function(error){
+                  if (error){
+                    console.log(error);
+                  }
+                });
 
-              this.processNewEvents(data, true);
+                this.processNewEvents(data, true);
           });
       });
-    });
 
     this.savedCounts = {};
     AsyncStorage.getItem(SAVED_COUNT_STORE, (err, result) => {
@@ -79,7 +81,8 @@ export default class EventsManager {
 
       this.fetchSavedCounts();
       this.fetchNewUserData();
-      this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
+      // TODO: rework this fetch scheme
+      // this.timer = setInterval(()=> this.fetchSavedCounts(), savedCountRefreshInterval)
 
       this.updateEventComponents();
       this.updateHearts();
@@ -99,9 +102,6 @@ export default class EventsManager {
         )
       )
     );
-
-    console.log('newEventDays', newEventDays);
-    console.log('new combined events', newCombinedEvents);
 
     let changed = false;
     newCombinedEvents.forEach(newEvent => {
@@ -159,11 +159,10 @@ export default class EventsManager {
   }
 
   fetchSavedCounts() {
-    fetch("https://api.bit.camp/api/firebaseEvents/favoriteCounts")
+    mockFetch("https://api.bit.camp/api/firebaseEvents/favoriteCounts")
       .then((response) => response.json())
       .then((responseJson) => {
         newSavedCount = responseJson;
-        console.log("SAVED: " + responseJson);
         this.savedCounts = newSavedCount;
         //store new favorite counts on phone
         AsyncStorage.setItem(SAVED_COUNT_STORE, JSON.stringify(newSavedCount), function(error){
@@ -198,7 +197,7 @@ export default class EventsManager {
       if (result != null && token != null) {
         result = JSON.parse(result);
         id = result.id;
-        let response = await fetch(`https://api.bit.camp/api/users/${id}/`, {
+        let response = await mockFetch(`https://api.bit.camp/api/users/${id}/`, {
           method: 'GET',
           headers: {
             'Accept': 'application/json',
@@ -207,10 +206,7 @@ export default class EventsManager {
           },
         });
         let responseJson = await response.json();
-        console.log(responseJson);
         if(response.status == 200){
-          console.log({result});
-          console.log({responseJson});
           if (!this.compareUserData(result, responseJson)) {
             Toast.show("Your user information is out of date! Please log out and log in again.", Toast.LONG);
           }
@@ -219,7 +215,7 @@ export default class EventsManager {
     }
     catch(error) {
       console.log(error);
-      Toast.show("Error grabbing new user data.");
+      Toast.show("Error grabbing new user data.", Toast.SHORT);
     }
     this.updateHearts();
     this.updateEventComponents();
@@ -274,7 +270,7 @@ export default class EventsManager {
     await AsyncStorage.getItem(USER_DATA_STORE, (err, result) => {
       AsyncStorage.getItem(USER_TOKEN, (err, token) => {
         id = JSON.parse(result).id;
-        let response = fetch(`https://api.bit.camp/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
+        let response = mockFetch(`https://api.bit.camp/api/users/${id}/favoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: new Headers({
             'Content-Type': 'application/json',
@@ -295,7 +291,6 @@ export default class EventsManager {
             this.createNotification(event);
 
             this.updateHearts();
-            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
 
@@ -320,7 +315,7 @@ export default class EventsManager {
 
         id = JSON.parse(result).id;
 
-        fetch(`https://api.bit.camp/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
+        mockFetch(`https://api.bit.camp/api/users/${id}/unfavoriteFirebaseEvent/${eventID}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -341,7 +336,6 @@ export default class EventsManager {
             event = this.eventIDToEventMap[eventID];
             this.deleteNotification(event);
             this.updateHearts();
-            console.log(this);
             //this.updateEventComponents();
             networkCallExecuting = false;
           } else {
@@ -355,27 +349,27 @@ export default class EventsManager {
 
   createNotification(event) {
     if(event.hasPassed) {
-      Toast.show('This event has ended.');
+      Toast.show('This event has ended.', Toast.SHORT);
     } else if (event.hasBegun) {
-      Toast.show("This event is currently in progress");
+      Toast.show("This event is currently in progress", Toast.SHORT);
     } else {
+      // TODO: reimplement notifications
+      // let notification = new firebase.notifications.Notification()
+      //   .setNotificationId(EVENT_ID_PREFIX + event.eventID)
+      //   .setTitle(event.title)
+      //   .setBody(notificationBufferMins + ' minutes until event starts.');
 
-      let notification = new firebase.notifications.Notification()
-        .setNotificationId(EVENT_ID_PREFIX + event.eventID)
-        .setTitle(event.title)
-        .setBody(notificationBufferMins + ' minutes until event starts.');
+      // notification.android
+      //   .setChannelId(channelId)
+      //   .android.setSmallIcon('ic_launcher');
 
-      notification.android
-        .setChannelId(channelId)
-        .android.setSmallIcon('ic_launcher');
+      // firebase.notifications().scheduleNotification(notification, {
+      //   fireDate: moment(event.startTime)
+      //     .subtract(notificationBufferMins, 'minutes')
+      //     .valueOf()
+      // });
 
-      firebase.notifications().scheduleNotification(notification, {
-        fireDate: moment(event.startTime)
-          .subtract(notificationBufferMins, 'minutes')
-          .valueOf()
-      });
-
-      Toast.show('You will be notified 15 min before this event.');
+      // Toast.show('You will be notified 15 min before this event.');
     }
   }
 
@@ -384,9 +378,10 @@ export default class EventsManager {
       Toast.show('You will no longer be notified about this event.');
     }
 
-    firebase
-      .notifications()
-      .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
+    // TODO: reimplement notification deletion
+    // firebase
+    //   .notifications()
+    //   .cancelNotification(EVENT_ID_PREFIX + event.eventID.toString());
   }
 
   getSavedCount(key) {

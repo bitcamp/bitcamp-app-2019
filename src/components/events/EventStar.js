@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import { H3 } from '../Text';
 import { colors } from '../Colors';
 
@@ -19,7 +19,6 @@ export default class EventStar extends Component {
     } else {
       eventManager.favoriteEvent(eventID);
     }
-    console.log(this.props.origin);
     if (this.props.origin === 'Event Description') {
       eventManager.updateEventComponents();
     }
@@ -36,14 +35,14 @@ export default class EventStar extends Component {
         <TouchableOpacity onPress={() => {
           this.handleHeartPress();
         }}>
-          <Icon
+          <Ionicons
             name={'ios-star'}
             size={30}
             color={(eventManager.isFavorited(eventID)) ? colors.starColor.selected : colors.starColor.unselected}
           />
         </TouchableOpacity>
         { !discludeArrow &&
-          <Icon
+          <Ionicons
             style={{ marginLeft: 12}}
             name={'ios-arrow-forward'}
             size={20}

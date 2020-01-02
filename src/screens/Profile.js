@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { Alert, AsyncStorage, StyleSheet, TouchableOpacity, View } from "react-native";
-import QRCode from "react-native-qrcode";
-import QRCodeScanner from "react-native-qrcode-scanner";
+import Modal from 'react-native-modal';
+import QRCode from "react-native-qrcode-svg";
+import QRCodeScanner from "../components/QRCodeScanner";
 import RNRestart from 'react-native-restart';
-import AntDesign from "react-native-vector-icons/AntDesign";
-import FAIcon from "react-native-vector-icons/FontAwesome";
-import MCI from "react-native-vector-icons/MaterialCommunityIcons";
-import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer } from "../components/Base";
+import { Ionicons, MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { CenteredActivityIndicator, ModalHeader, PadContainer, SubHeading, ViewContainer, PlainViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
 import FullScreenModal from "../components/modals/FullScreenModal";
 import { H1, H2, H3 } from "../components/Text";
 import { scale } from '../utils/scale';
 import EasterEggUsername from '../components/EasterEggUsername';
+import { mockFetch } from "../mockData/mockFetch";
 
 const FORCE_NORMAL_USER = false; // NOTE dangerous debug mode setting
 
@@ -27,6 +27,7 @@ export default class Profile extends Component {
       user: {},
       scanner: false,
 
+      scannerIsOn: true,
       scannedUser: false,
       scannedUserData: {},
 
@@ -75,10 +76,11 @@ export default class Profile extends Component {
 
   async onScanSuccess(e) {
     try {
+      this.setState({ scannerIsOn: false });
       const userId = e.data;
       const url =`https://api.bit.camp/api/users/${userId}/checkIn`;
       const token = await AsyncStorage.getItem(USER_TOKEN);
-      const response = await fetch(url, {
+      const response = await mockFetch(url, {
         method: "POST",
         headers: {
           "Accept": "application/json",
@@ -97,13 +99,13 @@ export default class Profile extends Component {
             minorStatus: !userProfile.adult,
             dietaryRestrictions: userProfile.dietaryRestrictions
           },
-          scannedUser: true
+          scannedUser: true,
         });
       } else {
         // Set state for NOT FOUND modal
         this.setState({
           scannedUserData: null,
-          scannedUser: true
+          scannedUser: true,
         });
       }
     } catch (error) {
@@ -115,7 +117,7 @@ export default class Profile extends Component {
           {
             text: "OK",
             onPress: () => {
-              this.scanner.reactivate();
+              this.setState({ scannerIsOn: true })
             }
           }
         ],
@@ -132,7 +134,7 @@ export default class Profile extends Component {
 
   async componentDidMount() {
     var loggedInUser = JSON.parse(await AsyncStorage.getItem(USER_DATA_STORE));
-    console.log(loggedInUser);
+    
     if (FORCE_NORMAL_USER) {
       loggedInUser.admin = false;
     }
@@ -154,6 +156,7 @@ export default class Profile extends Component {
           isVisible={this.state.scanner}
           onBackButtonPress={() => this.toggleScanner()}
           contentStyle={{ padding: 0 }}
+          shouldntScroll={true}
           header={
             <ModalHeader
               origin="Profile"
@@ -161,27 +164,17 @@ export default class Profile extends Component {
             />
           }
         >
-          <ViewContainer>
-            <QRCodeScanner
-              ref={node => {
-                this.scanner = node;
-              }}
-              onRead={this.onScanSuccess.bind(this)}
-              showMarker
-              reactivate={false}
-              customMarker={
-                <View style={styles.QRMarker}/>
-              }
-            />
-            <ScanResponseModal
-              isVisible={this.state.scannedUser}
-              scannedUserData={this.state.scannedUserData}
-              onBack={() => {
-                this.setState({ scannedUser: false });
-                this.scanner.reactivate();
-              }}
-            />
-          </ViewContainer>
+          <QRCodeScanner
+            onScan={this.onScanSuccess.bind(this)}
+            scannerIsOn={this.state.scannerIsOn}
+          />
+          <ScanResponseModal
+            isVisible={this.state.scannedUser}
+            scannedUserData={this.state.scannedUserData}
+            onBack={() => {
+              this.setState({ scannedUser: false, scannerIsOn: true });
+            }}
+          />
         </FullScreenModal>
       );
     })();
@@ -194,7 +187,7 @@ export default class Profile extends Component {
 
         const id = this.state.user.id
           ? this.state.user.id
-          : "";
+          : this.state.user.email; // TODO: possibly provide a more reasonable default
 
         const isOrganizer = this.state.user.admin || this.state.user.organizer;
 
@@ -208,8 +201,6 @@ export default class Profile extends Component {
                   <QRCode
                     value={id}
                     size={scale(175)}
-                    bgColor="black"
-                    fgColor="white"
                   />
                 )}
               </View>
@@ -240,7 +231,7 @@ export default class Profile extends Component {
                     style={[styles.actionButton, {backgroundColor: "#d2d1d7"}]}
                     onPress={() => this.toggleScanner()}
                   >
-                    <MCI
+                    <MaterialCommunityIcons
                       name="qrcode-scan"
                       size={50}
                       color="black"
@@ -278,26 +269,33 @@ export default class Profile extends Component {
 // TODO make this code less redundant
 const ScanResponseModal = props => {
   return (
-    <FullScreenModal
+    <Modal
       isVisible={props.isVisible}
+      backdropColor={colors.backgroundColor.normal}
       backdropOpacity={0.6}
       onBackdropPress={props.onBack}
       onBackButtonPress={props.onBack}
-      style={{ margin: 40 }}
+      animationIn="fadeInUp"
+      animationOut="fadeOutDown"
+      animationInTiming={250}
+      animationOutTiming={300}
+      backdropTransitionInTiming={250}
+      backdropTransitionOutTiming={300}
     >
       <View
         style={{
           backgroundColor: colors.backgroundColor.normal,
-          padding: 40,
+          padding: 20,
           borderRadius: 8,
-          alignItems: "center"
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         {
           !props.scannedUserData
           ? <React.Fragment>
-              <FAIcon
-                name="times"
+              <Ionicons
+                name="md-close"
                 size={48}
                 color={colors.iconColor}
                 style={{ marginBottom: 10 }}
@@ -306,8 +304,8 @@ const ScanResponseModal = props => {
               <H3 style={{ color: colors.textColor.light }}>Send to check-in table.</H3>
             </React.Fragment>
           : <React.Fragment>
-              <FAIcon
-                name="check"
+              <Ionicons
+                name="md-checkmark"
                 size={48}
                 color={colors.secondaryColor}
                 style={{ marginBottom: 10 }}
@@ -326,7 +324,7 @@ const ScanResponseModal = props => {
             </React.Fragment>
         }
       </View>
-    </FullScreenModal>
+    </Modal>
   );
 };
 

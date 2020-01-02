@@ -1,4 +1,4 @@
-import { hasTimePassed, normalizeTimeLabel } from './utils';
+import { hasTimePassed, normalizeTimeLabel } from './timeUtils';
 
 export default class Event {
   constructor(
@@ -42,9 +42,9 @@ export default class Event {
   }
 
   get timeRangeString() {
-    return this.startTimeFormatted === this.endTimeFormatted 
+    return this.startTimeFormatted === this.endTimeFormatted
       ? this.startTimeFormatted
-      : `from ${this.startTimeFormatted} - ${this.endTimeFormatted}`      
+      : `from ${this.startTimeFormatted} - ${this.endTimeFormatted}`
   }
 
   get clippedTitle() {

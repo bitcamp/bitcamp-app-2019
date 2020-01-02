@@ -1,8 +1,7 @@
 import moment from "moment";
 import React, { Component } from "react";
-import { Alert, AppState, AsyncStorage, FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
-import firebase from "react-native-firebase";
-import Toast from "react-native-simple-toast";
+import { Alert, AppState, AsyncStorage, FlatList, StyleSheet, TextInput, TouchableOpacity, View, ToastAndroid as Toast } from "react-native";
+import firebase from "firebase";
 import AltModalHeader from '../components/modals/AltModalHeader';
 import { Button, PadContainer, ViewContainer } from "../components/Base";
 import { colors } from "../components/Colors";
@@ -12,6 +11,7 @@ import QuestionCard from "../components/QuestionCard";
 import SwitchInput from '../components/SwitchInput';
 import { H2, H3, P } from "../components/Text";
 import { scale, verticalScale } from "../utils/scale";
+import { mockFetch } from "../mockData/mockFetch";
 
 const serverURL = "https://guarded-brook-59345.herokuapp.com";
 
@@ -33,7 +33,7 @@ export default class Mentors extends Component {
   }
 
   async grabQuestionsFromDB(email) {
-    fetch(`${serverURL}/getquestions/${email}`, {
+    mockFetch(`${serverURL}/getquestions/${email}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -153,7 +153,7 @@ export default class Mentors extends Component {
       }
 
       var questionString = JSON.stringify(questionObject);
-      fetch(`${serverURL}/question`, {
+      mockFetch(`${serverURL}/question`, {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -167,7 +167,8 @@ export default class Mentors extends Component {
       this.showToast();
       this.toggleModal();
       // make new question show up immediately at top of list
-      this.setState({ listData: [questionObject].concat(this.state.listData) });
+      this.setState({ listData: [questionObject, ...this.state.listData] });
+      setTimeout(() => console.log("List data", this.state.listData), 1000);
     }
   }
   renderHeading() {
@@ -284,20 +285,21 @@ export default class Mentors extends Component {
     );
   }
 
+  //TODO: reimplement when firebase is setup
   async createNotificationListener() {
-    // updates when app is in foreground
-    this.notificationListener = firebase
-      .notifications()
-      .onNotification(notification => {
-        this.grabQuestionsFromDB(notification.data.email);
-      });
+    // // updates when app is in foreground
+    // this.notificationListener = firebase
+    //   .notifications()
+    //   .onNotification(notification => {
+    //     this.grabQuestionsFromDB(notification.data.email);
+    //   });
 
-    // updates when app is in the background
-    this.notificationOpenedListener = firebase
-      .notifications()
-      .onNotificationOpened(notificationOpen => {
-        this.grabQuestionsFromDB(notificationOpen.notification.data.email);
-      });
+    // // updates when app is in the background
+    // this.notificationOpenedListener = firebase
+    //   .notifications()
+    //   .onNotificationOpened(notificationOpen => {
+    //     this.grabQuestionsFromDB(notificationOpen.notification.data.email);
+    //   });
   }
 
   async updateQuestionStatus(notification) {
@@ -351,20 +353,18 @@ export default class Mentors extends Component {
           />
         </TouchableOpacity>
         <PadContainer>
-          {this.state.listData && this.state.listData.length > 0 && (
-            <H2 style={modalStyles.bigTitle}>Your Questions</H2>
-          )}
-          <FlatList
-            data={this.state.listData}
-            renderItem={({ item }) => (
+          {this.state.listData &&
+            this.state.listData.length > 0 && (
+              <H2 style={modalStyles.bigTitle}>Your Questions</H2>
+            ) &&
+            this.state.listData.map(question => (
               <QuestionCard
-                question={item.question}
-                status={item.status}
-                location={item.location}
-                time={item.key}
+                question={question.question}
+                status={question.status}
+                key={question.key}
               />
-            )}
-          />
+            ))
+          }
         </PadContainer>
       </ViewContainer>
     );

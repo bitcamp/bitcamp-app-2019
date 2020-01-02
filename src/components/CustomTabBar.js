@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import Ionicon from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import EvilIcon from 'react-native-vector-icons/EvilIcons';
+import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { EvilIcons } from '@expo/vector-icons';
 import Entypo from 'react-native-vector-icons/Entypo'
 import moment from 'moment';
 import { colors } from './Colors';
@@ -26,10 +26,10 @@ class CustomTabBar extends Component {
             {
               {
                 'home': <FontAwesome name='home' size={scale(25)} color={color}/>,
-                'schedule': <EvilIcon name='calendar' size={scale(32)} color={color}/>,
+                'schedule': <EvilIcons name='calendar' size={scale(32)} color={color}/>,
                 'expo': <Entypo name='code' size={scale(25)} color={color}/>,
-                'mentors': <Ionicon name='ios-people' size={scale(32)} color={color} style={{marginTop: scale(-5), marginBottom: scale(-2.5)}}/>,
-                'profile': <Ionicon name='ios-person' size={scale(25)} color={color}/>
+                'mentors': <Ionicons name='ios-people' size={scale(32)} color={color} style={{marginTop: scale(-5), marginBottom: scale(-2.5)}}/>,
+                'profile': <Ionicons name='ios-person' size={scale(25)} color={color}/>
               }[tab]
             }
               <P

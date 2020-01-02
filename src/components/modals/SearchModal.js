@@ -7,7 +7,7 @@ import { colors } from '../Colors';
 import PillBadge, { badgeStyles } from '../PillBadge';
 import { scale } from '../../utils/scale';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import SearchBarTabView from '../SearchBarTabView';
 import _ from 'lodash';
 import { getDeviceHeight } from '../../utils/sizing';
@@ -29,13 +29,12 @@ export default class SearchModal extends Component {
       offsetHeight: 0,
       keyboardHeight: 0
     }
-    this.renderCount = 0;
   }
 
   escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
   }
-  
+
   componentDidMount() {
     this.keyboardDidShowSub = Keyboard.addListener('keyboardDidShow', this.handleKeyboardDidShow);
     this.keyboardDidHideSub = Keyboard.addListener('keyboardDidHide', this.handleKeyboardDidHide);
@@ -58,7 +57,7 @@ export default class SearchModal extends Component {
     newHeight[view] = event.nativeEvent.layout.height;
     this.setState({
       height: newHeight,
-      offsetHeight: Object.values(newHeight).reduce((acc,h) => acc + h, 0)
+      offsetHeight: Object.values(newHeight).reduce((acc, h) => acc + h, 0)
     })
   }
 
@@ -67,7 +66,7 @@ export default class SearchModal extends Component {
     let query_regex = this.escapeRegExp(query);
     let newSchedule = [];
 
-    if(query !== "") {
+    if (query !== "") {
       newSchedule = _.cloneDeep(this.props.eventDays);
 
       // Filter out any event that doesn't match the query
@@ -75,7 +74,7 @@ export default class SearchModal extends Component {
         eventDay.eventGroups = eventDay.eventGroups.map(eventGroup => {
           eventGroup.events = eventGroup.events.filter(event => {
             const category_search = (Array.isArray(event.category))
-              ? event.category.some(category => category.toLowerCase().search(query_regex) >= 0) 
+              ? event.category.some(category => category.toLowerCase().search(query_regex) >= 0)
               : event.category.toLowerCase().search(query_regex) >= 0;
 
             return event.title.toLowerCase().search(query_regex) >= 0 || category_search;
@@ -110,7 +109,6 @@ export default class SearchModal extends Component {
   }
 
   render() {
-    console.log(`SEARCH MODAL RENDER ${++this.renderCount}: `, (this.state) ? this.state : "");
     const props = this.props;
     const newSchedule = this.state.newSchedule.filter(day => day.eventGroups.length > 0);
     return (
@@ -118,15 +116,15 @@ export default class SearchModal extends Component {
         isVisible={props.isModalVisible}
         backdropColor={'#f7f7f7'}
         onBackButtonPress={() => props.toggleModal()}
-        contentStyle={{ padding: 0, justifyContent: 'flex-start' }}
+        contentStyle={{ padding: 0, borderColor: 'pink', borderWidth: 2 }}
+        shouldntScroll={true}
       >
         <View style={{
-            flex: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: scale(15),
-            paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
-          }}
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingHorizontal: scale(15),
+          paddingTop: Platform.OS === "ios" ? getStatusBarHeight() : 0,
+        }}
           onLayout={(event) => this.measureView(event, 'SearchBar')}
         >
           <SearchBar
@@ -137,13 +135,13 @@ export default class SearchModal extends Component {
             value={this.state.search}
             autoFocus={true}
             autoCapitalize='none'
-            containerStyle={{flex: 1}}
-            inputContainerStyle={{backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10)}}
-            leftIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
-            rightIconContainerStyle={{backgroundColor: colors.backgroundColor.dark}}
+            containerStyle={{ flex: 1 }}
+            inputContainerStyle={{ backgroundColor: colors.backgroundColor.dark, borderRadius: scale(10) }}
+            leftIconContainerStyle={{ backgroundColor: colors.backgroundColor.dark }}
+            rightIconContainerStyle={{ backgroundColor: colors.backgroundColor.dark }}
             returnKeyType="search"
           />
-          <View style={{flex: 0,flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => props.toggleModal()} style={{ flex: 0 }}>
               <H3 style={{
                 color: colors.primaryColor,
@@ -157,8 +155,8 @@ export default class SearchModal extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{flex: 1}} onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
-          <View style={{flex: 1, padding: 9, paddingTop: 10, paddingBottom: 10}}>
+        <View onLayout={(event, ...args) => this.measureView(event, 'TagViewParent')}>
+          <View style={{ flexGrow: 1, padding: 9, paddingTop: 10, paddingBottom: 10 }}>
             <ScrollView
               horizontal={true}
               onLayout={(event) => this.measureView(event, 'TagScrollView')}
@@ -166,13 +164,13 @@ export default class SearchModal extends Component {
               {this.renderBadges()}
             </ScrollView>
             <LinearGradient
-                colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
-                locations={[0, 0.1, 0.8, 1]}
-                start={{x: 0, y: 0}}
-                end={{x: 1, y: 0}}
-                style={{position: 'absolute', top: 0, left: 0, right: 0, bottom: 0}}
-                pointerEvents={'none'}
-              />
+              colors={['rgba(255,255,255,0.7)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,0.7)']}
+              locations={[0, 0.1, 0.8, 1]}
+              start={[0, 0]}
+              end={[1, 0]}
+              style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+              pointerEvents={'none'}
+            />
           </View>
         </View>
         <SearchBarTabView

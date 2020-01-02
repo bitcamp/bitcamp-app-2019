@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import Images from '../../../assets/imgs/index';
 import { scale } from '../../utils/scale';
 import { getDeviceWidth, getImageHeight } from '../../utils/sizing';
@@ -60,7 +60,7 @@ export default class EventCard extends Component {
                 { backgroundColor: this.getColor() },
                 styles.favoriteInfo,
               ]}>
-                <IonIcon name="ios-star" size={scale(15)} color={'white'} />
+                <Ionicons name="ios-star" size={scale(15)} color={'white'} />
                 <BaseText style={styles.favoriteCount}>
                   {eventManager.getSavedCount(event.eventID)}
                 </BaseText>

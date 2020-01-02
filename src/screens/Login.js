@@ -4,6 +4,7 @@ import { Alert, AsyncStorage, StyleSheet, TextInput, TouchableOpacity } from 're
 import { Button, Heading, PadContainer, SubHeading } from '../components/Base';
 import { colors } from '../components/Colors';
 import KeyboardShift from '../components/KeyboardShift';
+import { mockFetch } from '../mockData/mockFetch';
 
 const APP_ID = '@com.technica.technica18:';
 const USER_TOKEN = APP_ID + 'JWT';
@@ -23,12 +24,12 @@ export default class Login extends Component<Props> {
       greeting: 'Welcome to \nBitcamp 2019',
       instruction: 'Enter the email you used to sign up for Bitcamp.',
       nextPage: (
-        <TouchableOpacity onPress={() => this.sendEmail(this.state.fieldValue)}>
+        //TODO: remove
           <Button
               text="Next"
               style={{...styles.button}}
-            />
-        </TouchableOpacity>),
+              onPress={() => this.sendEmail(this.state.fieldValue)}
+            />),
     };
   }
   constructor(props) {
@@ -50,11 +51,11 @@ export default class Login extends Component<Props> {
   }
 
   async sendEmail(email) {
-    validEmail = this.validEmail(email);
+    const validEmail = this.validEmail(email);
     if(validEmail != null){
       let url = "https://api.bit.camp/auth/login/requestCode";
       try {
-          let response = await fetch(url, {
+          let response = await mockFetch(url, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
@@ -65,14 +66,13 @@ export default class Login extends Component<Props> {
           if(response.status == 200){
             this.setState({greeting: "Great!", instruction: "We've sent a verification code to your email. Please enter that code below to login.",
             nextPage: (
-              <TouchableOpacity onPress={() => this.sendReceivedCode(this.state.fieldValue)}>
                   <Button
+                      onPress={() => this.sendReceivedCode(this.state.fieldValue)}
                       text='Submit'
                       size={22}
                       color='white'
                       style={styles.button}
-                    />
-                </TouchableOpacity>),
+                    />),
               savedEmail: validEmail, fieldValue: '', placeholder: 'xxxxxx'});
           } else{
             Alert.alert(
@@ -120,7 +120,7 @@ export default class Login extends Component<Props> {
     let url = "https://api.bit.camp/auth/login/code";
     try {
         let email = this.state.savedEmail;
-        let response = await fetch(url, {
+        let response = await mockFetch(url, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -132,12 +132,14 @@ export default class Login extends Component<Props> {
         if(response.status == 200){
           await AsyncStorage.setItem(USER_DATA_STORE, JSON.stringify(responseJson.user));
           await AsyncStorage.setItem(USER_TOKEN, responseJson.token);
+          
           userFavoritedEvents = this.processUserEvents(responseJson.user.favoritedFirebaseEvents);
           await AsyncStorage.setItem(EVENT_FAVORITED_STORE, JSON.stringify(userFavoritedEvents));
           this.setState({savedCode: code, fieldValue: ''});
           const { navigate } = this.props.navigation;
           navigate('AppContainer');
 
+          // TODO: investigate if you can just await this before the navigate statement
           // this might happen after component is unmounted,
           // however without a delay it will change back as it animates
           // FYI this is kind of a hack since when the user navigates back we want to reset to the

@@ -1,4 +1,24 @@
 {
-  "name": "technica",
-  "displayName": "technica"
+  "expo": {
+    "name": "Bitcamp",
+    "slug": "bitcamp",
+    "sdkVersion": "36.0.0",
+    "version": "1.0.0",
+    "platforms": ["ios", "android", "web"],
+    "orientation": "portrait",
+    "icon": "./assets/imgs/app-icon.png",
+    "entryPoint": "./index.js",
+    "splash": {
+      "image": "./assets/imgs/splash-screen.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#FF6F3F"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
 }

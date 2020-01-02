@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { colors } from '../Colors';
 import Icon from 'react-native-vector-icons/Ionicons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { Ionicons } from '@expo/vector-icons';
 import { scale } from '../../utils/scale';
 import { BaseText } from '../Text';
 
@@ -47,8 +47,8 @@ export default class CustomScheduleTabBar extends Component {
             {tab}
           </BaseText>
           :
-          <FontAwesome5
-            name={'car-side'}
+          <Ionicons
+            name={'md-car'}
             size={22}
             color={this.props.activeTab === i ? colors.primaryColor : colors.textColor.light}
           />)

@@ -2,8 +2,13 @@ import React, { Component } from 'react';
 import { YellowBox, AsyncStorage } from 'react-native';
 import Login from './screens/Login';
 import AppContainer from './screens/AppContainer';
-import { createStackNavigator} from 'react-navigation';
+import { createStackNavigator} from 'react-navigation-stack';
 import { CenteredActivityIndicator } from './components/Base';
+import { createAppContainer } from 'react-navigation';
+import * as firebase from 'firebase';
+import { firebaseConfig } from '../config';
+
+// TODO: add in react-native-screens optimization
 
 // NOTE dangerously ignore deprecated warning for now
 YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader', 'Setting a timer', "Warning: Can't"]);
@@ -14,7 +19,7 @@ XMLHttpRequest = GLOBAL.originalXMLHttpRequest ?
     GLOBAL.originalXMLHttpRequest :
     GLOBAL.XMLHttpRequest;
 
-  // fetch logger
+// fetch logger
 global._fetch = fetch;
 global.fetch = function (uri, options, ...args) {
   return global._fetch(uri, options, ...args).then((response) => {
@@ -22,6 +27,11 @@ global.fetch = function (uri, options, ...args) {
     return response;
   });
 };
+
+// Firebase initialization
+if(firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 export default class App extends Component<Props> {
   constructor(props) {
@@ -31,7 +41,11 @@ export default class App extends Component<Props> {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.loadUserInfo();
+  }
+
+  async loadUserInfo() {
     try {
       const userInfo = await AsyncStorage.getItem("USER_DATA_STORE");
       this.setState({
@@ -49,6 +63,7 @@ export default class App extends Component<Props> {
       );
     } else {
 
+      // TODO: strip out of render
       const AppNavigator = createStackNavigator({
         Login: { screen: Login },
         AppContainer: { screen: AppContainer },
@@ -57,8 +72,9 @@ export default class App extends Component<Props> {
           ? 'Login' 
           : 'AppContainer'
       });
+      const NavContainer = createAppContainer(AppNavigator);
 
-      return <AppNavigator screenProps={this.props}/>;
+      return <NavContainer screenProps={this.props}/>;
     }
   }
 }

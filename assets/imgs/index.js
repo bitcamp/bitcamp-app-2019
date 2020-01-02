@@ -17,6 +17,10 @@ const Images = {
     bitcamp_logo: require('./bitcamp-logo.png'),
 
     // Floor Maps
+    floor1: require('./floor-maps/Floor_1.png'),
+    floor2: require('./floor-maps/Floor_2.png'),
+    floor3: require('./floor-maps/Floor_3.png'),
+    parking: require('./floor-maps/Parking.png'),
     not_found: require('./floor-maps/not_found.png')
 };
 

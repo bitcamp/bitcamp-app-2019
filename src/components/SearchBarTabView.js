@@ -37,13 +37,15 @@ export default class SearchBarTabView extends React.Component {
 
   renderSearchResults(schedule) {
     return schedule.map((eventDay) =>
-      <ScrollView key={eventDay.label} tabLabel={eventDay.label} style={[styles.tabView]}>
         <FlatList
           data={[eventDay]}
           renderItem={this.renderScheduleForDay.bind(this)}
           keyExtractor={(eventDayObj) => `${eventDayObj.label} list`}
+          key={eventDay.label}
+          tabLabel={eventDay.label}
+          style={[styles.tabView]}
         />
-      </ScrollView>);
+      );
   }
 
   render() {

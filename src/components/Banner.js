@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ImageBackground, StyleSheet } from 'react-native';
 import { PadContainer } from './Base';
 import { H2, H3 } from './Text';
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 import { getDeviceWidth, getImageHeight } from '../utils/sizing';
 import { colors } from './Colors';
 import { imageType } from '../utils/PropTypeUtils';
@@ -40,25 +40,25 @@ Banner.propTypes = {
 
 const styles = StyleSheet.create({
     imageBg: {
-      position: 'relative',
-      width: getDeviceWidth(),
-      height: getImageHeight()
+        position: 'relative',
+        width: getDeviceWidth(),
+        height: getImageHeight()
     },
     darkImageMask: {
-      flex: 1,
+        flex: 1,
     },
     description: {
-      fontWeight: 'bold',
-      color: colors.textColor.primary,
+        fontWeight: 'bold',
+        color: colors.textColor.primary,
     },
     title: {
-      color: colors.textColor.primary,
-      fontSize: 26,
+        color: colors.textColor.primary,
+        fontSize: 26,
     },
     textGroup: {
-      marginBottom: 40,
-      flex: 1,
-      justifyContent: 'flex-end',
+        marginBottom: 40,
+        flex: 1,
+        justifyContent: 'flex-end',
     },
 });
 

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { ActivityIndicator, Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 import { Paper } from 'react-native-paper';
-import IonIcon from 'react-native-vector-icons/Ionicons';
+import { Ionicons } from '@expo/vector-icons';
 import Images from '../../assets/imgs/index';
 import { scale } from '../utils/scale';
 import { colors } from './Colors';
@@ -22,12 +22,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: scale(15),
     paddingRight: scale(15)
-  },
-  modal: {
-    flex: 1,
-    backgroundColor: colors.backgroundColor.normal,
-    padding: scale(15),
-    paddingTop: 0,
   },
   spacing: {
     height: scale(10),
@@ -153,12 +147,6 @@ const HorizontalLine = props => (
 
 const Spacing = props => <View style={styles.spacing} />;
 
-const ModalContent = props => (
-  <ScrollView keyboardShouldPersistTaps='handled'>
-    <View style={[styles.modal, props.style]}>{props.children}</View>
-  </ScrollView>
-);
-
 class ModalHeader extends Component {
   constructor(props) {
     super(props);
@@ -181,7 +169,7 @@ class ModalHeader extends Component {
             onPress={onBackButtonPress}
           >
             <View style={{flexDirection: 'row', alignSelf: 'flex-start', alignItems: 'center'}}>
-              <IonIcon
+              <Ionicons
                 name={'ios-arrow-back'}
                 size={35}
                 color={colors.primaryColor}
@@ -238,7 +226,5 @@ const Button = props => (
   </TouchableOpacity>
 );
 
-const modalStyle = { margin: 0 } //TODO: remove
-
-export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalContent, ModalHeader, modalStyle, CenteredActivityIndicator, Button };
+export { PlainViewContainer, ViewContainer, Heading, SubHeading, PaperSheet, PadContainer, HorizontalLine, Spacing, ModalHeader, CenteredActivityIndicator, Button };
 
